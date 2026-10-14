@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/privacy" },
   openGraph: { url: "/privacy", title, description, images: SHARE_IMAGE },
-  twitter: { title, description, images: SHARE_IMAGE },
+  twitter: { title, description },
 };
 
 export default function Page() {

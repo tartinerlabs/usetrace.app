@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/support" },
   openGraph: { url: "/support", title, description, images: SHARE_IMAGE },
-  twitter: { title, description, images: SHARE_IMAGE },
+  twitter: { title, description },
 };
 
 const sections: { heading: string; items: FaqItem[] }[] = [

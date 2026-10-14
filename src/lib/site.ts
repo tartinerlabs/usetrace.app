@@ -29,5 +29,5 @@ export const SHARE_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
-  alt: `${BRAND}: The everyday, remembered.`,
+  alt: `${BRAND}: ${TAGLINE}`,
 };
