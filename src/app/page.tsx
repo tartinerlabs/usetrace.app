@@ -2,15 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { AppStoreBadge } from "@/components/app-store-badge";
 import { Faq, type FaqItem } from "@/components/faq";
-import {
-  type Activity,
-  DayRibbon,
-  type RibbonSegment,
-  RouteSwatch,
-  RouteThread,
-} from "@/components/route-motif";
 import {
   APP_STORE_NAME,
   APP_STORE_URL,
@@ -22,6 +14,14 @@ import {
   SUMMARY,
   TAGLINE,
 } from "@/lib/site";
+import { AppStoreBadge } from "./components/app-store-badge";
+import {
+  type Activity,
+  DayRibbon,
+  type RibbonSegment,
+  RouteSwatch,
+  RouteThread,
+} from "./components/route-motif";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
