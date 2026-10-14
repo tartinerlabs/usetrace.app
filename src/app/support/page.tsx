@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Faq, type FaqItem } from "@/components/faq";
-import { BRAND, SUPPORT_EMAIL } from "@/lib/site";
+import { BRAND, SHARE_IMAGE, SUPPORT_EMAIL } from "@/lib/site";
 
 const title = "Support";
 const description = `Get answers about how to record, pause, sync with iCloud, export and delete your data in ${BRAND}, and about notifications.`;
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/support" },
-  openGraph: { url: "/support", title, description },
-  twitter: { title, description },
+  openGraph: { url: "/support", title, description, images: SHARE_IMAGE },
+  twitter: { title, description, images: SHARE_IMAGE },
 };
 
 const sections: { heading: string; items: FaqItem[] }[] = [

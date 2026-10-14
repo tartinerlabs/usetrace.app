@@ -22,3 +22,12 @@ export const APP_STORE_URL: string | null = APP_STORE_ID
 
 // TODO: replace with the real support address.
 export const SUPPORT_EMAIL = "[support email]";
+
+// Child pages that set their own openGraph/twitter lose the root
+// opengraph-image file, so they reference it explicitly.
+export const SHARE_IMAGE = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: `${BRAND}: The everyday, remembered.`,
+};
