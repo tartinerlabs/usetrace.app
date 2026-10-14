@@ -1,6 +1,6 @@
 import posthog from "posthog-js";
 
-const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const key = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
 
 // Cookieless and anonymous; `defaults` also tracks client-side navigations.
 if (key) {
