@@ -1,36 +1,38 @@
-import Image from "next/image";
 import Link from "next/link";
-import { BRAND } from "@/lib/site";
 
 export function SiteHeader() {
   return (
-    <header className="mx-auto flex w-full flex-wrap max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+    <header className="mx-auto flex w-full max-w-[1240px] flex-wrap items-center justify-between gap-4 px-[clamp(20px,5vw,56px)] py-5">
       <Link
         href="/"
-        className="flex items-center gap-2 rounded-small font-rounded text-lg font-semibold"
+        className="flex items-center gap-2.5 rounded-small text-[26px] font-semibold leading-none tracking-[-0.8px]"
       >
-        <Image
-          src="/images/app-icon.png"
-          alt=""
-          width={32}
-          height={32}
-          className="size-8 rounded-[0.5rem]"
-        />
-        {BRAND}
+        {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
+        <img src="/brand/logo.svg" alt="" width={30} height={30} />
+        trace
       </Link>
-      <nav aria-label="Primary">
-        <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-secondary text-sm sm:gap-x-6">
-          <li>
-            <Link href="/privacy" className="hover:text-ink">
-              Privacy
-            </Link>
-          </li>
-          <li>
-            <Link href="/support" className="hover:text-ink">
-              Support
-            </Link>
-          </li>
-        </ul>
+      <nav
+        aria-label="Primary"
+        className="flex items-center gap-[clamp(12px,3vw,28px)] text-[15px]"
+      >
+        <Link
+          href="/#privacy"
+          className="text-secondary motion-safe:transition-colors hover:text-ink"
+        >
+          Privacy
+        </Link>
+        <Link
+          href="/#faq"
+          className="text-secondary motion-safe:transition-colors hover:text-ink"
+        >
+          Questions
+        </Link>
+        <Link
+          href="/#download"
+          className="inline-flex min-h-11 items-center rounded-full bg-ink px-[18px] font-semibold text-canvas motion-safe:transition-opacity hover:opacity-85"
+        >
+          Download
+        </Link>
       </nav>
     </header>
   );

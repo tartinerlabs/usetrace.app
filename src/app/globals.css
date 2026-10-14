@@ -18,6 +18,15 @@
   --bus: #5f658f;
   --drive: #a4542f;
   --flight: #346eaa;
+  --place: #5f7161;
+  --body: #4a4a44;
+  /* Night: the privacy, questions and download sections and the footer. */
+  --night: #0e1014;
+  --night-surface: #191c21;
+  --night-line: #2a2e35;
+  --on-night: #f1efe9;
+  --night-secondary: #a3a49e;
+  --peach: #edb48c;
 }
 
 @media (prefers-contrast: more) {
@@ -52,9 +61,18 @@
   --color-bus: var(--bus);
   --color-drive: var(--drive);
   --color-flight: var(--flight);
+  --color-place: var(--place);
+  --color-body: var(--body);
+  --color-night: var(--night);
+  --color-night-surface: var(--night-surface);
+  --color-night-line: var(--night-line);
+  --color-on-night: var(--on-night);
+  --color-night-secondary: var(--night-secondary);
+  --color-peach: var(--peach);
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sans:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    var(--font-geist), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-rounded:
     ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto,
     sans-serif;
@@ -78,10 +96,72 @@ html {
 body {
   background: var(--canvas);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-geist), system-ui, -apple-system, sans-serif;
 }
 
 :focus-visible {
   outline: 2px solid var(--sun);
   outline-offset: 3px;
+}
+
+/* Material Symbols Rounded, loaded in the root layout. */
+.icon {
+  /* biome-ignore lint/a11y/useGenericFontNames: an icon font has no generic fallback */
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 1;
+}
+
+/* Hero: the highlight sweeps in, then the routes draw and the stops appear. */
+@keyframes highlight-in {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes highlight-text {
+  from {
+    color: var(--ink);
+  }
+}
+
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-highlight {
+    animation: highlight-in 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.25s both;
+  }
+  .hero-highlight-text {
+    animation: highlight-text 0.3s ease 0.55s both;
+  }
+  .route-draw {
+    animation: route-draw 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
+  }
+  .route-draw-late {
+    animation: route-draw 2.1s cubic-bezier(0.4, 0, 0.2, 1) 1.05s both;
+  }
+  .stop-in {
+    animation: fade-in 0.4s ease 1.9s both;
+  }
+  .stop-in-late {
+    animation: fade-in 0.4s ease 2.8s both;
+  }
 }

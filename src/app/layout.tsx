@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -12,6 +13,41 @@ import {
   TAGLINE,
 } from "@/lib/site";
 import "./globals.css";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+
+// Only the glyphs the site uses, in alphabetical order as Google Fonts requires.
+const ICON_NAMES = [
+  "account_circle",
+  "add",
+  "arrow_forward",
+  "auto_awesome",
+  "block",
+  "cloud_lock",
+  "directions_bike",
+  "directions_car",
+  "directions_walk",
+  "graphic_eq",
+  "history",
+  "home",
+  "local_cafe",
+  "location_on",
+  "lock",
+  "park",
+  "pause",
+  "pause_circle",
+  "route",
+  "screen_lock_portrait",
+  "train",
+  "widgets",
+  "wifi",
+  "work",
+];
+const ICON_FONT_URL = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0&icon_names=${ICON_NAMES.join(",")}&display=block`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -46,7 +82,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="antialiased">
+    <html
+      lang="en"
+      className={`${geist.variable} ${geistMono.variable} antialiased`}
+    >
+      <head>
+        <link rel="stylesheet" href={ICON_FONT_URL} precedence="default" />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"

@@ -3,9 +3,9 @@ export const BRAND = "Trace";
 export const DESCRIPTOR = "Location Timeline";
 export const APP_STORE_NAME = `${BRAND}: ${DESCRIPTOR}`;
 
-export const TAGLINE = "The everyday, remembered.";
+export const TAGLINE = "Your day, retraced.";
 export const SUMMARY =
-  "A private journal of the places you go and the paths you take.";
+  "Trace records the places you go and the routes you take. Your journal stays on your iPhone.";
 export const DESCRIPTION = `${BRAND} is a private location timeline for iPhone. It records your day automatically. Your journal stays encrypted on your iPhone. ${BRAND} has no streaks and no account.`;
 
 export const SITE_URL = "https://usetrace.app";
