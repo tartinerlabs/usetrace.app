@@ -21,10 +21,10 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.2",
+    "@biomejs/biome": "2.5.15",
     "@tailwindcss/turbopack": "^4",
     "@types/mdx": "2.0.14",
-    "@types/node": "^20",
+    "@types/node": "^26.6.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
