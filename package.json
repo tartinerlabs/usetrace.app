@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "prepare": "husky"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
@@ -24,12 +25,16 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
+    "@commitlint/cli": "21.2.0",
+    "@commitlint/config-conventional": "21.2.0",
+    "@commitlint/types": "21.2.0",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/mdx": "2.0.14",
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "babel-plugin-react-compiler": "1.0.0",
+    "husky": "9.1.7",
     "portless": "0.15.8",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2"
