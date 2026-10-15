@@ -876,6 +876,11 @@ const IPHONE_FEATURES = [
 
 const FAQ = [
   {
+    question: "Can you see where I go?",
+    answer:
+      "No. We do not operate servers that receive your journal. Your journal stays on your iPhone, or in your own iCloud account if you turn on iCloud sync. Trace encrypts it before it leaves your iPhone. Optional analytics never include your locations, routes, places, notes or photos.",
+  },
+  {
     question: "Does Trace use much battery?",
     answer:
       "No. Trace uses the low-power location service of iOS. With the Always permission, Trace uses this service to fill in your full day.",
@@ -1129,6 +1134,12 @@ export default function Home() {
               >
                 Your journal stays on your iPhone.
               </h2>
+              <p className="max-w-[46ch] text-pretty text-[clamp(19px,2vw,23px)] text-secondary leading-[1.45]">
+                You should not have to trust a company with your location
+                history. With Trace, you do not have to. We do not receive your
+                journal, so we cannot read it, sell it or lose it in a data
+                breach.
+              </p>
             </div>
             <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-[clamp(28px,4vw,56px)]">
               {PRIVACY_POINTS.map((point) => (
