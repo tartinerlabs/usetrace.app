@@ -97,6 +97,23 @@ const privacyPromises = [
 
 const faqItems: FaqItem[] = [
   {
+    question: "Can you see where I go?",
+    answer: (
+      <>
+        <p>
+          No. We do not operate servers that receive your journal. Your journal
+          stays on your iPhone, or in your own iCloud account if you turn on
+          iCloud sync. In iCloud, Trace encrypts your journal before it leaves
+          your iPhone.
+        </p>
+        <p>
+          Optional usage analytics never include your locations, routes, places,
+          notes or photos.
+        </p>
+      </>
+    ),
+  },
+  {
     question: "Does Trace record all the time?",
     answer: (
       <>
@@ -255,7 +272,8 @@ export default function Home() {
             {SUMMARY}
           </p>
           <p className="text-secondary">
-            Trace is a private, automatic location timeline for iPhone.
+            Trace is a private, automatic location timeline for iPhone. Your
+            journal stays on your iPhone, and we never receive it.
           </p>
           <AppStoreBadge location="hero" />
         </div>
@@ -274,6 +292,45 @@ export default function Home() {
       <div className={containerClass}>
         <DayRibbon segments={sampleDay} />
       </div>
+
+      {/* Privacy */}
+      <section
+        aria-labelledby="privacy-heading"
+        className={`${containerClass} py-12 md:py-16`}
+      >
+        <div className="rounded-card border border-line bg-surface p-6 sm:p-10">
+          <Eyebrow>Privacy</Eyebrow>
+          <h2 id="privacy-heading" className={`${headingClass} mt-3`}>
+            We never see where you go.
+          </h2>
+          <p className="mt-4 max-w-3xl text-lg text-secondary leading-relaxed">
+            You should not have to trust a company with your location history.
+            With Trace, you do not have to. Your journal stays on your iPhone.
+            We do not receive it, so we cannot read it, sell it or lose it in a
+            data breach.
+          </p>
+          <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2">
+            {privacyPromises.map((promise) => (
+              <li key={promise} className="flex gap-3 leading-relaxed">
+                <span
+                  aria-hidden="true"
+                  className="mt-[0.6em] size-2 shrink-0 rounded-full bg-walk"
+                />
+                {promise}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 font-rounded font-semibold text-lg">
+            You do not need an account, and you do not sign in.
+          </p>
+          <Link
+            href="/privacy"
+            className="mt-4 inline-block font-medium underline decoration-line underline-offset-4 motion-safe:transition-colors hover:decoration-ink"
+          >
+            Read the privacy policy
+          </Link>
+        </div>
+      </section>
 
       {/* Today */}
       <TabSection
@@ -471,39 +528,6 @@ export default function Home() {
         <p className="mt-6 text-secondary">
           You must use iOS {MIN_IOS} or later.
         </p>
-      </section>
-
-      {/* Privacy */}
-      <section
-        aria-labelledby="privacy-heading"
-        className={`${containerClass} py-12 md:py-16`}
-      >
-        <div className="rounded-card border border-line bg-surface p-6 sm:p-10">
-          <Eyebrow>Privacy</Eyebrow>
-          <h2 id="privacy-heading" className={`${headingClass} mt-3`}>
-            Yours, and only yours.
-          </h2>
-          <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2">
-            {privacyPromises.map((promise) => (
-              <li key={promise} className="flex gap-3 leading-relaxed">
-                <span
-                  aria-hidden="true"
-                  className="mt-[0.6em] size-2 shrink-0 rounded-full bg-walk"
-                />
-                {promise}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 font-rounded font-semibold text-lg">
-            You do not need an account, and you do not sign in.
-          </p>
-          <Link
-            href="/privacy"
-            className="mt-4 inline-block font-medium underline decoration-line underline-offset-4 motion-safe:transition-colors hover:decoration-ink"
-          >
-            Read the privacy policy
-          </Link>
-        </div>
       </section>
 
       {/* FAQ */}
