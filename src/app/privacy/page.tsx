@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SHARE_IMAGE } from "@/lib/site";
+import { SHARE_IMAGE, TWITTER_IMAGE } from "@/lib/site";
 import Policy from "./policy.mdx";
 
 const title = "Privacy Policy";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/privacy" },
   openGraph: { url: "/privacy", title, description, images: SHARE_IMAGE },
-  twitter: { title, description },
+  twitter: { title, description, images: TWITTER_IMAGE },
 };
 
 export default function Page() {

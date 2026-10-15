@@ -24,10 +24,16 @@ export const APP_STORE_URL: string | null = APP_STORE_ID
 export const SUPPORT_EMAIL = "[support email]";
 
 // Child pages that set their own openGraph/twitter lose the root
-// opengraph-image file, so they reference it explicitly.
+// opengraph-image and twitter-image files, so they reference them explicitly.
 export const SHARE_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
   alt: `${BRAND}: ${TAGLINE}`,
+};
+
+export const TWITTER_IMAGE = {
+  ...SHARE_IMAGE,
+  url: "/twitter-image.png",
+  height: 600,
 };
