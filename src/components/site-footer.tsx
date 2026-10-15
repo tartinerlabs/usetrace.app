@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { COMPANY } from "@/lib/site";
+import { BRAND } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -23,7 +23,7 @@ export function SiteFooter() {
               </Link>
             </li>
             {/* Literal year: new Date() is not allowed during prerender with cacheComponents. */}
-            <li>© 2026 {COMPANY}</li>
+            <li>© 2026 {BRAND}</li>
           </ul>
         </nav>
       </div>

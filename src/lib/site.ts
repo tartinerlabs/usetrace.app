@@ -10,7 +10,6 @@ export const DESCRIPTION = `${BRAND} is a private location timeline for iPhone. 
 
 export const SITE_URL = "https://usetrace.app";
 export const BUNDLE_ID = "com.tartinerlabs.Trace";
-export const COMPANY = "Tartiner Labs";
 export const MIN_IOS = "18.0";
 
 // TODO: set once the app has an App Store listing. While null, the Smart App

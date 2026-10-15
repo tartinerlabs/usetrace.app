@@ -16,7 +16,6 @@ import {
   APP_STORE_NAME,
   APP_STORE_URL,
   BRAND,
-  COMPANY,
   DESCRIPTION,
   MIN_IOS,
   SITE_URL,
@@ -47,7 +46,6 @@ const jsonLd = {
   applicationCategory: "LifestyleApplication",
   url: SITE_URL,
   image: `${SITE_URL}/images/app-icon.png`,
-  publisher: { "@type": "Organization", name: COMPANY },
   ...(APP_STORE_URL
     ? { downloadUrl: APP_STORE_URL, installUrl: APP_STORE_URL }
     : {}),
