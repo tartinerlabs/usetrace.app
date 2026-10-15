@@ -31,6 +31,28 @@ const nextConfig: NextConfig = {
     browserToTerminal: "warn",
   },
   typedRoutes: true,
+  // Agents that send Accept: text/markdown get Markdown instead of HTML.
+  async rewrites() {
+    const acceptsMarkdown = [
+      {
+        type: "header" as const,
+        key: "accept",
+        value: "(.*)text/markdown(.*)",
+      },
+    ];
+    return {
+      beforeFiles: [{ source: "/", destination: "/md", has: acceptsMarkdown }],
+      afterFiles: [],
+      // Fallback rewrites run only when no page or file matches.
+      fallback: [
+        {
+          source: "/:path*",
+          destination: "/md/not-found",
+          has: acceptsMarkdown,
+        },
+      ],
+    };
+  },
 };
 
 const withMDX = createMDX();

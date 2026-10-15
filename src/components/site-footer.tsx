@@ -13,6 +13,11 @@ export function SiteFooter() {
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             <li>
+              <Link href="/about" className="hover:text-on-night">
+                About
+              </Link>
+            </li>
+            <li>
               <Link href="/privacy" className="hover:text-on-night">
                 Privacy
               </Link>
