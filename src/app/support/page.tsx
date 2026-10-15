@@ -10,7 +10,14 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/support" },
-  openGraph: { url: "/support", title, description, images: SHARE_IMAGE },
+  openGraph: {
+    type: "website",
+    siteName: BRAND,
+    url: "/support",
+    title,
+    description,
+    images: SHARE_IMAGE,
+  },
   twitter: { title, description, images: TWITTER_IMAGE },
 };
 

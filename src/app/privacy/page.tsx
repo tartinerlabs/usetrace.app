@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
-import { SHARE_IMAGE, TWITTER_IMAGE } from "@/lib/site";
+import { BRAND, SHARE_IMAGE, TWITTER_IMAGE } from "@/lib/site";
 import Policy from "./policy.mdx";
 
 const title = "Privacy Policy";
 const description =
-  "Trace keeps your journal encrypted on your iPhone. Our servers never receive your journal.";
+  "Trace keeps your journal encrypted on your iPhone. Our servers never receive your journal, and we do not sell your data or show ads.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/privacy" },
-  openGraph: { url: "/privacy", title, description, images: SHARE_IMAGE },
+  openGraph: {
+    type: "website",
+    siteName: BRAND,
+    url: "/privacy",
+    title,
+    description,
+    images: SHARE_IMAGE,
+  },
   twitter: { title, description, images: TWITTER_IMAGE },
 };
 
