@@ -47,7 +47,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [https://trace.localhost](https://trace.localhost). The dev server runs through [Portless](https://portless.sh). Set `PORTLESS=0` to use a plain port.
 
 ### Environment variables
 
@@ -59,7 +59,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Command | Description |
 | --- | --- |
-| `pnpm dev` | Start the development server. |
+| `pnpm dev` | Start the development server through Portless. |
 | `pnpm build` | Make a production build. |
 | `pnpm start` | Start the production server. |
 | `pnpm lint` | Check the code with Biome. |
