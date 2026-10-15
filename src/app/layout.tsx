@@ -49,15 +49,8 @@ const ICON_NAMES = [
 ];
 const ICON_FONT_URL = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0&icon_names=${ICON_NAMES.join(",")}&display=block`;
 
-// Vercel's production domain (usetrace.app), so share images resolve on the
-// host serving the site. It is read at build time, so redeploy after changing
-// the project's domains.
-const PRODUCTION_HOST = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    PRODUCTION_HOST ? `https://${PRODUCTION_HOST}` : SITE_URL,
-  ),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${APP_STORE_NAME} · ${TAGLINE}`,
     template: `%s · ${BRAND}`,
