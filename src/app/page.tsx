@@ -20,6 +20,7 @@ import {
   MIN_IOS,
   SITE_URL,
   SUMMARY,
+  SUPPORT_EMAIL,
   TAGLINE,
 } from "@/lib/site";
 
@@ -36,19 +37,34 @@ export const metadata: Metadata = {
   },
 };
 
+// No PostalAddress on purpose: the company name stays off public pages.
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: APP_STORE_NAME,
-  alternateName: BRAND,
-  description: DESCRIPTION,
-  operatingSystem: `iOS ${MIN_IOS} or later`,
-  applicationCategory: "LifestyleApplication",
-  url: SITE_URL,
-  image: `${SITE_URL}/images/app-icon.png`,
-  ...(APP_STORE_URL
-    ? { downloadUrl: APP_STORE_URL, installUrl: APP_STORE_URL }
-    : {}),
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: APP_STORE_NAME,
+      alternateName: BRAND,
+      description: DESCRIPTION,
+      operatingSystem: `iOS ${MIN_IOS} or later`,
+      applicationCategory: "LifestyleApplication",
+      url: SITE_URL,
+      image: `${SITE_URL}/images/app-icon.png`,
+      ...(APP_STORE_URL
+        ? { downloadUrl: APP_STORE_URL, installUrl: APP_STORE_URL }
+        : {}),
+    },
+    {
+      "@type": "Organization",
+      name: BRAND,
+      url: SITE_URL,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: SUPPORT_EMAIL,
+      },
+    },
+  ],
 };
 
 const wrap = "mx-auto w-full max-w-[1240px] px-[clamp(20px,5vw,56px)]";
