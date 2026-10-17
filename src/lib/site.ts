@@ -19,8 +19,7 @@ export const APP_STORE_URL: string | null = APP_STORE_ID
   ? `https://apps.apple.com/app/id${APP_STORE_ID}`
   : null;
 
-// TODO: replace with the real support address.
-export const SUPPORT_EMAIL = "[support email]";
+export const SUPPORT_EMAIL = "support@usetrace.app";
 
 // Child pages that set their own openGraph/twitter lose the root
 // opengraph-image and twitter-image files, so they reference them explicitly.
