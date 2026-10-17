@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-// No PostalAddress on purpose: the company name stays off public pages.
+// City and country only: no street address or company name on public pages.
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -62,6 +62,11 @@ const jsonLd = {
         "@type": "ContactPoint",
         contactType: "customer support",
         email: SUPPORT_EMAIL,
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Singapore",
+        addressCountry: "SG",
       },
     },
   ],
