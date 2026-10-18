@@ -7,5 +7,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.5 },
     { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.5 },
     { url: `${SITE_URL}/support`, changeFrequency: "yearly", priority: 0.5 },
+    {
+      url: `${SITE_URL}/google-maps-timeline-alternative`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
