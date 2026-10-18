@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
           destination: "/md/google-maps-timeline-alternative",
           has: acceptsMarkdown,
         },
+        {
+          source: "/arc-timeline-alternative",
+          destination: "/md/arc-timeline-alternative",
+          has: acceptsMarkdown,
+        },
       ],
       afterFiles: [],
       // Fallback rewrites run only when no page or file matches.

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { LIVE as ARC_LIVE } from "@/lib/arc-timeline";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,5 +13,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    ...(ARC_LIVE
+      ? [
+          {
+            url: `${SITE_URL}/arc-timeline-alternative`,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
   ];
 }
