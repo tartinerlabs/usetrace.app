@@ -44,9 +44,9 @@ Trace is an app. It is not an API. An agent cannot connect to Trace or read a jo
 ## Privacy
 
 - Trace encrypts your journal on your device. We cannot read it.
-- Trace records nothing until you tap Start recording. You can pause it from the app, the widget, the Lock Screen or Siri.
+- Trace records nothing until you tap Start my journal. You can pause it from the app, the widget, the Lock Screen or Siri.
 - You do not sign in. We do not sell your data or track you across other apps.
-- Analytics are off by default. Analytics never include your locations, routes, places, notes or photos.
+- Trace sends no analytics. If you share analytics with app developers in iOS Settings, Apple sends us crash reports. They do not include your journal.
 - You can export your journal as a JSON file. You can erase your journal at any time.
 
 ## Pages

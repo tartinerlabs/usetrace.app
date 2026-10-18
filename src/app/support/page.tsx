@@ -29,8 +29,9 @@ const sections: { heading: string; items: FaqItem[] }[] = [
         question: "When does Trace start to record?",
         answer: (
           <p>
-            Trace records nothing until you tap <strong>Start recording</strong>
-            . If you only give permissions, Trace never starts to record.
+            Trace records nothing until you tap{" "}
+            <strong>Start my journal</strong>. If you only give permissions,
+            Trace never starts to record.
           </p>
         ),
       },
@@ -124,10 +125,19 @@ const sections: { heading: string; items: FaqItem[] }[] = [
       {
         question: "How do I restore my journal on a new iPhone?",
         answer: (
-          <p>
-            Trace uses iCloud Passwords &amp; Keychain to restore your journal
-            on a replacement iPhone.
-          </p>
+          <>
+            <p>
+              With iCloud sync, turn on iCloud sync on the new iPhone and tap{" "}
+              <strong>Restore journal from iCloud</strong> in Settings. iCloud
+              sync needs iCloud Passwords &amp; Keychain.
+            </p>
+            <p>
+              Without iCloud sync, move your data with Quick Start or with an
+              encrypted backup, in iCloud or on your computer. An unencrypted
+              backup on your computer does not include the key of your journal,
+              so Trace cannot open the journal on the new iPhone.
+            </p>
+          </>
         ),
       },
     ],
@@ -172,9 +182,10 @@ const sections: { heading: string; items: FaqItem[] }[] = [
               downloaded before. After that, they do not sync.
             </p>
             <p>
-              To erase only this iPhone, choose{" "}
-              <strong>Erase This iPhone Only</strong>. If you want a copy,
-              export your journal first.
+              If Trace cannot erase the iCloud copy, for example when you are
+              offline, you can choose <strong>Erase This Device Only</strong>.
+              The iCloud copy stays, and it comes back if you turn on iCloud
+              sync again. If you want a copy, export your journal first.
             </p>
           </>
         ),
@@ -189,9 +200,9 @@ const sections: { heading: string; items: FaqItem[] }[] = [
         answer: (
           <>
             <p>
-              All notifications are optional. Trace can send reminders to
-              record, a weekly recap on Sunday evening and a daily story
-              notification at approximately 9 PM.
+              All notifications are optional and off by default. Trace can send
+              reminders to record, a daily story notification at approximately 9
+              PM and a weekly recap on Sunday evening.
             </p>
             <p>
               Trace creates the reminders on your iPhone. Trace does not send

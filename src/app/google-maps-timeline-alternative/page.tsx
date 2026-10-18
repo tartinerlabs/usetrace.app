@@ -58,6 +58,12 @@ const rows: { topic: string; trace: string; google: string }[] = [
       "Auto-delete can remove data after 3, 18 or 36 months. You can also keep it until you delete it.",
   },
   {
+    topic: "Import",
+    trace:
+      "Import your Google Maps Timeline export. Trace adds only the days that have nothing in your journal.",
+    google: "Not available.",
+  },
+  {
     topic: "Export",
     trace: "Export your journal as a JSON file.",
     google: "Export Timeline as a JSON file (location-history.json).",
@@ -71,7 +77,7 @@ const rows: { topic: string; trace: string; google: string }[] = [
   {
     topic: "Ads and tracking",
     trace:
-      "No ads. We do not sell your data or track you across other apps. Analytics are off by default.",
+      "No ads. We do not sell your data or track you across other apps. Trace sends no analytics.",
     google: "Controlled by your Google Account settings.",
   },
 ];
@@ -112,6 +118,16 @@ const faq: FaqItem[] = [
         No. {BRAND} encrypts your journal on your iPhone. We do not operate
         servers that receive your journal. If you turn on iCloud sync, your
         journal goes to your own iCloud account.
+      </p>
+    ),
+  },
+  {
+    question: `Can I bring my Google Maps Timeline history to ${BRAND}?`,
+    answer: (
+      <p>
+        Yes. Export your Timeline from the Google Maps app on your phone. Then
+        in {BRAND}, open Settings and tap Import Google Timeline. {BRAND} adds
+        only the days that have nothing in your journal.
       </p>
     ),
   },

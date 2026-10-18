@@ -19,7 +19,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link href="/privacy" className="hover:text-on-night">
-                Privacy
+                Privacy Policy
               </Link>
             </li>
             <li>

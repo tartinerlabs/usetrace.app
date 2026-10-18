@@ -27,11 +27,11 @@ const rules = [
   },
   {
     heading: "You control the recording",
-    body: `${BRAND} records nothing until you tap Start recording. You can pause it from the app, the Home Screen widget, the Lock Screen or Siri.`,
+    body: `${BRAND} records nothing until you tap Start my journal. You can pause it from the app, the Home Screen widget, the Lock Screen or Siri.`,
   },
   {
     heading: "No account and no ads",
-    body: "You do not sign in. We do not sell your data or track you across other apps. Analytics are off by default. Analytics never include your locations, routes, places, notes or photos.",
+    body: "You do not sign in. We do not sell your data or track you across other apps. Trace sends no analytics. If you share analytics with app developers in iOS Settings, Apple sends us crash reports. They do not include your journal.",
   },
   {
     heading: "No streaks. No scores.",
