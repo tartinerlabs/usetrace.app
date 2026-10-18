@@ -145,10 +145,6 @@ Reviewers passed these as minor:
   speakers comes first.
 - **Site sample day.** The site's sample day does not match the app's. Either
   the site or the film should change so both tell the same day.
-- **LFS push hook.** Media is in Git LFS (`.gitattributes`: `*.mp4`, `*.wav`),
-  but Husky owns the git hooks, so LFS could not install its pre-push hook.
-  Until `.husky/pre-push` runs `git lfs pre-push "$@"`, run
-  `git lfs push origin main` before or after each push that adds media.
 - **App Store.** When `APP_STORE_ID` is set, replace "Coming soon on the App
   Store" with the official badge and link, and re-render.
 - **Capture script.** Keep the XCUITest capture script in the app repo (or in

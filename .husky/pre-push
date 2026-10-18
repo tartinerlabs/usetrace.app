@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+command -v git-lfs >/dev/null 2>&1 || { echo "git-lfs is required to push (brew install git-lfs)"; exit 2; }
+git lfs pre-push "$@"
