@@ -26,6 +26,7 @@ export function onScrollFrame(callback: () => void) {
 /**
  * The route line beside a chapter. It fills in the chapter's route style as the
  * chapter scrolls past 60% of the viewport, and its stop fills when reached.
+ * Once reached, the chapter gets `data-reached` so its visual can reveal.
  */
 export function ChapterRail({
   activity,
@@ -42,9 +43,13 @@ export function ChapterRail({
   useEffect(() => {
     const chapter = ref.current?.closest("article");
     if (!chapter) return;
+    const reach = () => {
+      chapter.dataset.reached = "";
+      setReached(true);
+    };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setProgress(1);
-      setReached(true);
+      reach();
       return;
     }
     return onScrollFrame(() => {
@@ -52,7 +57,7 @@ export function ChapterRail({
       const rect = chapter.getBoundingClientRect();
       const length = Math.max(1, rect.height - 28);
       setProgress(Math.min(1, Math.max(0, (line - rect.top - 28) / length)));
-      setReached(line > rect.top + 12);
+      if (line > rect.top + 12) reach();
     });
   }, []);
 

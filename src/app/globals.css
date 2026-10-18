@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* A chapter not yet scrolled to (see ChapterRail). Only with scripts, so content shows without them. */
+@custom-variant unreached {
+  @media (scripting: enabled) {
+    article:not([data-reached]) & {
+      @slot;
+    }
+  }
+}
+
 /* Colours mirror the light ("Paper") variants in Trace/Assets.xcassets. Light only. */
 :root {
   color-scheme: light;
@@ -120,7 +129,7 @@ body {
   font-variation-settings: "FILL" 1;
 }
 
-/* Hero: the highlight sweeps in, then the routes draw and the stops appear. */
+/* Hero: the highlight sweeps in, the ribbon grows, then the routes draw and the stops appear. */
 @keyframes highlight-in {
   from {
     transform: scaleX(0);
@@ -139,6 +148,12 @@ body {
   }
 }
 
+@keyframes ribbon-in {
+  from {
+    transform: scaleY(0);
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -153,10 +168,13 @@ body {
     animation: highlight-text 0.3s ease 0.55s both;
   }
   .route-draw {
-    animation: route-draw 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
+    animation: route-draw var(--draw-duration) cubic-bezier(0.4, 0, 0.2, 1)
+      var(--draw-delay) both;
   }
-  .route-draw-late {
-    animation: route-draw 2.1s cubic-bezier(0.4, 0, 0.2, 1) 1.05s both;
+  /* Backwards fill only, so the hover scale still transitions afterwards. */
+  .ribbon-in {
+    transform-origin: center bottom;
+    animation: ribbon-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
   }
   .stop-in {
     animation: fade-in 0.4s ease 1.9s both;

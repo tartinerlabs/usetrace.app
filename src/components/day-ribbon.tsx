@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type PointerEvent, useState } from "react";
 import { ACTIVITIES, SAMPLE_DAY, STAY_OPACITY } from "@/lib/sample-day";
 
 const clock = (minutes: number) =>
@@ -31,6 +31,26 @@ const parts = SAMPLE_DAY.reduce<
   return acc;
 }, []);
 
+const DAY_MINUTES = parts.reduce((sum, part) => sum + part.minutes, 0);
+// A short movement can be a few pixels wide, so a pointer this close picks it.
+const REACH_PX = 12;
+
+/** The part under the pointer, or the nearest movement within REACH_PX. */
+function partAt(event: PointerEvent<HTMLElement>) {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const perPx = DAY_MINUTES / rect.width;
+  const minute = (event.clientX - rect.left) * perPx;
+  const gap = (part: (typeof parts)[number]) =>
+    Math.max(0, part.start - minute, minute - (part.start + part.minutes));
+  let best = parts.findIndex((part) => gap(part) === 0);
+  for (const [index, part] of parts.entries()) {
+    if (part.kind === "place" || gap(part) > REACH_PX * perPx) continue;
+    if (parts[best]?.kind === "place" || gap(part) < gap(parts[best]))
+      best = index;
+  }
+  return best;
+}
+
 /** The day as time-proportional colours. Touch, hover or focus a part to name it. */
 export function DayRibbon() {
   const [active, setActive] = useState(-1);
@@ -55,6 +75,8 @@ export function DayRibbon() {
       <fieldset
         aria-label="Parts of the day"
         className="flex h-[clamp(44px,6vw,64px)] gap-[3px]"
+        onPointerMove={(event) => setActive(partAt(event))}
+        onPointerDown={(event) => setActive(partAt(event))}
         onMouseLeave={() => setActive(-1)}
       >
         {parts.map((part, index) => (
@@ -63,10 +85,12 @@ export function DayRibbon() {
             key={index}
             type="button"
             aria-label={part.label}
-            onMouseEnter={() => setActive(index)}
-            onFocus={() => setActive(index)}
-            onClick={() => setActive(index)}
-            className="min-w-[3px] cursor-pointer rounded-lg outline-offset-2 motion-safe:transition-[opacity,transform] motion-safe:duration-200"
+            // Pointers pick on the ribbon; focus here is for the keyboard.
+            onFocus={(event) => {
+              if (event.currentTarget.matches(":focus-visible"))
+                setActive(index);
+            }}
+            className="ribbon-in min-w-[3px] cursor-pointer rounded-lg outline-offset-2 motion-safe:transition-[opacity,transform] motion-safe:duration-200"
             style={{
               flex: `${part.minutes} 1 0`,
               background: ACTIVITIES[part.kind].color,
@@ -74,6 +98,7 @@ export function DayRibbon() {
                 (part.kind === "place" ? STAY_OPACITY : 1) *
                 (active < 0 || active === index ? 1 : 0.35),
               transform: active === index ? "scaleY(1.12)" : undefined,
+              animationDelay: `${(0.5 + index * 0.06).toFixed(2)}s`,
             }}
           />
         ))}

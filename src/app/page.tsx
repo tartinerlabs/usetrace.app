@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { AppStoreBadge } from "@/components/app-store-badge";
 import { ChapterRail } from "@/components/chapter-rail";
+import { CountUp } from "@/components/count-up";
+import { DayMap, type MapPin, type MapRoute } from "@/components/day-map";
 import { DayRibbon } from "@/components/day-ribbon";
 import { DuoStage } from "@/components/duo-stage";
+import { HistoryCalendar } from "@/components/history-calendar";
+import { JourneyPlayback } from "@/components/journey-playback";
 import {
   ACTIVITIES,
   type Activity,
+  DAY_POINTS,
+  HOME,
+  JEWEL,
+  JOURNEYS,
+  MARINA_BAY_SANDS,
   SAMPLE_DAY,
   STAY_OPACITY,
+  WORK,
 } from "@/lib/sample-day";
 import {
   APP_STORE_NAME,
@@ -104,6 +113,28 @@ function Icon({
   );
 }
 
+const DAY_MAP_LABEL =
+  "Map of Singapore with the routes of Monday 5 October: a train from Home to Work, a lunch walk to Marina Bay Sands, a drive to Jewel Changi Airport and a drive home.";
+
+const [walkToStation, train, walkToWork, lunchWalk, , eveningDrive, driveHome] =
+  JOURNEYS;
+
+/** The routes of the day, without the walk back from lunch, drawn in one after another. */
+function drawnRoutes(timings: [delay: number, duration: number][]): MapRoute[] {
+  return [
+    walkToStation,
+    train,
+    walkToWork,
+    lunchWalk,
+    eveningDrive,
+    driveHome,
+  ].map((journey, i) => ({
+    ...journey,
+    // The routes start to draw 0.9 s after the page loads.
+    draw: { delay: 0.9 + timings[i][0], duration: timings[i][1] },
+  }));
+}
+
 function RibbonStrip({ className }: { className: string }) {
   return (
     <div aria-hidden="true" className={`flex gap-0.5 ${className}`}>
@@ -123,42 +154,14 @@ function RibbonStrip({ className }: { className: string }) {
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({ value, label }: { value: ReactNode; label: string }) {
   return (
     <span className="flex flex-col gap-[0.5cqw]">
-      <span className="font-medium text-[6.2cqw] tracking-[-0.2cqw]">
+      <span className="font-medium text-[6.2cqw] tabular-nums tracking-[-0.2cqw]">
         {value}
       </span>
       <span className="text-[3.1cqw] text-secondary">{label}</span>
     </span>
-  );
-}
-
-function MapLabel({
-  left,
-  top,
-  children,
-}: {
-  left: string;
-  top: string;
-  children: ReactNode;
-}) {
-  return (
-    <span
-      className="absolute whitespace-nowrap rounded-full bg-surface px-[3cqw] py-[1.2cqw] font-semibold text-[3.2cqw] shadow-[0_0.5cqw_2cqw_rgba(0,0,0,0.12)]"
-      style={{ left, top }}
-    >
-      {children}
-    </span>
-  );
-}
-
-function MapStop({ left, top }: { left: string; top: string }) {
-  return (
-    <span
-      className="absolute -mt-[1.4cqw] -ml-[1.4cqw] size-[2.8cqw] rounded-full bg-ink shadow-[0_0_0_0.8cqw_#fff]"
-      style={{ left, top }}
-    />
   );
 }
 
@@ -170,32 +173,26 @@ function TodayScreen() {
     { icon: "location_on", label: "Places" },
     { icon: "account_circle", label: "You" },
   ];
-  const ribbon: [Activity, number][] = [
-    ["place", 3],
-    ["walk", 0.6],
-    ["train", 0.6],
-    ["place", 48],
-    ["drive", 1.2],
-    ["place", 6],
-    ["drive", 1.2],
-    ["place", 12],
-  ];
 
   return (
-    <div className="absolute right-0 bottom-0 w-[44%] rounded-[clamp(30px,5vw,54px)] bg-ink p-[9px] shadow-[0_30px_60px_-20px_rgba(27,27,25,0.45)]">
+    <div className="absolute right-0 bottom-0 w-[46%] rounded-[clamp(26px,4.6vw,50px)] bg-ink p-1 shadow-[0_30px_60px_-20px_rgba(27,27,25,0.45)]">
       <div
         role="img"
-        aria-label="The Today screen in Trace. It shows Monday 5 October: 46.0 km travelled, 1 h 41 min in motion and 3 places, with the routes on a map of Singapore."
+        aria-label="The Today screen in Trace. It shows Monday 5 October: 54.8 km travelled, 2 h 9 min in motion and 4 places, with the routes on a map of Singapore."
         className="@container relative aspect-[402/874] w-full overflow-hidden rounded-[clamp(22px,4.2vw,46px)] bg-canvas text-ink"
       >
-        <div className="flex items-center justify-between pt-[4cqw] pr-[8cqw] pl-[14cqw] font-semibold text-[4.2cqw]">
+        <span
+          aria-hidden="true"
+          className="absolute top-[2.7cqw] left-1/2 z-[2] h-[9.2cqw] w-[31cqw] -translate-x-1/2 rounded-full bg-black"
+        />
+        <div className="box-content flex h-[9.2cqw] items-center justify-between pt-[2.7cqw] pr-[8cqw] pl-[10cqw] font-semibold text-[4.2cqw]">
           <span>19:38</span>
           <span className="flex items-center gap-[1.5cqw]">
             <Icon name="wifi" className="text-[4.6cqw]" />
             <span className="h-[3cqw] w-[6.5cqw] rounded-[1cqw] bg-ink" />
           </span>
         </div>
-        <div className="flex flex-col px-[6cqw] pt-[8cqw]">
+        <div className="flex flex-col px-[6cqw] pt-[5.6cqw]">
           <div className="flex items-center justify-between">
             <span className="flex items-center gap-[1.5cqw]">
               {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
@@ -214,61 +211,51 @@ function TodayScreen() {
             5 Oct
           </span>
           <span className="mt-[2.5cqw] text-[3.7cqw] text-body">
-            City mornings. A slower evening.
+            City mornings. An evening at Changi.
           </span>
           <div className="mt-[5cqw] flex gap-[7cqw]">
-            <Stat value="46.0 km" label="travelled" />
-            <Stat value="1 h 41 m" label="in motion" />
-            <Stat value="3" label="places" />
+            <Stat value={<CountUp total="km" />} label="travelled" />
+            <Stat value={<CountUp total="motion" />} label="in motion" />
+            <Stat value={<CountUp total="places" />} label="places" />
           </div>
           <div className="mt-[5cqw] overflow-hidden rounded-[5cqw] border border-line bg-surface">
-            <div className="relative h-[64cqw] overflow-hidden bg-[#e8ebe0]">
-              <span className="absolute -right-[10cqw] -bottom-[8cqw] h-[30cqw] w-[56cqw] rounded-[50%] bg-[#c9dce6]" />
-              <span className="absolute bottom-[6cqw] -left-[12cqw] h-[14cqw] w-[36cqw] rounded-[50%] bg-[#c9dce6]" />
-              <span className="absolute top-[6cqw] left-[52cqw] h-[18cqw] w-[26cqw] rounded-[50%] bg-[#d5e3cf]" />
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 100 64"
-                preserveAspectRatio="none"
-                className="absolute inset-0 size-full"
-              >
-                <path
-                  d="M27 12 C30 24, 40 28, 47 34 S 64 44, 69 52"
-                  pathLength={1}
-                  strokeDasharray={1}
-                  fill="none"
-                  stroke="var(--train)"
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  className="route-draw"
-                />
-                <path
-                  d="M27 12 C38 20, 46 26, 49 33 C 44 40, 44 48, 54 52 S 66 55, 69 52"
-                  pathLength={1}
-                  strokeDasharray={1}
-                  fill="none"
-                  stroke="var(--drive)"
-                  strokeWidth={1.3}
-                  strokeLinecap="round"
-                  className="route-draw-late"
-                />
-              </svg>
-              <MapStop left="27%" top="18.75%" />
-              <MapLabel left="19%" top="3.9%">
-                Home
-              </MapLabel>
-              <span className="stop-in">
-                <MapStop left="49%" top="51.56%" />
-                <MapLabel left="33%" top="35.9%">
-                  Dempsey Hill
-                </MapLabel>
-              </span>
-              <span className="stop-in-late">
-                <MapStop left="69%" top="81.25%" />
-                <MapLabel left="61%" top="64%">
-                  Office
-                </MapLabel>
-              </span>
+            <div className="relative h-[64cqw] overflow-hidden bg-[#f7f3ea]">
+              <DayMap
+                width={352}
+                height={256}
+                fit={DAY_POINTS}
+                padding={34}
+                fontSize={15}
+                strokeScale={1.1}
+                routes={drawnRoutes([
+                  [0, 0.3],
+                  [0.2, 1.2],
+                  [1.3, 0.2],
+                  [1.4, 0.2],
+                  [1.5, 1],
+                  [2.4, 1.1],
+                ]).map((route) =>
+                  route.points === driveHome.points
+                    ? { ...route, opacity: 0.55 }
+                    : route,
+                )}
+                pins={[
+                  { at: HOME, label: "Home", side: "d" },
+                  { at: WORK, label: "Work", side: "l", className: "stop-in" },
+                  {
+                    at: MARINA_BAY_SANDS,
+                    label: "Marina Bay Sands",
+                    side: "r",
+                    className: "stop-in",
+                  },
+                  {
+                    at: JEWEL,
+                    label: "Jewel Changi",
+                    side: "u",
+                    className: "stop-in-late",
+                  },
+                ]}
+              />
               <span className="absolute top-[3.5cqw] right-[3.5cqw] rounded-full bg-white/85 px-[2.6cqw] py-[1.2cqw] font-mono text-[2.6cqw] tracking-[0.4cqw]">
                 SINGAPORE
               </span>
@@ -291,14 +278,14 @@ function TodayScreen() {
             <span>Touch to explore</span>
           </div>
           <div className="mt-[3cqw] flex h-[6cqw] gap-[0.6cqw]">
-            {ribbon.map(([kind, flex], index) => (
+            {SAMPLE_DAY.map((part, index) => (
               <span
                 // biome-ignore lint/suspicious/noArrayIndexKey: fixed order of the day
                 key={index}
                 className="rounded-[1.2cqw]"
                 style={{
-                  flex: `${flex} 1 0`,
-                  background: ACTIVITIES[kind].color,
+                  flex: `${part.minutes} 1 0`,
+                  background: ACTIVITIES[part.kind].color,
                 }}
               />
             ))}
@@ -320,115 +307,43 @@ function TodayScreen() {
   );
 }
 
-const MARK_COLOURS = [
-  "var(--walk)",
-  "var(--cycle)",
-  "var(--train)",
-  "var(--drive)",
-];
-
-function HistoryCard() {
-  const days = Array.from({ length: 31 }, (_, index) => {
-    const day = index + 1;
-    const marks =
-      day <= 15
-        ? MARK_COLOURS.filter(
-            (_, j) => (day * 7 + j * 3) % 5 < 2 + (j === 0 ? 1 : 0),
-          ).slice(0, 3)
-        : [];
-    return { day, marks, past: day <= 15, selected: day === 5 };
-  });
-
-  return (
-    <div className={`${card} flex flex-col gap-5 p-[clamp(20px,3vw,32px)]`}>
-      <div className="grid grid-cols-4 gap-1.5 rounded-[14px] bg-fill p-1 text-center font-semibold text-sm">
-        {["Day", "Week", "Month", "Year"].map((view) => (
-          <span
-            key={view}
-            className={`rounded-[10px] py-2 ${view === "Month" ? "bg-sun text-on-sun" : ""}`}
-          >
-            {view}
-          </span>
-        ))}
-      </div>
-      <div className="font-semibold text-[26px] tracking-[-0.5px]">October</div>
-      <div className="grid grid-cols-7 gap-1.5 text-center">
-        {["M", "T", "W", "T", "F", "S", "S"].map((weekday, index) => (
-          <span
-            // biome-ignore lint/suspicious/noArrayIndexKey: weekday initials repeat
-            key={index}
-            className="font-mono text-[11px] text-secondary"
-          >
-            {weekday}
-          </span>
-        ))}
-        {/* October 2026 starts on a Thursday. */}
-        <span className="col-span-3" />
-        {days.map(({ day, marks, past, selected }) => (
-          <span
-            key={day}
-            className={`flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl font-semibold text-[15px] ${
-              selected
-                ? "bg-sun text-on-sun"
-                : past
-                  ? "text-ink"
-                  : "text-[#b5b2a8]"
-            }`}
-          >
-            {day}
-            <span className="flex h-1 justify-center gap-0.5">
-              {marks.map((colour) => (
-                <span
-                  key={colour}
-                  className="h-1 w-1.5 rounded-sm"
-                  style={{ background: selected ? "var(--on-sun)" : colour }}
-                />
-              ))}
-            </span>
-          </span>
-        ))}
-      </div>
-      <div className="flex items-center gap-3 border-line border-t pt-[18px]">
-        <span className="flex size-11 items-center justify-center rounded-full bg-fill text-walk">
-          <Icon name="local_cafe" className="text-[22px]" />
-        </span>
-        <div className="flex min-w-0 flex-col gap-0.5">
-          <span className="font-semibold">Coffee at Dempsey Hill</span>
-          <span className="text-secondary text-sm">
-            Mon 5 Oct · 1 photo · 1 note
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function JourneyCard() {
+function DayStoryCard() {
   return (
     <div className={`${card} overflow-hidden`}>
-      <Image
-        src="/images/onboarding-first-day.webp"
-        alt="An illustrated route. It goes from a house, past the trees, to the waterfront."
-        width={960}
-        height={960}
-        sizes="(min-width: 860px) 36rem, 100vw"
-        className="h-auto w-full"
-      />
-      <div className="flex flex-col gap-3.5 border-line border-t px-[clamp(20px,3vw,28px)] pt-5 pb-6">
-        <div className="flex items-center gap-3.5">
-          <span className="flex size-11 flex-none items-center justify-center rounded-full bg-ink text-canvas">
-            <Icon name="pause" className="text-[26px]" />
-          </span>
-          <div className="relative h-1.5 min-w-0 flex-1 rounded-[3px] bg-fill">
-            <span className="absolute inset-y-0 left-0 w-[62%] rounded-[3px] bg-cycle" />
-            <span className="absolute top-1/2 left-[62%] -mt-2.5 -ml-2.5 size-5 rounded-full border-4 border-cycle bg-surface" />
-          </div>
-        </div>
-        <div className="flex justify-between font-mono text-secondary text-xs">
-          <span>16:20 HOME</span>
-          <span className="text-ink">16:42 · 4.8 KM</span>
-          <span>16:55 BEACH</span>
-        </div>
+      <div
+        role="img"
+        aria-label={DAY_MAP_LABEL}
+        className="relative aspect-[7/5] bg-[#86c3f2]"
+      >
+        <DayMap
+          width={560}
+          height={400}
+          fit={DAY_POINTS}
+          padding={56}
+          fontSize={14}
+          strokeScale={1.2}
+          routes={JOURNEYS}
+          pins={[
+            { at: HOME, label: "Home", side: "d" },
+            { at: WORK, label: "Work", side: "l" },
+            { at: MARINA_BAY_SANDS, label: "Marina Bay Sands", side: "r" },
+            { at: JEWEL, label: "Jewel Changi Airport", side: "u" },
+          ]}
+        />
+      </div>
+      <div className="flex flex-col gap-2 border-line border-t px-[clamp(20px,3vw,28px)] pt-5 pb-6">
+        <span className="font-mono text-secondary text-xs tracking-[1px]">
+          DAILY STORY · MONDAY 5 OCT
+        </span>
+        <span className="font-semibold text-[22px] tracking-[-0.3px]">
+          City mornings. An evening at Changi.
+        </span>
+        <p className="text-pretty text-[15px] text-secondary leading-normal">
+          You were out the door at 7:42 and on the Downtown Line soon after. You
+          spent most of the day at Work, with a lunch walk to Marina Bay Sands.
+          In the evening you drove to Jewel Changi Airport for dinner, and were
+          home by 8:42.
+        </p>
       </div>
     </div>
   );
@@ -438,29 +353,29 @@ const PLACES = [
   {
     name: "Home",
     icon: "home",
-    visits: 31,
-    usual: "Usually arrives 18:40",
+    visits: 268,
+    usual: "Usually arrives 20:42",
     private: true,
   },
   {
-    name: "Office",
+    name: "Work",
     icon: "work",
-    visits: 22,
-    usual: "Usually arrives 09:10",
+    visits: 143,
+    usual: "Usually arrives 08:31",
     private: false,
   },
   {
-    name: "Dempsey Hill",
-    icon: "local_cafe",
+    name: "Marina Bay Sands",
+    icon: "restaurant",
     visits: 9,
-    usual: "Usually arrives 08:20",
+    usual: "Usually arrives 12:39",
     private: false,
   },
   {
-    name: "East Coast Park",
-    icon: "park",
-    visits: 4,
-    usual: "Usually arrives 16:50",
+    name: "Jewel Changi Airport",
+    icon: "restaurant",
+    visits: 12,
+    usual: "Usually arrives 18:49",
     private: false,
   },
 ];
@@ -468,7 +383,7 @@ const PLACES = [
 function PlacesCard() {
   return (
     <ul className={`${card} px-[clamp(16px,3vw,28px)] py-2`}>
-      {PLACES.map((place) => (
+      {PLACES.map((place, index) => (
         <li
           key={place.name}
           className="flex items-center gap-3.5 border-line py-[18px] not-first:border-t"
@@ -499,8 +414,11 @@ function PlacesCard() {
             </div>
             <span className="block h-1 rounded-sm bg-fill">
               <span
-                className="block h-1 rounded-sm bg-sun"
-                style={{ width: `${Math.round((place.visits / 31) * 100)}%` }}
+                className="block h-1 rounded-sm bg-sun unreached:w-0! motion-safe:transition-[width] motion-safe:duration-[1.1s] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)]"
+                style={{
+                  width: `${Math.max(2, Math.round((place.visits / 268) * 100))}%`,
+                  transitionDelay: `${(0.3 + index * 0.15).toFixed(2)}s`,
+                }}
               />
             </span>
           </div>
@@ -532,12 +450,16 @@ function ExploreCard() {
     const jitter = ((row * 31 + column * 17) % 7) / 7;
     const explored = distance < 1.3 + jitter * 0.9;
     return {
-      background: !explored
-        ? "var(--fill)"
-        : column > 8 && row < 5
-          ? "var(--cycle)"
-          : "var(--walk)",
-      opacity: explored && distance > 1.2 ? 0.7 : 1,
+      explored,
+      style: {
+        background: !explored
+          ? "var(--fill)"
+          : column > 8 && row < 5
+            ? "var(--cycle)"
+            : "var(--walk)",
+        opacity: explored && distance > 1.2 ? 0.7 : 1,
+        transitionDelay: `${(0.3 + column * 0.07 + row * 0.02).toFixed(2)}s`,
+      },
     };
   });
 
@@ -552,11 +474,11 @@ function ExploreCard() {
         </span>
       </div>
       <div aria-hidden="true" className="grid grid-cols-16 gap-[3px]">
-        {squares.map((style, index) => (
+        {squares.map(({ explored, style }, index) => (
           <span
             // biome-ignore lint/suspicious/noArrayIndexKey: fixed grid position
             key={index}
-            className="aspect-square rounded-[3px]"
+            className={`aspect-square rounded-[3px] motion-safe:transition-[background-color] motion-safe:duration-400 ${explored ? "unreached:bg-fill!" : ""}`}
             style={style}
           />
         ))}
@@ -583,41 +505,32 @@ const CHAPTERS: {
   {
     id: "map",
     activity: "walk",
-    time: "08:00",
+    time: "07:42",
     title: "See your whole day on one map.",
     body: "Trace draws each route on the map. The line shows how you moved. Each evening, Trace writes a short story of your day.",
     note: "You can add notes and photos. You can also correct a stop that is not correct.",
-    visual: (
-      <Image
-        src="/images/onboarding-example.webp"
-        alt="A sample day on Monday 5 October. A route goes from Home through Dempsey Hill to Office. The story shows “A slow morning at home” and “Coffee at Dempsey Hill”."
-        width={960}
-        height={960}
-        sizes="(min-width: 860px) 36rem, 100vw"
-        className="h-auto w-full rounded-[32px] border border-line"
-      />
-    ),
+    visual: <DayStoryCard />,
   },
   {
     id: "history",
     activity: "train",
-    time: "09:25",
+    time: "07:48",
     title: "Look back at any day.",
     body: "Open a day, a week, a month or a year. Each day keeps its memory card, with its notes and photos.",
-    visual: <HistoryCard />,
+    visual: <HistoryCalendar />,
   },
   {
     id: "journey",
-    activity: "cycle",
-    time: "16:20",
+    activity: "drive",
+    time: "18:15",
     title: "Play back a journey.",
     body: "Move the slider to go back in time. The map shows where you were and when.",
-    visual: <JourneyCard />,
+    visual: <JourneyPlayback />,
   },
   {
     id: "places",
-    activity: "drive",
-    time: "18:25",
+    activity: "place",
+    time: "18:43",
     title: "Know your places.",
     body: "Trace finds the places that you go to frequently. See how frequently you go and when you usually arrive.",
     note: "Make a place private, and Trace keeps only a pin for it. Your exact location is not stored, synced or exported.",
@@ -626,7 +539,7 @@ const CHAPTERS: {
   {
     id: "explore",
     activity: "place",
-    time: "18:55",
+    time: "20:42",
     title: "No streaks. No scores.",
     body: "A quiet day at home does not remove progress. As you go to new streets, your explored map fills in.",
     visual: <ExploreCard />,
@@ -634,23 +547,18 @@ const CHAPTERS: {
 ];
 
 const STORY = [
+  { icon: "work", colour: "var(--train)", text: "At work", time: "08:27" },
   {
-    icon: "home",
-    colour: "var(--place)",
-    text: "A slow morning at home",
-    time: "07:00",
-  },
-  {
-    icon: "local_cafe",
+    icon: "restaurant",
     colour: "var(--walk)",
-    text: "Coffee at Dempsey Hill",
-    time: "08:25",
+    text: "Lunch at Marina Bay Sands",
+    time: "12:39",
   },
   {
-    icon: "work",
-    colour: "var(--train)",
-    text: "A long day at the office",
-    time: "10:05",
+    icon: "restaurant",
+    colour: "var(--drive)",
+    text: "Dinner at Jewel Changi",
+    time: "18:49",
   },
 ];
 
@@ -700,13 +608,13 @@ function DuoPhone() {
                 </span>
               </div>
               <span className="text-[clamp(10px,1.4vw,17px)] text-body">
-                City mornings. A slower evening.
+                City mornings. An evening at Changi.
               </span>
               <div className="flex gap-[clamp(10px,2.6vw,32px)]">
                 {[
-                  ["46.0 km", "travelled"],
-                  ["1 h 41 m", "in motion"],
-                  ["3", "places"],
+                  ["54.8 km", "travelled"],
+                  ["2 h 9 m", "in motion"],
+                  ["4", "places"],
                 ].map(([value, label]) => (
                   <div key={label} className="flex flex-col">
                     <span className="font-semibold text-[clamp(14px,2.4vw,30px)] tracking-[-0.5px]">
@@ -775,14 +683,30 @@ function DuoPhone() {
                 className="relative size-full overflow-hidden bg-canvas"
                 style={{ borderRadius: `${innerRadius} 0 0 ${innerRadius}` }}
               >
-                <Image
-                  src="/images/onboarding-everyday.webp"
-                  alt="The map of Monday 5 October on the left half of the inner display."
-                  width={960}
-                  height={960}
-                  sizes="(min-width: 1040px) 32rem, 50vw"
-                  className="size-full object-cover"
-                />
+                <div
+                  role="img"
+                  aria-label="The map of Monday 5 October on the left half of the inner display."
+                  className="absolute inset-0 bg-[#86c3f2]"
+                >
+                  <DayMap
+                    width={350}
+                    height={500}
+                    fit={DAY_POINTS}
+                    padding={40}
+                    fontSize={12}
+                    routes={JOURNEYS}
+                    pins={[
+                      { at: HOME, label: "Home", side: "d" },
+                      { at: WORK, label: "Work", side: "l" },
+                      {
+                        at: MARINA_BAY_SANDS,
+                        label: "Marina Bay Sands",
+                        side: "u",
+                      },
+                      { at: JEWEL, label: "Jewel Changi", side: "u" },
+                    ]}
+                  />
+                </div>
                 <span
                   className="pointer-events-none absolute inset-0"
                   style={{
@@ -809,14 +733,20 @@ function DuoPhone() {
                     WebkitBackdropFilter: foldBlur,
                   }}
                 />
-                <Image
-                  src="/images/onboarding-everyday.webp"
-                  alt=""
-                  width={960}
-                  height={960}
-                  sizes="(min-width: 1040px) 32rem, 50vw"
-                  className="h-[44%] w-full object-cover"
-                />
+                <div className="relative h-[44%] w-full flex-none bg-[#86c3f2]">
+                  <DayMap
+                    width={400}
+                    height={256}
+                    fit={DAY_POINTS}
+                    padding={30}
+                    fontSize={12}
+                    labels={false}
+                    routes={JOURNEYS}
+                    pins={[HOME, WORK, MARINA_BAY_SANDS, JEWEL].map(
+                      (at): MapPin => ({ at }),
+                    )}
+                  />
+                </div>
                 <div className="flex min-h-0 flex-1 flex-col gap-[clamp(6px,1.2vw,14px)] p-[clamp(12px,2.6vw,32px)]">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-semibold text-[clamp(20px,4vw,50px)] leading-none tracking-[-0.04em]">
@@ -828,8 +758,8 @@ function DuoPhone() {
                   </div>
                   <div className="flex gap-[clamp(10px,2.4vw,28px)]">
                     {[
-                      ["46.0 km", "travelled"],
-                      ["3", "places"],
+                      ["54.8 km", "travelled"],
+                      ["4", "places"],
                     ].map(([value, label]) => (
                       <div key={label} className="flex flex-col">
                         <span className="font-semibold text-[clamp(13px,2.2vw,26px)] tracking-[-0.5px]">
@@ -861,12 +791,12 @@ const PRIVACY_POINTS = [
   {
     icon: "pause_circle",
     title: "You control the recording",
-    body: "Trace records nothing until you tap Start recording. You can pause it from the app, the widget, the Lock Screen or Siri.",
+    body: "Trace records nothing until you tap Start my journal. You can pause it from the app, the widget, the Lock Screen or Siri.",
   },
   {
     icon: "block",
     title: "No account and no ads",
-    body: "You do not sign in. We do not sell your data or track you across other apps. iCloud sync and analytics are off by default.",
+    body: "You do not sign in. We do not sell your data or track you across other apps. iCloud sync is off by default. Trace sends no analytics.",
   },
 ];
 
@@ -897,7 +827,7 @@ const FAQ = [
   {
     question: "Can you see where I go?",
     answer:
-      "No. We do not operate servers that receive your journal. Your journal stays on your iPhone, or in your own iCloud account if you turn on iCloud sync. Trace encrypts it before it leaves your iPhone. Optional analytics never include your locations, routes, places, notes or photos.",
+      "No. We do not operate servers that receive your journal. Your journal stays on your iPhone, or in your own iCloud account if you turn on iCloud sync. Trace encrypts it before it leaves your iPhone. Trace sends no analytics.",
   },
   {
     question: "Does Trace use much battery?",
@@ -907,7 +837,7 @@ const FAQ = [
   {
     question: "Does Trace record all the time?",
     answer:
-      "No. Trace records nothing until you tap Start recording. With the While Using permission, Trace records only when the app is open. You can pause Trace at any time, also from the Lock Screen.",
+      "No. Trace records nothing until you tap Start my journal. With the While Using permission, Trace records only when the app is open. You can pause Trace at any time, also from the Lock Screen.",
   },
   {
     question: "Do I need an account?",
@@ -916,7 +846,7 @@ const FAQ = [
   {
     question: "Can I erase all my data?",
     answer:
-      "Yes. In Settings, tap Erase Journal. This erases every day, place, route, memory and saved place.",
+      "Yes. In Settings, tap Erase Journal. This erases every day, place, route, memory and saved place, and the iCloud copy if you use iCloud sync. Your other devices keep the data that they downloaded before. Older backups of your iPhone can also contain earlier data.",
   },
 ];
 
@@ -998,16 +928,47 @@ export default function Home() {
             </ul>
           </div>
           <div className="relative aspect-[1/1.08] w-full max-w-[620px] justify-self-center">
-            <Image
-              src="/images/onboarding-everyday.webp"
-              alt="An illustrated map of a day. A route goes from a house, past a café, to a park at the waterfront."
-              width={960}
-              height={960}
-              sizes="(min-width: 1040px) 32rem, 84vw"
-              loading="eager"
-              fetchPriority="high"
-              className="absolute top-0 left-0 h-auto w-[84%] rounded-[32px]"
-            />
+            <div
+              role="img"
+              aria-label={DAY_MAP_LABEL}
+              className="absolute top-[4%] left-0 h-[82%] w-[84%] overflow-hidden rounded-[32px] border border-line bg-[#86c3f2]"
+            >
+              <DayMap
+                width={520}
+                height={560}
+                fit={DAY_POINTS}
+                padding={[150, 250, 150, 110]}
+                fontSize={15}
+                strokeScale={1.3}
+                routes={drawnRoutes([
+                  [0.2, 0.3],
+                  [0.4, 1.2],
+                  [1.5, 0.2],
+                  [1.6, 0.2],
+                  [1.7, 1],
+                  [2.6, 1.1],
+                ])}
+                pins={[
+                  { at: HOME, label: "Home", side: "d" },
+                  { at: WORK, label: "Work", side: "l", className: "stop-in" },
+                  {
+                    at: MARINA_BAY_SANDS,
+                    label: "Marina Bay Sands",
+                    side: "d",
+                    className: "stop-in",
+                  },
+                  {
+                    at: JEWEL,
+                    label: "Jewel Changi",
+                    side: "u",
+                    className: "stop-in-late",
+                  },
+                ]}
+              />
+              <span className="absolute top-5 left-5 rounded-full bg-white/85 px-3 py-1.5 font-mono text-xs tracking-[1px]">
+                MONDAY 5 OCT · SINGAPORE
+              </span>
+            </div>
             <TodayScreen />
           </div>
         </section>
@@ -1022,24 +983,22 @@ export default function Home() {
               A DAY IN COLOUR · MONDAY 5 OCT
             </h2>
             <ul className="flex flex-wrap gap-x-[18px] gap-y-1.5 text-sm">
-              {(["walk", "cycle", "train", "drive", "place"] as const).map(
-                (kind) => {
-                  const style = ACTIVITIES[kind];
-                  return (
-                    <li key={kind} className="flex items-center gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="w-[26px]"
-                        style={{
-                          borderTop: `${style.width}px ${style.border} ${style.color}`,
-                          opacity: kind === "place" ? 0.5 : 1,
-                        }}
-                      />
-                      {style.name}
-                    </li>
-                  );
-                },
-              )}
+              {(["walk", "train", "drive", "place"] as const).map((kind) => {
+                const style = ACTIVITIES[kind];
+                return (
+                  <li key={kind} className="flex items-center gap-2">
+                    <span
+                      aria-hidden="true"
+                      className="w-[26px]"
+                      style={{
+                        borderTop: `${style.width}px ${style.border} ${style.color}`,
+                        opacity: kind === "place" ? 0.5 : 1,
+                      }}
+                    />
+                    {style.name}
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <DayRibbon />
@@ -1100,7 +1059,9 @@ export default function Home() {
                       </p>
                     )}
                   </div>
-                  <div className="min-w-0">{chapter.visual}</div>
+                  <div className="min-w-0 unreached:translate-y-10 unreached:opacity-0 motion-safe:[transition:opacity_0.7s_ease_0.1s,translate_0.9s_cubic-bezier(0.2,0.7,0.2,1)_0.1s]">
+                    {chapter.visual}
+                  </div>
                 </div>
               </article>
             );
@@ -1134,7 +1095,7 @@ export default function Home() {
             <DuoPhone />
           </DuoStage>
           <p className="self-center font-mono text-secondary text-xs tracking-[1px]">
-            IPHONE DUO REQUIRES iOS 27
+            IPHONE DUO REQUIRES iOS 27.1
           </p>
         </section>
 
@@ -1277,8 +1238,8 @@ export default function Home() {
               Start your first day.
             </h2>
             <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
-              Install Trace and tap Start recording. Tonight, your day is on the
-              map.
+              Install Trace and tap Start my journal. Tonight, your day is on
+              the map.
             </p>
             <AppStoreBadge />
           </section>
