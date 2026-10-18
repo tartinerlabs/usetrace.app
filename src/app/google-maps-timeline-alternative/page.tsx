@@ -1,282 +1,474 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AppStoreBadge } from "@/components/app-store-badge";
-import { Faq, type FaqItem } from "@/components/faq";
-import { BRAND, MIN_IOS, SHARE_IMAGE, TWITTER_IMAGE } from "@/lib/site";
-
-const title = "Google Maps Timeline alternative for iPhone";
-const description = `Compare ${BRAND} and Google Maps Timeline. ${BRAND} is a private location timeline for iPhone. It has no account, and your journal stays encrypted on your iPhone.`;
+import {
+  CHECKED,
+  DESCRIPTION,
+  FAQ,
+  GOOGLE_HELP_URL,
+  HEADING,
+  IMPORT_PRIVACY,
+  INTRO,
+  KEEP_GOOGLE,
+  PATH,
+  ROWS,
+  STEPS,
+  type Status,
+  TITLE,
+  UPDATED,
+} from "@/lib/google-maps-timeline";
+import {
+  APP_STORE_NAME,
+  BRAND,
+  MIN_IOS,
+  SHARE_IMAGE,
+  SITE_URL,
+  TWITTER_IMAGE,
+} from "@/lib/site";
 
 export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/google-maps-timeline-alternative" },
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: PATH },
   openGraph: {
     type: "website",
     siteName: BRAND,
-    url: "/google-maps-timeline-alternative",
-    title,
-    description,
+    url: PATH,
+    title: TITLE,
+    description: DESCRIPTION,
     images: SHARE_IMAGE,
   },
-  twitter: { title, description, images: TWITTER_IMAGE },
+  twitter: { title: TITLE, description: DESCRIPTION, images: TWITTER_IMAGE },
 };
 
-// Google facts come from Google Maps Help (answers 6258979 and 14169818).
-// Check them again before each change to this page.
-const CHECKED = "October 2026";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      name: TITLE,
+      description: DESCRIPTION,
+      url: `${SITE_URL}${PATH}`,
+      dateModified: UPDATED,
+      about: {
+        "@type": "SoftwareApplication",
+        name: APP_STORE_NAME,
+        alternateName: BRAND,
+        operatingSystem: `iOS ${MIN_IOS} or later`,
+        applicationCategory: "LifestyleApplication",
+        url: SITE_URL,
+      },
+      mentions: { "@type": "SoftwareApplication", name: "Google Maps" },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: BRAND, item: SITE_URL },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: TITLE,
+          item: `${SITE_URL}${PATH}`,
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: FAQ.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    },
+  ],
+};
 
-const rows: { topic: string; trace: string; google: string }[] = [
-  {
-    topic: "Account",
-    trace: "You do not sign in.",
-    google:
-      "You need a Google Account. Timeline is off by default. You must turn it on.",
+// Same scale and type as the home page.
+const wrap = "mx-auto w-full max-w-[1240px] px-[clamp(20px,5vw,56px)]";
+const eyebrow = "font-mono text-secondary text-xs tracking-[1.2px]";
+const sectionHeading =
+  "text-balance font-semibold text-[clamp(34px,4.6vw,60px)] leading-none tracking-[-0.035em]";
+const lead =
+  "text-pretty text-[clamp(17px,1.6vw,20px)] text-body leading-normal";
+const card = "rounded-[32px] border border-line bg-surface";
+const underline =
+  "underline decoration-[#c9c4b6] underline-offset-[5px] motion-safe:transition-colors hover:decoration-ink";
+
+function Icon({ name, className = "" }: { name: string; className?: string }) {
+  return (
+    <span aria-hidden="true" className={`icon ${className}`}>
+      {name}
+    </span>
+  );
+}
+
+const STATUS: Record<
+  Status,
+  { icon: string; label: string; className: string }
+> = {
+  yes: { icon: "check_circle", label: "Yes", className: "text-walk" },
+  partly: {
+    icon: "do_not_disturb_on",
+    label: "Partly",
+    className: "text-secondary",
   },
-  {
-    topic: "Where your data is",
-    trace: `${BRAND} encrypts your journal on your iPhone. We do not operate servers that receive your journal.`,
-    google: "Timeline is on each device that you sign in on.",
-  },
-  {
-    topic: "Cloud copy",
-    trace:
-      "iCloud sync is optional and off by default. It goes to your own iCloud account. Trace encrypts it before it leaves your iPhone.",
-    google:
-      "Backup is optional. Google keeps an encrypted copy on Google servers. To use backup, you must turn off auto-delete.",
-  },
-  {
-    topic: "Changes on other devices",
-    trace: "With iCloud sync, your journal is the same on each iPhone.",
-    google:
-      "A change or a deletion on one device does not go to your other devices.",
-  },
-  {
-    topic: "How long data stays",
-    trace: "Your journal stays until you erase it.",
-    google:
-      "Auto-delete can remove data after 3, 18 or 36 months. You can also keep it until you delete it.",
-  },
-  {
-    topic: "Import",
-    trace:
-      "Import your Google Maps Timeline export. Trace adds only the days that have nothing in your journal.",
-    google: "Not available.",
-  },
-  {
-    topic: "Export",
-    trace: "Export your journal as a JSON file.",
-    google: "Export Timeline as a JSON file (location-history.json).",
-  },
-  {
-    topic: "Devices",
-    trace: `iPhone with iOS ${MIN_IOS} or later.`,
-    google:
-      "The Google Maps app on Android and iPhone. Timeline is not available in Maps on a computer.",
-  },
-  {
-    topic: "Ads and tracking",
-    trace:
-      "No ads. We do not sell your data or track you across other apps. Trace sends no analytics.",
-    google: "Controlled by your Google Account settings.",
-  },
+  no: { icon: "cancel", label: "No", className: "text-[#b3412f]" },
+};
+
+function StatusMark({ status }: { status: Status }) {
+  const { icon, label, className } = STATUS[status];
+  return (
+    <span
+      role="img"
+      aria-label={label}
+      className={`icon text-[22px] ${className}`}
+    >
+      {icon}
+    </span>
+  );
+}
+
+// What the import does, from GoogleTimelineImport.swift in the app.
+const IMPORT_RESULTS = [
+  { icon: "check_circle", text: "Stays and journeys" },
+  { icon: "check_circle", text: "Only days with nothing in your journal" },
+  { icon: "lock", text: "Read on your iPhone" },
 ];
-
-const extras = [
-  {
-    heading: "A story of your day",
-    body: `Each evening, ${BRAND} writes a short story of your day. You can add notes and photos, and you can correct a stop.`,
-  },
-  {
-    heading: "Play back a journey",
-    body: "Move the slider to see where you were and when. Open a day, a week, a month or a year.",
-  },
-  {
-    heading: "Private places",
-    body: `See how frequently you go to a place. Make a place private, and ${BRAND} keeps only a pin for it.`,
-  },
-  {
-    heading: "Your explored map",
-    body: "As you go to new streets, your explored map fills in. There are no streaks and no scores.",
-  },
-];
-
-const faq: FaqItem[] = [
-  {
-    question: `Is ${BRAND} a replacement for Google Maps Timeline?`,
-    answer: (
-      <p>
-        Yes, if you use an iPhone. {BRAND} records the places you go and the
-        routes you take, automatically. You do not need a Google Account.
-      </p>
-    ),
-  },
-  {
-    question: `Does ${BRAND} send my locations to a server?`,
-    answer: (
-      <p>
-        No. {BRAND} encrypts your journal on your iPhone. We do not operate
-        servers that receive your journal. If you turn on iCloud sync, your
-        journal goes to your own iCloud account.
-      </p>
-    ),
-  },
-  {
-    question: `Can I bring my Google Maps Timeline history to ${BRAND}?`,
-    answer: (
-      <p>
-        Yes. Export your Timeline from the Google Maps app on your phone. Then
-        in {BRAND}, open Settings and tap Import Google Timeline. {BRAND} adds
-        only the days that have nothing in your journal.
-      </p>
-    ),
-  },
-  {
-    question: `Can I use ${BRAND} on Android or on a computer?`,
-    answer: (
-      <p>
-        No. {BRAND} is only for iPhone. If you use Android, Google Maps Timeline
-        is a better choice for you.
-      </p>
-    ),
-  },
-  {
-    question: `Can I use ${BRAND} and Google Maps Timeline at the same time?`,
-    answer: (
-      <p>
-        Yes. The two apps record separately. Each app uses its own location
-        permission on your iPhone.
-      </p>
-    ),
-  },
-];
-
-const linkClassName =
-  "text-ink underline decoration-line underline-offset-4 hover:decoration-sun";
 
 export default function Page() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <h1 className="wrap-break-word font-rounded font-semibold text-[clamp(2rem,1.6rem+2vw,2.75rem)] text-ink leading-tight tracking-tight">
-        A private Google Maps Timeline alternative for iPhone
-      </h1>
-      <p className="mt-4 text-lg text-secondary leading-relaxed">
-        {BRAND} records the places you go and the routes you take. You do not
-        sign in. Your journal stays encrypted on your iPhone.
-      </p>
-      <div className="mt-8">
-        <AppStoreBadge />
-      </div>
+    <>
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD, with "<" escaped
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
 
-      <section className="mt-16">
-        <h2 className="mb-4 font-rounded font-semibold text-2xl text-ink leading-snug">
-          {BRAND} and Google Maps Timeline
-        </h2>
-        {/* Below sm, each row stacks into a card and the cells carry their own labels. */}
-        <div className="overflow-hidden rounded-card border border-line bg-surface">
-          <table className="w-full text-left text-sm leading-relaxed">
-            <thead className="max-sm:sr-only">
-              <tr className="border-line border-b text-ink">
-                <th scope="col" className="w-1/5 px-4 py-3 font-semibold">
-                  <span className="sr-only">Topic</span>
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold">
-                  {BRAND}
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold">
-                  Google Maps Timeline
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              {rows.map((row) => (
-                <tr
-                  key={row.topic}
-                  className="align-top max-sm:block max-sm:py-2"
-                >
-                  <th
-                    scope="row"
-                    className="px-4 py-3 font-medium text-ink max-sm:block max-sm:pb-1"
+      <div className="overflow-x-clip">
+        {/* Hero */}
+        <section
+          aria-labelledby="hero-heading"
+          className={`${wrap} grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(40px,6vw,80px)] pt-[clamp(32px,6vw,72px)] pb-[clamp(72px,10vw,136px)]`}
+        >
+          <div className="flex flex-col gap-7">
+            <p className={eyebrow}>GOOGLE MAPS TIMELINE ALTERNATIVE</p>
+            <h1
+              id="hero-heading"
+              className="text-balance font-semibold text-[clamp(40px,5.2vw,70px)] leading-[0.95] tracking-[-0.045em]"
+            >
+              {HEADING}
+            </h1>
+            <p className="max-w-[34ch] text-pretty text-[#3a3a35] text-[clamp(19px,2vw,23px)] leading-[1.45]">
+              {INTRO}
+            </p>
+            <div className="flex flex-wrap items-center gap-5">
+              <AppStoreBadge />
+              <a
+                href="#compare"
+                className={`font-medium text-[15px] ${underline}`}
+              >
+                Compare the two apps
+              </a>
+            </div>
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 border-line border-t pt-[18px] font-mono text-secondary text-xs tracking-[1px]">
+              <li>NO GOOGLE ACCOUNT</li>
+              <li>IMPORTS YOUR TIMELINE</li>
+              <li>ENCRYPTED ON YOUR IPHONE</li>
+            </ul>
+          </div>
+
+          {/* The import at a glance: Google's file goes in, a Trace journal comes out. */}
+          <div
+            aria-hidden="true"
+            className="flex w-full max-w-[480px] flex-col items-center justify-self-center"
+          >
+            <div className={`${card} flex w-full items-center gap-4 p-5`}>
+              <span className="flex size-14 flex-none items-center justify-center rounded-2xl bg-fill font-mono font-semibold text-secondary text-xs">
+                JSON
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate font-mono text-[15px]">
+                  location-history.json
+                </span>
+                <span className="block text-secondary text-sm">
+                  Exported from Google Maps
+                </span>
+              </span>
+            </div>
+            <span className="flex h-16 items-center">
+              <span className="h-full w-px bg-line" />
+              <Icon
+                name="arrow_forward"
+                className="absolute rotate-90 rounded-full border border-line bg-canvas p-1.5 text-sun text-xl"
+              />
+            </span>
+            <div className={`${card} w-full overflow-hidden`}>
+              <div className="flex items-center gap-4 border-line border-b p-5">
+                {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
+                <img
+                  src="/brand/logo.svg"
+                  alt=""
+                  width={56}
+                  height={56}
+                  className="size-14 flex-none rounded-[22.37%]"
+                />
+                <span>
+                  <span className="block font-semibold text-[17px]">
+                    Import Google Timeline
+                  </span>
+                  <span className="block text-secondary text-sm">
+                    {BRAND} Settings
+                  </span>
+                </span>
+              </div>
+              <ul className="flex flex-col gap-3.5 p-5">
+                {IMPORT_RESULTS.map((result) => (
+                  <li
+                    key={result.text}
+                    className="flex items-center gap-3 text-[15px]"
                   >
-                    {row.topic}
+                    <Icon
+                      name={result.icon}
+                      className="text-[22px] text-walk"
+                    />
+                    {result.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Comparison */}
+        <section
+          id="compare"
+          aria-labelledby="compare-heading"
+          className={`${wrap} scroll-mt-6 pb-[clamp(72px,10vw,136px)]`}
+        >
+          <div className="mb-[clamp(28px,4vw,44px)] flex flex-col gap-5">
+            <p className={eyebrow}>SIDE BY SIDE</p>
+            <h2 id="compare-heading" className={sectionHeading}>
+              {BRAND} and Google Maps Timeline
+            </h2>
+          </div>
+
+          {/* Below md, each row stacks into a card and the cells carry their own labels. */}
+          <div className={`${card} overflow-hidden`}>
+            <table className="w-full text-left text-[15px] leading-relaxed">
+              <thead className="max-md:sr-only">
+                <tr className="border-line border-b">
+                  <th scope="col" className="w-[22%] px-6 py-5">
+                    <span className="sr-only">Topic</span>
                   </th>
-                  <td className="px-4 py-3 text-ink max-sm:block max-sm:py-1">
-                    <span className="block font-semibold text-xs sm:hidden">
+                  <th
+                    scope="col"
+                    className="w-[39%] bg-sun/[0.06] px-6 py-5 font-semibold"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
+                      <img
+                        src="/brand/logo.svg"
+                        alt=""
+                        width={28}
+                        height={28}
+                        className="rounded-[22.37%]"
+                      />
                       {BRAND}
                     </span>
-                    {row.trace}
-                  </td>
-                  <td className="px-4 py-3 text-secondary max-sm:block max-sm:py-1">
-                    <span className="block font-semibold text-ink text-xs sm:hidden">
-                      Google Maps Timeline
-                    </span>
-                    {row.google}
-                  </td>
+                  </th>
+                  <th scope="col" className="px-6 py-5 font-semibold">
+                    Google Maps Timeline
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-3 text-secondary text-sm leading-relaxed">
-          We checked the facts about Google Maps Timeline in {CHECKED}, on{" "}
-          <a
-            href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS"
-            className={linkClassName}
-          >
-            Google Maps Help
-          </a>
-          . Google can change Timeline at any time.
-        </p>
-      </section>
+              </thead>
+              <tbody className="divide-y divide-line">
+                {ROWS.map((row) => (
+                  <tr
+                    key={row.topic}
+                    className="align-top max-md:block max-md:px-5 max-md:py-5"
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-5 font-semibold max-md:block max-md:p-0 max-md:pb-3"
+                    >
+                      {row.topic}
+                    </th>
+                    <td className="bg-sun/[0.06] px-6 py-5 text-ink max-md:block max-md:rounded-2xl max-md:px-4 max-md:py-3">
+                      <span className="mb-1 block font-mono text-[11px] text-sun tracking-[1px] md:hidden">
+                        {BRAND.toUpperCase()}
+                      </span>
+                      <span className="flex gap-3">
+                        <StatusMark status={row.traceStatus} />
+                        <span>{row.trace}</span>
+                      </span>
+                    </td>
+                    <td className="px-6 py-5 text-secondary max-md:block max-md:px-4 max-md:pt-3 max-md:pb-0">
+                      <span className="mb-1 block font-mono text-[11px] tracking-[1px] md:hidden">
+                        GOOGLE MAPS TIMELINE
+                      </span>
+                      <span className="flex gap-3">
+                        <StatusMark status={row.googleStatus} />
+                        <span>{row.google}</span>
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-secondary text-sm leading-relaxed">
+            We checked the facts about Google Maps Timeline in{" "}
+            <time dateTime={UPDATED}>{CHECKED}</time>, on{" "}
+            <a href={GOOGLE_HELP_URL} className={underline}>
+              Google Maps Help
+            </a>
+            . Google can change Timeline at any time.
+          </p>
+        </section>
 
-      <section className="mt-16">
-        <h2 className="mb-4 font-rounded font-semibold text-2xl text-ink leading-snug">
-          More in {BRAND}
-        </h2>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {extras.map((extra) => (
-            <div key={extra.heading}>
-              <h3 className="font-semibold text-ink">{extra.heading}</h3>
-              <p className="mt-2 text-secondary leading-relaxed">
-                {extra.body}
+        {/* Switch */}
+        <section
+          aria-labelledby="switch-heading"
+          className={`${wrap} pb-[clamp(96px,12vw,160px)]`}
+        >
+          <div className="mb-[clamp(28px,4vw,44px)] grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-end gap-[clamp(20px,4vw,64px)]">
+            <div className="flex flex-col gap-5">
+              <p className={eyebrow}>IMPORT GOOGLE TIMELINE</p>
+              <h2 id="switch-heading" className={sectionHeading}>
+                Move to {BRAND} in three steps.
+              </h2>
+            </div>
+            <p className={`max-w-[40ch] ${lead}`}>{IMPORT_PRIVACY}</p>
+          </div>
+          <ol className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-3">
+            {STEPS.map((step, index) => (
+              <li
+                key={step.heading}
+                className={`${card} flex flex-col gap-3 p-[clamp(24px,3vw,32px)]`}
+              >
+                <span className="font-mono font-semibold text-[clamp(44px,5vw,60px)] text-sun leading-none tracking-[-2px]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-4 font-semibold text-[21px] tracking-[-0.3px]">
+                  {step.heading}
+                </h3>
+                <p className="text-base text-secondary leading-[1.55]">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Night: when to keep Google, questions, download. */}
+        <div className="bg-night text-on-night [--line:var(--night-line)] [--secondary:var(--night-secondary)]">
+          <section
+            aria-labelledby="keep-heading"
+            className={`${wrap} pt-[clamp(80px,11vw,152px)] pb-[clamp(64px,8vw,112px)]`}
+          >
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-[clamp(28px,5vw,72px)]">
+              <div className="flex flex-col gap-6">
+                <p className={eyebrow}>TO BE FAIR</p>
+                <h2
+                  id="keep-heading"
+                  className="max-w-[14ch] text-balance font-semibold text-[clamp(40px,6vw,80px)] leading-[0.95] tracking-[-0.045em]"
+                >
+                  When to keep Google Maps Timeline.
+                </h2>
+              </div>
+              <ul className="flex flex-col">
+                {KEEP_GOOGLE.map((item) => (
+                  <li
+                    key={item}
+                    className="flex gap-4 border-line border-t py-6 text-[clamp(18px,1.8vw,21px)] leading-normal"
+                  >
+                    <Icon
+                      name="arrow_forward"
+                      className="mt-1 flex-none text-peach text-xl"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section
+            id="faq"
+            aria-labelledby="faq-heading"
+            className={`${wrap} grid grid-cols-1 gap-[clamp(24px,5vw,72px)] pb-[clamp(80px,10vw,144px)] md:grid-cols-3`}
+          >
+            <h2
+              id="faq-heading"
+              className="font-semibold text-[clamp(26px,3vw,34px)] tracking-[-0.6px]"
+            >
+              Questions
+            </h2>
+            <div className="min-w-0 border-line border-t md:col-span-2">
+              {FAQ.map((item) => (
+                <details
+                  key={item.question}
+                  className="group border-line border-b"
+                >
+                  <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3 font-medium text-lg [&::-webkit-details-marker]:hidden">
+                    {item.question}
+                    <Icon
+                      name="add"
+                      className="text-2xl text-secondary motion-safe:transition-transform group-open:rotate-45"
+                    />
+                  </summary>
+                  <p className="max-w-[62ch] pb-6 text-base text-secondary leading-relaxed">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+              <p className="mt-5 text-[15px] text-secondary">
+                To learn what {BRAND} does with your data, read the{" "}
+                <Link
+                  href="/privacy"
+                  className="text-on-night underline underline-offset-4"
+                >
+                  Privacy Policy
+                </Link>
+                .
               </p>
             </div>
-          ))}
+          </section>
+
+          <section
+            aria-labelledby="cta-heading"
+            className={`${wrap} flex flex-col items-center gap-7 pb-[clamp(80px,10vw,128px)] text-center`}
+          >
+            {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
+            <img
+              src="/brand/logo-dark.svg"
+              alt=""
+              width={96}
+              height={96}
+              className="rounded-[22.37%] shadow-[0_0_0_1px_var(--night-line)]"
+            />
+            <h2
+              id="cta-heading"
+              className="font-semibold text-[clamp(44px,7vw,96px)] leading-[0.95] tracking-[-0.05em]"
+            >
+              Bring your days home.
+            </h2>
+            <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
+              Install {BRAND} and import your Google Timeline. Your old days and
+              your new days stay on your iPhone.
+            </p>
+            <AppStoreBadge />
+            <Link
+              href="/"
+              className="font-medium text-[15px] underline decoration-[#4a4e55] underline-offset-[5px] motion-safe:transition-colors hover:decoration-on-night"
+            >
+              See all the features of {BRAND}
+            </Link>
+          </section>
         </div>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="mb-4 font-rounded font-semibold text-2xl text-ink leading-snug">
-          When to keep Google Maps Timeline
-        </h2>
-        <ul className="list-disc space-y-2 pl-6 text-secondary leading-relaxed">
-          <li>You use Android, or you use Android and iPhone together.</li>
-          <li>You want your location history in your Google Account.</li>
-        </ul>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="mb-4 font-rounded font-semibold text-2xl text-ink leading-snug">
-          Questions
-        </h2>
-        <Faq items={faq} />
-      </section>
-
-      <section className="mt-16 rounded-card border border-line bg-fill p-6 text-center sm:p-8">
-        <h2 className="font-rounded font-semibold text-ink text-xl">
-          Keep your day on your iPhone
-        </h2>
-        <p className="mt-3 text-secondary leading-relaxed">
-          To learn what {BRAND} does with your data, read the{" "}
-          <Link href="/privacy" className={linkClassName}>
-            Privacy Policy
-          </Link>
-          .
-        </p>
-        <div className="mt-6">
-          <AppStoreBadge />
-        </div>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }

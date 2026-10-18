@@ -41,7 +41,14 @@ const nextConfig: NextConfig = {
       },
     ];
     return {
-      beforeFiles: [{ source: "/", destination: "/md", has: acceptsMarkdown }],
+      beforeFiles: [
+        { source: "/", destination: "/md", has: acceptsMarkdown },
+        {
+          source: "/google-maps-timeline-alternative",
+          destination: "/md/google-maps-timeline-alternative",
+          has: acceptsMarkdown,
+        },
+      ],
       afterFiles: [],
       // Fallback rewrites run only when no page or file matches.
       fallback: [

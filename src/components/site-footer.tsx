@@ -27,6 +27,14 @@ export function SiteFooter() {
                 Support
               </Link>
             </li>
+            <li>
+              <Link
+                href="/google-maps-timeline-alternative"
+                className="hover:text-on-night"
+              >
+                Google Maps Timeline alternative
+              </Link>
+            </li>
             {/* Literal year: new Date() is not allowed during prerender with cacheComponents. */}
             <li>© 2026 {BRAND}</li>
           </ul>
