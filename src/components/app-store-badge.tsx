@@ -1,6 +1,3 @@
-"use client";
-
-import posthog from "posthog-js";
 import { APP_STORE_URL } from "@/lib/site";
 
 // Apple's official black badge artwork.
@@ -17,7 +14,7 @@ function Badge() {
   );
 }
 
-export function AppStoreBadge({ location }: { location: string }) {
+export function AppStoreBadge() {
   if (!APP_STORE_URL) {
     return (
       <div className="inline-flex flex-col items-center gap-2">
@@ -32,15 +29,7 @@ export function AppStoreBadge({ location }: { location: string }) {
   }
 
   return (
-    <a
-      href={APP_STORE_URL}
-      className="inline-block rounded-[0.6rem]"
-      onClick={() => {
-        if (posthog.__loaded) {
-          posthog.capture("app_store_badge_clicked", { location });
-        }
-      }}
-    >
+    <a href={APP_STORE_URL} className="inline-block rounded-[0.6rem]">
       <Badge />
     </a>
   );

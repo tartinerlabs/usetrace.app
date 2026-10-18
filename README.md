@@ -34,7 +34,7 @@ This repository contains the marketing site only. It does not contain the iOS ap
 | Styles | [Tailwind CSS](https://tailwindcss.com) 4 |
 | Content | MDX (`@next/mdx`) |
 | Lint and format | [Biome](https://biomejs.dev) |
-| Analytics | Vercel Analytics, Speed Insights, PostHog |
+| Analytics | Vercel Analytics, Speed Insights |
 | Hosting | [Vercel](https://vercel.com) |
 
 ## Get started
@@ -43,17 +43,10 @@ You must have [pnpm](https://pnpm.io). `devEngines` in `package.json` sets the p
 
 ```bash
 pnpm install
-cp .env.example .env.local
 pnpm dev
 ```
 
 Open [https://trace.localhost](https://trace.localhost). The dev server runs through [Portless](https://portless.sh). Set `PORTLESS=0` to use a plain port.
-
-### Environment variables
-
-| Name | Required | Description |
-| --- | --- | --- |
-| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | No | PostHog project token. When empty, PostHog analytics is off. |
 
 ## Scripts
 

@@ -975,7 +975,7 @@ export default function Home() {
               id="download"
               className="flex scroll-mt-6 flex-wrap items-center gap-5"
             >
-              <AppStoreBadge location="hero" />
+              <AppStoreBadge />
               <a
                 href="#privacy"
                 className={`font-medium text-[15px] ${underline}`}
@@ -1280,7 +1280,7 @@ export default function Home() {
               Install Trace and tap Start recording. Tonight, your day is on the
               map.
             </p>
-            <AppStoreBadge location="footer-cta" />
+            <AppStoreBadge />
           </section>
         </div>
       </div>
