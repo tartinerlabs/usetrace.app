@@ -1,3 +1,4 @@
+import type { ComparisonRow, Status } from "@/components/comparison-table";
 import { BRAND, MIN_IOS, SITE_URL } from "@/lib/site";
 
 // Content of /google-maps-timeline-alternative. The page, its JSON-LD and its
@@ -16,86 +17,77 @@ export const UPDATED = "2026-10-18";
 export const GOOGLE_HELP_URL =
   "https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS";
 
-// How well each app does on a row. Be fair: Google gets "yes" where it does well.
-export type Status = "yes" | "partly" | "no";
-
-export const ROWS: {
-  topic: string;
-  trace: string;
-  traceStatus: Status;
-  google: string;
-  googleStatus: Status;
-}[] = [
+export const ROWS: ComparisonRow[] = [
   {
     topic: "Account",
     trace: "You do not sign in.",
     traceStatus: "yes",
-    google:
+    other:
       "You need a Google Account. Timeline is off by default. You must turn it on.",
-    googleStatus: "no",
+    otherStatus: "no",
   },
   {
     topic: "Where your data is",
     trace: `${BRAND} encrypts your journal on your iPhone. We do not operate servers that receive your journal.`,
     traceStatus: "yes",
-    google: "Timeline is on each device that you sign in on.",
-    googleStatus: "yes",
+    other: "Timeline is on each device that you sign in on.",
+    otherStatus: "yes",
   },
   {
     topic: "Cloud copy",
     trace:
       "iCloud sync is optional and off by default. It goes to your own iCloud account. Trace encrypts it before it leaves your iPhone.",
     traceStatus: "yes",
-    google:
+    other:
       "Backup is optional. Google keeps an encrypted copy on Google servers. To use backup, you must turn off auto-delete.",
-    googleStatus: "yes",
+    otherStatus: "yes",
   },
   {
     topic: "Changes on other devices",
     trace: "With iCloud sync, your journal is the same on each iPhone.",
     traceStatus: "yes",
-    google:
+    other:
       "A change or a deletion on one device does not go to your other devices.",
-    googleStatus: "no",
+    otherStatus: "no",
   },
   {
     topic: "How long data stays",
     trace: "Your journal stays until you erase it.",
     traceStatus: "yes",
-    google:
+    other:
       "Auto-delete can remove data after 3, 18 or 36 months. You can also keep it until you delete it.",
-    googleStatus: "yes",
+    otherStatus: "yes",
   },
   {
     topic: "Import",
     trace:
       "Import your Google Maps Timeline export. Trace adds only the days that have nothing in your journal.",
     traceStatus: "yes",
-    google: "Not available.",
-    googleStatus: "no",
+    other: "Not available.",
+    otherStatus: "no",
   },
   {
     topic: "Export",
     trace: "Export your journal as a JSON file.",
     traceStatus: "yes",
-    google: "Export Timeline as a JSON file (location-history.json).",
-    googleStatus: "yes",
+    other: "Export Timeline as a JSON file (location-history.json).",
+    otherStatus: "yes",
   },
   {
     topic: "Devices",
     trace: `iPhone with iOS ${MIN_IOS} or later.`,
     traceStatus: "partly",
-    google:
+    other:
       "The Google Maps app on Android and iPhone. Timeline is not available in Maps on a computer.",
-    googleStatus: "yes",
+    otherStatus: "yes",
   },
   {
     topic: "Ads and tracking",
     trace:
       "No ads. We do not sell your data or track you across other apps. Trace sends no analytics.",
     traceStatus: "yes",
-    google: "Controlled by your Google Account settings.",
-    googleStatus: "partly",
+    other: "Controlled by your Google Account settings.",
+    otherStatus: "partly",
   },
 ];
 
@@ -160,7 +152,7 @@ export const MARKDOWN = `# ${HEADING}
 
 | Topic | ${BRAND} | Google Maps Timeline |
 | --- | --- | --- |
-${ROWS.map((row) => `| ${row.topic} | ${MARK[row.traceStatus]} ${row.trace} | ${MARK[row.googleStatus]} ${row.google} |`).join("\n")}
+${ROWS.map((row) => `| ${row.topic} | ${MARK[row.traceStatus]} ${row.trace} | ${MARK[row.otherStatus]} ${row.other} |`).join("\n")}
 
 We checked the facts about Google Maps Timeline in ${CHECKED}, on [Google Maps Help](${GOOGLE_HELP_URL}). Google can change Timeline at any time.
 

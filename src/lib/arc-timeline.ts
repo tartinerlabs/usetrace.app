@@ -1,4 +1,4 @@
-import type { Status } from "@/lib/google-maps-timeline";
+import type { ComparisonRow, Status } from "@/components/comparison-table";
 import { BRAND, MIN_IOS, SITE_URL } from "@/lib/site";
 
 // Content of /arc-timeline-alternative. The page, its JSON-LD and its
@@ -22,69 +22,62 @@ export const UPDATED = "2026-10-18";
 export const ARC_LISTING_URL =
   "https://apps.apple.com/us/app/arc-timeline-4/id6740688708";
 
-// Be fair: Arc gets "yes" where it does well.
-export const ROWS: {
-  topic: string;
-  trace: string;
-  traceStatus: Status;
-  arc: string;
-  arcStatus: Status;
-}[] = [
+export const ROWS: ComparisonRow[] = [
   {
     topic: "Account",
     trace: "You do not sign in.",
     traceStatus: "yes",
-    arc: "No account and no sign-up.",
-    arcStatus: "yes",
+    other: "No account and no sign-up.",
+    otherStatus: "yes",
   },
   {
     topic: "Where your data is",
     trace: `${BRAND} encrypts your journal on your iPhone. We do not operate servers that receive your journal.`,
     traceStatus: "yes",
-    arc: "All data is stored on your iPhone.",
-    arcStatus: "yes",
+    other: "All data is stored on your iPhone.",
+    otherStatus: "yes",
   },
   {
     topic: "Cloud copy",
     trace: `iCloud sync is optional and off by default. It goes to your own iCloud account. ${BRAND} encrypts it before it leaves your iPhone.`,
     traceStatus: "yes",
-    arc: "Optional backup to your own iCloud account.",
-    arcStatus: "yes",
+    other: "Optional backup to your own iCloud account.",
+    otherStatus: "yes",
   },
   {
     topic: "Same journal on each iPhone",
     trace: "With iCloud sync, your journal is the same on each iPhone.",
     traceStatus: "yes",
-    arc: "Arc lists iCloud backup. It does not list sync between devices.",
-    arcStatus: "partly",
+    other: "Arc lists iCloud backup. It does not list sync between devices.",
+    otherStatus: "partly",
   },
   {
     topic: "Import Google Timeline",
     trace: `Import your Google Maps Timeline export. ${BRAND} adds only the days that have nothing in your journal.`,
     traceStatus: "yes",
-    arc: "Not in the list of imports.",
-    arcStatus: "no",
+    other: "Not in the list of imports.",
+    otherStatus: "no",
   },
   {
     topic: "Other imports",
     trace: `${BRAND} imports only Google Timeline files.`,
     traceStatus: "no",
-    arc: "Arc backups, GPX files and Apple Health workouts.",
-    arcStatus: "yes",
+    other: "Arc backups, GPX files and Apple Health workouts.",
+    otherStatus: "yes",
   },
   {
     topic: "Export",
     trace: "Export your journal as a JSON file.",
     traceStatus: "yes",
-    arc: "JSON and GPX files. Automatic exports to iCloud Drive.",
-    arcStatus: "yes",
+    other: "JSON and GPX files. Automatic exports to iCloud Drive.",
+    otherStatus: "yes",
   },
   {
     topic: "iPhones",
     trace: `iPhone with iOS ${MIN_IOS} or later.`,
     traceStatus: "yes",
-    arc: "iPhone with iOS 26 or later.",
-    arcStatus: "partly",
+    other: "iPhone with iOS 26 or later.",
+    otherStatus: "partly",
   },
 ];
 
@@ -136,7 +129,7 @@ export const MARKDOWN = `# ${HEADING}
 
 | Topic | ${BRAND} | Arc Timeline |
 | --- | --- | --- |
-${ROWS.map((row) => `| ${row.topic} | ${MARK[row.traceStatus]} ${row.trace} | ${MARK[row.arcStatus]} ${row.arc} |`).join("\n")}
+${ROWS.map((row) => `| ${row.topic} | ${MARK[row.traceStatus]} ${row.trace} | ${MARK[row.otherStatus]} ${row.other} |`).join("\n")}
 
 We checked the facts about Arc Timeline in ${CHECKED}, on its [App Store page](${ARC_LISTING_URL}). Arc can change at any time.
 
