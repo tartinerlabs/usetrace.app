@@ -145,12 +145,12 @@ Reviewers passed these as minor:
   speakers comes first.
 - **Site sample day.** The site's sample day does not match the app's. Either
   the site or the film should change so both tell the same day.
-- **Repo weight.** About 58 MB of media (footage, VO, score, renders) would go
-  into plain git. Decide on Git LFS or keeping media out of the repo before the
-  first commit.
-- **Workspace.** `pnpm-workspace.yaml` lists `video`, so every root install,
-  Vercel's included, also installs Remotion. A standalone package would avoid
-  this.
+- **LFS push hook.** Media is in Git LFS (`.gitattributes`: `*.mp4`, `*.wav`),
+  but Husky owns the git hooks, so LFS could not install its pre-push hook.
+  Until `.husky/pre-push` runs `git lfs pre-push "$@"`, run
+  `git lfs push origin main` before or after each push that adds media.
+- **Vercel.** Turn on Git LFS in the Vercel project settings, or the deployed
+  `public/videos/` files are LFS pointers, not videos.
 - **App Store.** When `APP_STORE_ID` is set, replace "Coming soon on the App
   Store" with the official badge and link, and re-render.
 - **Capture script.** Keep the XCUITest capture script in the app repo (or in

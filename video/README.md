@@ -8,9 +8,12 @@ A 52-second promo film for Trace: Location Timeline (iPhone, iOS 18+), built wit
 | `TracePromo`         | 1920x1080 | 60 fps | 3120 frames (52.0 s) |
 | `TracePromoVertical` | 1080x1920 | 60 fps | 3120 frames (52.0 s) |
 
-This folder is the `trace-promo` package in the usetrace.app pnpm workspace
-(`pnpm-workspace.yaml` lists `video`). It is not part of the Next.js build: the
-root `tsconfig.json` excludes it, and renders in `out/` are git-ignored. The
+This folder is a standalone pnpm package (`trace-promo`, with its own
+`pnpm-workspace.yaml` and lockfile), so the site's installs and Vercel deploys
+never pull in Remotion. It is not part of the Next.js build: the root
+`tsconfig.json` excludes it, and renders in `out/` are git-ignored. Footage,
+voice-over, music and delivered videos (`*.mp4`, `*.wav`) are stored with Git
+LFS; run `git lfs pull` after cloning. The
 16:9 master, 9:16 cut and poster are delivered to the site as
 `public/videos/trace-promo.mp4`, `public/videos/trace-promo-9x16.mp4` and
 `public/videos/trace-promo-poster.png`.
@@ -20,12 +23,11 @@ open: see [`PRODUCTION.md`](PRODUCTION.md).
 
 ## Studio
 
-Install once from the repo root, then run Studio from the root or from `video/`:
+From `video/`:
 
 ```console
 pnpm install
-pnpm --filter trace-promo exec remotion studio   # from the repo root
-pnpm exec remotion studio                        # from video/
+pnpm exec remotion studio
 ```
 
 ## Render
