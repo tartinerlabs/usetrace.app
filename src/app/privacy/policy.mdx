@@ -1,22 +1,22 @@
 # Trace Privacy Policy
 
-Effective date: <mark>[date]</mark>
+Effective date: 18 October 2026
 
-Trace: Movement Journal ("Trace") is made by <mark>[legal name]</mark> ("we", "us"). Trace is a private journal of the places you go and the paths you take. It is designed so that your movement history is built and kept on your iPhone. This policy explains what Trace records, where it is kept, what leaves your device, and the choices you have.
+Trace: Location Timeline ("Trace", "we", "us") is a private journal of the places you go and the paths you take. It is designed so that your movement history is built and kept on your iPhone or iPad. This policy explains what Trace records, where it is kept, what leaves your device, and the choices you have.
 
 ## The short version
 
 - Trace records nothing until you tap **Start recording**. You can pause at any time.
-- Your journal is stored on your iPhone, and its sensitive contents are encrypted.
+- Your journal is stored on your device, and its sensitive contents are encrypted.
 - We do not run servers that receive your journal, and we cannot read it.
-- iCloud sync is optional and off by default. If you turn it on, your journal is encrypted on your iPhone before it is uploaded to your own iCloud account.
+- iCloud sync is optional and off by default. If you turn it on, your journal is encrypted on your device before it is uploaded to your own iCloud account.
 - Some features use Apple services, such as Apple Maps to name the places you visit.
-- Usage analytics are optional and off by default, and never include your movement history.
+- Trace contains no third-party analytics or tracking. Crash reports reach us only through Apple, if you share analytics with developers, or when you choose to attach them to a bug report.
 - We do not sell your data, show ads, or track you across other apps or websites.
 
 ## What Trace records
 
-**Location.** After you start recording, Trace uses your iPhone's location to record where you have been: location readings (coordinates, accuracy, altitude, speed, direction and time), and the visits, places, journeys and routes it works out from them. If you allow Always access, recording continues in the background, and iOS can relaunch Trace to resume it. Trace does not request location access until you choose to set up recording, and it does not record while paused or while you are exploring the sample day.
+**Location.** After you start recording, Trace uses your device's location to record where you have been: location readings (coordinates, accuracy, altitude, speed, direction and time), and the visits, places, journeys and routes it works out from them. If you allow Always access, recording continues in the background, and iOS or iPadOS can relaunch Trace to resume it. Trace does not request location access until you choose to set up recording, and it does not record while paused or while you are exploring the sample day.
 
 **Motion and fitness activity.** If you allow it, Trace uses motion activity to tell walking, cycling and driving apart. Motion readings are used in the moment and are not stored. Trace works without this permission, with less detailed movement types.
 
@@ -24,57 +24,64 @@ Trace: Movement Journal ("Trace") is made by <mark>[legal name]</mark> ("we", "u
 
 **Memories.** Notes, titles and photos you choose to add. Trace only receives the photos you pick in the system photo picker; it does not get access to your photo library. Photos are re-encoded and their metadata, including photo location, is removed before saving.
 
-**Journaling Suggestions.** On supported iPhones, if you choose a suggestion from Apple's Journaling Suggestions picker, Trace receives only the suggestion you select (such as its place, dates, title and first photo), which you can edit before saving.
+**Imported history.** If you choose to import a Google Maps Timeline export, Trace reads the file you pick on your device and adds its visits and journeys to your journal, marked as imported. The file is never uploaded or copied into Trace, and Google place identifiers and addresses are not kept. Imported days are encrypted and, if you use iCloud sync, synced like recorded ones. Your private saved places apply to imported history too.
+
+**Journaling Suggestions.** On supported iPhones and iPads, if you choose a suggestion from Apple's Journaling Suggestions picker, Trace receives only the suggestion you select (such as its place, dates, title and first photo), which you can edit before saving.
 
 ## Where your journal is kept
 
-Your journal is stored on your iPhone. Sensitive fields, including locations, routes, place names, notes and photos, are encrypted with AES-256-GCM using a key kept in your iPhone's Keychain, which stays on that device. Some non-sensitive information needed to organise the journal, such as dates, ordering and internal identifiers, is not encrypted. iOS also protects the files when your iPhone has not been unlocked since restarting.
+Your journal is stored on your device. Sensitive fields, including locations, routes, place names, notes and photos, are encrypted with AES-256-GCM using a key kept in your device's Keychain. The key is never sent to iCloud Keychain; it moves to a new device only inside an encrypted backup or a direct device-to-device transfer, so your journal can open there. Some non-sensitive information needed to organise the journal, such as dates, ordering and internal identifiers, is not encrypted. iOS and iPadOS also protect the files when your device has not been unlocked since restarting.
 
 The Trace widget and Live Activity only see whether recording is on or paused. They cannot open your journal.
 
 Trace keeps your journal until you delete it. There is currently no automatic deletion of older history.
 
-## What leaves your iPhone
+## What leaves your device
 
 ### iCloud sync (optional, off by default)
 
-If you turn on iCloud sync in Settings, Trace stores your journal in the private iCloud database of your own Apple Account so it can be restored and shared across your devices. Each day is encrypted on your iPhone before upload, with a key stored in your iCloud Keychain. We cannot decrypt it, and there is no password we can use to recover it. Apple can still see limited information about the stored records, such as their size and when they change. Raw location readings and motion readings are not synced. iCloud is provided by Apple under [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
+If you turn on iCloud sync in Settings, Trace stores your journal in the private iCloud database of your own Apple Account so it can be restored and shared across your devices. Each day is encrypted on your device before upload, with a key stored in your iCloud Keychain. We cannot decrypt it, and there is no password we can use to recover it. Apple can still see limited information about the stored records, such as their size and when they change. Raw location readings and motion readings are not synced. iCloud is provided by Apple under [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
 
 ### Apple services
 
-- **Naming places.** To give recorded places a readable name, Trace sends the coordinates of recently recorded places to Apple Maps and saves the name it returns. Places near your saved places are never sent.
+- **Naming places.** To give places a readable name, Trace sends the coordinates of places in your journal that still need one, including imported ones, to Apple Maps and saves the name it returns. Places near your saved places are never sent.
 - **Searching for places.** When you search for a place while saving one, what you type is sent to Apple Maps to find matches.
 - **Maps.** Maps in Trace are displayed with Apple's MapKit.
-- **Daily stories.** Optional daily stories are written entirely on your iPhone by Apple Intelligence, on supported devices. They use summaries of your day, not routes, coordinates, notes or photos, and nothing is sent to a cloud model.
+- **Daily stories.** Optional daily stories are written entirely on your device by Apple Intelligence, on supported devices. They use summaries of your day, not routes, coordinates, notes or photos, and nothing is sent to a cloud model.
 - **Siri and Shortcuts.** If you use Trace's shortcuts, such as Get Day Summary, Siri receives the result, such as the day's distance, time moving and number of places.
 
 Apple's handling of this information is covered by [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
 
-### Usage analytics (optional, off by default)
+### Crash and performance reports
 
-Trace asks separately whether you would like to share usage analytics, and you can change your answer at any time in Settings. If you agree, Trace sends a small, fixed set of events to [PostHog](https://posthog.com/privacy), hosted in the European Union, to help us understand which features are used and when recording fails. These events describe actions, such as opening a section or starting recording, along with app and iOS versions, a random installation identifier and a session identifier. They never include locations, routes, places, notes, photos or other journal content. Session recording, automatic screen tracking, person profiles and IP-based location lookup are turned off. As with any internet request, PostHog receives your device's IP address when events are sent.
+If you turn on **Share With App Developers** in your device's Analytics & Improvements settings, Apple shares crash, performance and usage statistics for Trace with us. Apple collects and aggregates this information under its own privacy policy; it does not include your journal. Trace itself sends no analytics.
 
-If you turn analytics off, Trace stops sending events and deletes any unsent events and the installation identifier from your iPhone. To ask us to delete analytics data already received, contact us at the address below.
+iOS and iPadOS can also give Trace reports of crashes, freezes and heavy resource use, which Trace keeps on your device. They describe where in Trace's code a problem happened and whether Trace was recording, never your locations. They leave your device only if you include them in a bug report.
+
+### Feedback and bug reports
+
+When you send feedback or report a bug, Trace prepares an email in your mail app, where you can review it before sending. It includes your message and only what you choose to add, such as device information, recording status, crash reports, screenshots or a day, journey or visit from your journal. Journal attachments are readable, not encrypted. We use what you send to answer you and fix problems, and you can ask us to delete it.
 
 ### Notifications
 
-Recording reminders and the weekly recap are optional and off by default. They are scheduled on your iPhone and do not contain your journal's contents.
+Recording reminders and the weekly recap are optional and off by default. They are scheduled on your device and do not contain your journal's contents.
 
 ## Your choices
 
 - **Pause or stop recording** from Trace, the widget, the Live Activity or Siri.
-- **Change permissions** for location and motion at any time in iOS Settings.
+- **Change permissions** for location and motion at any time in your device's Settings app.
 - **Keep a saved place's exact location private.**
-- **Turn iCloud sync, analytics and reminders** on or off in Settings.
+- **Turn iCloud sync and reminders** on or off in Settings, and sharing with developers in your device's Analytics & Improvements settings.
+- **Import your Google Maps Timeline** from Settings. Nothing is imported unless you choose a file.
 - **Export your journal** as a file. The export is not encrypted, so keep it somewhere safe.
 - **Delete** individual visits, journeys, days, memories and photos. Removing a photo from Trace does not delete it from your Photos library.
-- **Erase your journal** from Settings, which deletes it from this iPhone and, if you use iCloud sync, from iCloud. Copies already downloaded to your other devices stay there until you erase them on those devices too. Older backups of your iPhone or iCloud may still contain earlier data until they are replaced.
+- **Erase your journal** from Settings, which deletes it from this device and, if you use iCloud sync, from iCloud. Copies already downloaded to your other devices stay there until you erase them on those devices too. Older backups of your device or iCloud may still contain earlier data until they are replaced.
 
-Because your journal stays on your device or in your own iCloud account, we do not hold a copy of it and cannot access, correct or delete it for you. You can do this directly in Trace. Depending on where you live, you may have rights to access, correct, delete or object to the processing of personal data we hold, such as analytics data. To exercise them, contact us.
+Because your journal stays on your device or in your own iCloud account, we do not hold a copy of it and cannot access, correct or delete it for you. You can do this directly in Trace. Depending on where you live, you may have rights to access, correct, delete or object to the processing of personal data we hold, such as bug reports you have sent. To exercise them, contact us.
 
 ## Children
 
-Trace is not directed to children under <mark>[13]</mark>, and we do not knowingly collect personal data from them.
+Trace is not directed to children under 13, and we do not knowingly collect personal data from them.
 
 ## Changes to this policy
 
@@ -82,6 +89,6 @@ If we change this policy, we will update the effective date above, and tell you 
 
 ## Contact
 
-<mark>[legal name]</mark>
-<mark>[postal address, if required]</mark>
-<mark>[privacy contact email]</mark>
+Trace
+
+support@usetrace.app
