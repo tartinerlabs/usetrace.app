@@ -35,5 +35,21 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["video/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noSvgWithoutTitle": "off"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "off",
+            "noApproximativeNumericConstant": "off"
+          }
+        }
+      }
+    }
+  ]
 }

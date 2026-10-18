@@ -1,0 +1,15 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Renders. Deliveries go to ../public/videos.
+/out/
+
+# Audio tool environments and intermediates
+.venv
+tools/music/stems
+tools/vo/raw
+
+# Score master: rebuilt by tools/music/score.py; only score_ducked.wav is used
+/public/music/score.wav
