@@ -14,18 +14,18 @@ const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const weekday = (day: number) => WEEKDAYS[(day + 2) % 7];
 
 const MEMORIES: Record<number, [title: string, icon: string]> = {
-  1: ["Evening run at East Coast Park", "directions_run"],
-  2: ["First visit to Tiong Bahru", "explore"],
-  3: ["Hawker lunch at Maxwell", "restaurant"],
-  4: ["Ferry to Pulau Ubin", "directions_boat"],
-  5: ["Dinner at Jewel Changi Airport", "restaurant"],
-  7: ["Walk at the Botanic Gardens", "park"],
-  9: ["Drinks at Clarke Quay", "local_bar"],
-  10: ["Cycle to Changi Village", "directions_bike"],
-  11: ["MacRitchie trail", "hiking"],
-  13: ["Late night at Work", "work"],
-  14: ["Haircut in Katong", "content_cut"],
-  15: ["Lunch at Lau Pa Sat", "restaurant"],
+  1: ["Evening run along the beach", "directions_run"],
+  2: ["First visit to a new area", "explore"],
+  3: ["Lunch at the food market", "restaurant"],
+  4: ["Ferry to the island", "directions_boat"],
+  5: ["Dinner at a restaurant", "restaurant"],
+  7: ["Walk in the park", "park"],
+  9: ["Drinks by the river", "local_bar"],
+  10: ["Cycle along the coast", "directions_bike"],
+  11: ["Trail walk at the reservoir", "hiking"],
+  13: ["Late night at the Office", "work"],
+  14: ["Haircut in town", "content_cut"],
+  15: ["Lunch with friends", "restaurant"],
 };
 
 const DAYS = Array.from({ length: 31 }, (_, index) => {

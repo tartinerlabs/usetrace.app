@@ -3,19 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import { onScrollFrame } from "@/components/chapter-rail";
 import { DayMap } from "@/components/day-map";
-import { JEWEL, JOURNEYS, type LatLng, WORK } from "@/lib/sample-day";
+import { JOURNEYS, OFFICE, type Point, RESTAURANT } from "@/lib/sample-day";
 
-// The evening drive from Work to Jewel Changi Airport: 18:15 to 18:43, 20.3 km.
-const DRIVE = JOURNEYS[5].points;
+// The evening drive from the Office to a restaurant: 18:15 to 18:43, 23.5 km.
+const DRIVE = JOURNEYS[3].points;
 const PLAY_MS = 9000;
 
 /** The part of `points` from the start to fraction `f` of its length. */
-function along(points: LatLng[], f: number) {
+function along(points: Point[], f: number) {
   const lengths = points
     .slice(1)
     .map((p, i) => Math.hypot(p[0] - points[i][0], p[1] - points[i][1]));
   let left = f * lengths.reduce((sum, length) => sum + length, 0);
-  const out: LatLng[] = [points[0]];
+  const out: Point[] = [points[0]];
   for (const [i, length] of lengths.entries()) {
     const [a, b] = [points[i], points[i + 1]];
     if (left <= length) {
@@ -79,7 +79,7 @@ export function JourneyPlayback() {
 
   const driven = along(DRIVE, Math.max(0.001, progress));
   const minutes = Math.round(28 * progress);
-  const label = `18:${String(15 + minutes).padStart(2, "0")} · ${(20.3 * progress).toFixed(1)} KM`;
+  const label = `18:${String(15 + minutes).padStart(2, "0")} · ${(23.5 * progress).toFixed(1)} KM`;
 
   return (
     <div
@@ -88,7 +88,7 @@ export function JourneyPlayback() {
     >
       <div
         role="img"
-        aria-label="Playback of the drive from Work to Jewel Changi Airport, about two thirds of the way along the East Coast."
+        aria-label="Playback of the drive from the Office to a restaurant, about two thirds of the way along."
         className="relative aspect-[14/9] bg-[#86c3f2]"
       >
         <DayMap
@@ -103,8 +103,8 @@ export function JourneyPlayback() {
             { mode: "drive", points: driven },
           ]}
           pins={[
-            { at: WORK, label: "Work", side: "l" },
-            { at: JEWEL, label: "Jewel Changi Airport", side: "l" },
+            { at: OFFICE, label: "Office", side: "u" },
+            { at: RESTAURANT, label: "Restaurant", side: "d" },
             { at: driven[driven.length - 1], radius: 9, fill: "var(--sun)" },
           ]}
         />
@@ -144,9 +144,9 @@ export function JourneyPlayback() {
           </div>
         </div>
         <div className="flex justify-between font-mono text-secondary text-xs">
-          <span>18:15 WORK</span>
+          <span>18:15 OFFICE</span>
           <span className="text-ink tabular-nums">{label}</span>
-          <span>18:43 JEWEL CHANGI</span>
+          <span>18:43 RESTAURANT</span>
         </div>
       </div>
     </div>

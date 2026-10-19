@@ -1,231 +1,217 @@
 import type { CSSProperties } from "react";
-import type { LatLng, Mode } from "@/lib/sample-day";
+import type { Mode, Point } from "@/lib/sample-day";
 
-// A simplified Singapore: coastline, parks, reservoirs, the airport and expressways.
-const COAST: LatLng[] = [
-  [1.3, 103.64],
-  [1.35, 103.64],
-  [1.39, 103.68],
-  [1.43, 103.7],
-  [1.445, 103.76],
-  [1.45, 103.8],
-  [1.46, 103.82],
-  [1.44, 103.86],
-  [1.42, 103.88],
-  [1.415, 103.91],
-  [1.395, 103.95],
-  [1.39, 103.985],
-  [1.37, 104.0],
-  [1.345, 104.03],
-  [1.32, 104.0],
-  [1.31, 103.96],
-  [1.3, 103.93],
-  [1.3, 103.9],
-  [1.292, 103.875],
-  [1.278, 103.866],
-  [1.272, 103.848],
-  [1.265, 103.82],
-  [1.28, 103.79],
-  [1.285, 103.76],
-  [1.3, 103.72],
-  [1.29, 103.68],
-];
+// A made-up city, the same as the app's welcome art: no real places.
+// Drawn in the art's 1024 × 1024 space; the sample day uses the same space.
+const LABEL_FONT =
+  "-apple-system, BlinkMacSystemFont, 'SF Pro Text', Geist, system-ui, sans-serif";
 
-const FEATURES: Record<
-  "land" | "green" | "water" | "airport" | "runway" | "coastGreen" | "roads",
-  LatLng[][]
-> = {
-  land: [
-    [
-      [1.462, 103.58],
-      [1.466, 103.7],
-      [1.47, 103.77],
-      [1.472, 103.82],
-      [1.458, 103.88],
-      [1.446, 103.93],
-      [1.436, 103.99],
-      [1.432, 104.08],
-      [1.75, 104.08],
-      [1.75, 103.58],
-    ],
-    [
-      [1.405, 103.93],
-      [1.418, 103.95],
-      [1.421, 103.98],
-      [1.411, 104.005],
-      [1.4, 103.985],
-      [1.398, 103.952],
-    ],
-    [
-      [1.248, 103.808],
-      [1.256, 103.828],
-      [1.253, 103.846],
-      [1.245, 103.838],
-      [1.241, 103.82],
-    ],
-    [
-      [1.258, 103.69],
-      [1.272, 103.71],
-      [1.268, 103.75],
-      [1.255, 103.74],
-    ],
-  ],
-  green: [
-    [
-      [1.338, 103.775],
-      [1.362, 103.778],
-      [1.385, 103.786],
-      [1.405, 103.805],
-      [1.402, 103.826],
-      [1.381, 103.836],
-      [1.356, 103.834],
-      [1.34, 103.818],
-    ],
-    [
-      [1.309, 103.811],
-      [1.323, 103.812],
-      [1.323, 103.821],
-      [1.309, 103.82],
-    ],
-    [
-      [1.346, 103.77],
-      [1.356, 103.772],
-      [1.356, 103.781],
-      [1.346, 103.78],
-    ],
-    [
-      [1.282, 103.862],
-      [1.288, 103.864],
-      [1.286, 103.872],
-      [1.279, 103.869],
-    ],
-    [
-      [1.372, 103.95],
-      [1.388, 103.952],
-      [1.392, 103.965],
-      [1.378, 103.966],
-    ],
-  ],
-  water: [
-    [
-      [1.342, 103.816],
-      [1.351, 103.821],
-      [1.349, 103.832],
-      [1.34, 103.828],
-    ],
-    [
-      [1.394, 103.795],
-      [1.405, 103.808],
-      [1.4, 103.82],
-      [1.391, 103.807],
-    ],
-    [
-      [1.372, 103.818],
-      [1.38, 103.822],
-      [1.377, 103.829],
-      [1.37, 103.826],
-    ],
-    [
-      [1.279, 103.853],
-      [1.29, 103.855],
-      [1.288, 103.862],
-      [1.28, 103.862],
-    ],
-  ],
-  airport: [
-    [
-      [1.33, 103.975],
-      [1.372, 103.968],
-      [1.392, 103.99],
-      [1.378, 104.008],
-      [1.338, 104.005],
-    ],
-  ],
-  runway: [
-    [
-      [1.334, 103.985],
-      [1.382, 103.978],
-    ],
-    [
-      [1.338, 103.995],
-      [1.386, 103.988],
-    ],
-  ],
-  coastGreen: [
-    [
-      [1.293, 103.88],
-      [1.3, 103.905],
-      [1.308, 103.935],
-      [1.318, 103.96],
-    ],
-  ],
-  roads: [
-    [
-      [1.335, 103.7],
-      [1.341, 103.75],
-      [1.337, 103.79],
-      [1.326, 103.82],
-      [1.331, 103.86],
-      [1.336, 103.9],
-      [1.346, 103.94],
-      [1.356, 103.97],
-    ],
-    [
-      [1.288, 103.842],
-      [1.31, 103.846],
-      [1.34, 103.846],
-      [1.372, 103.842],
-      [1.405, 103.836],
-    ],
-    [
-      [1.29, 103.866],
-      [1.3, 103.9],
-      [1.31, 103.938],
-      [1.33, 103.978],
-    ],
-    [
-      [1.36, 103.77],
-      [1.4, 103.77],
-      [1.44, 103.772],
-    ],
-    [
-      [1.29, 103.68],
-      [1.302, 103.75],
-      [1.287, 103.8],
-      [1.276, 103.84],
-    ],
-    [
-      [1.405, 103.836],
-      [1.396, 103.89],
-      [1.376, 103.94],
-      [1.362, 103.978],
-    ],
-    [
-      [1.336, 103.86],
-      [1.36, 103.88],
-      [1.395, 103.905],
-    ],
-    [
-      [1.38, 103.7],
-      [1.372, 103.745],
-      [1.36, 103.77],
-    ],
-  ],
-};
+function City({ labels }: { labels: boolean }) {
+  return (
+    <g>
+      <defs>
+        {/* Building footprints, two grains so blocks don't read as a tile */}
+        <pattern
+          id="city-bld"
+          width="64"
+          height="64"
+          patternUnits="userSpaceOnUse"
+        >
+          <g fill="#EAE6DC" stroke="#DED9CD" strokeWidth="1">
+            <rect x="5" y="5" width="22" height="15" rx="2" />
+            <rect x="31" y="5" width="27" height="21" rx="2" />
+            <rect x="5" y="25" width="15" height="28" rx="2" />
+            <rect x="24" y="31" width="13" height="22" rx="2" />
+            <rect x="41" y="31" width="17" height="12" rx="2" />
+            <rect x="41" y="47" width="17" height="10" rx="2" />
+          </g>
+        </pattern>
+        <pattern
+          id="city-bld2"
+          width="48"
+          height="48"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(14)"
+        >
+          <g fill="#EAE6DC" stroke="#DED9CD" strokeWidth="1">
+            <rect x="4" y="4" width="18" height="18" rx="2" />
+            <rect x="26" y="4" width="18" height="10" rx="2" />
+            <rect x="26" y="18" width="18" height="26" rx="2" />
+            <rect x="4" y="26" width="18" height="18" rx="2" />
+          </g>
+        </pattern>
+        <pattern
+          id="city-trees"
+          width="22"
+          height="22"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="6" cy="6" r="4" fill="#CFE0C4" />
+          <circle cx="17" cy="15" r="3.5" fill="#CFE0C4" />
+        </pattern>
+      </defs>
 
-// w: water, g: green, l: land.
-const LABELS: [string, number, number, "w" | "g" | "l"][] = [
-  ["JOHOR STRAIT", 1.457, 103.8, "w"],
-  ["SINGAPORE STRAIT", 1.235, 103.9, "w"],
-  ["CENTRAL CATCHMENT", 1.372, 103.805, "g"],
-  ["PULAU UBIN", 1.411, 103.968, "l"],
-  ["SENTOSA", 1.249, 103.827, "l"],
-  ["BUKIT TIMAH", 1.336, 103.795, "l"],
-  ["TOA PAYOH", 1.334, 103.85, "l"],
-  ["JURONG", 1.335, 103.72, "l"],
-  ["WOODLANDS", 1.436, 103.787, "l"],
-  ["CHANGI", 1.358, 104.01, "l"],
-];
+      {/* City fabric */}
+      <rect x="-1024" y="-1024" width="3072" height="3072" fill="#F4F2EC" />
+      <rect
+        x="-1024"
+        y="-1024"
+        width="3072"
+        height="3072"
+        fill="url(#city-bld)"
+      />
+      <path
+        d="M-1024 560 L0 560 C 200 600, 380 680, 560 640 C 700 610, 820 640, 1024 600 L 2048 600 L 2048 2048 L -1024 2048 Z"
+        fill="url(#city-bld2)"
+      />
+      <path
+        d="M-1024 560 L0 560 C 200 600, 380 680, 560 640 C 700 610, 820 640, 1024 600 L 2048 600 L 2048 2048 L -1024 2048 Z"
+        fill="#F4F2EC"
+        fillOpacity="0.45"
+      />
+
+      {/* Parks */}
+      {[
+        "M400 90 C 480 60, 620 70, 650 140 C 680 210, 600 250, 520 240 C 440 230, 360 160, 400 90 Z",
+        "M560 760 C 640 720, 760 740, 800 800 C 840 870, 760 930, 660 920 C 560 910, 500 820, 560 760 Z",
+        "M40 760 C 110 730, 200 760, 210 830 C 220 900, 140 930, 80 910 C 20 890, -10 790, 40 760 Z",
+      ].map((d) => (
+        <g key={d}>
+          <path d={d} fill="#DDE8D3" />
+          <path d={d} fill="url(#city-trees)" />
+        </g>
+      ))}
+      <path
+        d="M610 820 C 640 800, 700 806, 712 836 C 724 866, 680 884, 646 878 C 610 872, 590 840, 610 820 Z"
+        fill="#C9DCEB"
+      />
+
+      {/* River */}
+      <g fill="none" strokeLinecap="round">
+        <path
+          d="M-1024 600 L-30 520 C 180 450, 380 600, 560 540 S 860 430, 1054 500 L 2048 560"
+          stroke="#C9DCEB"
+          strokeWidth="78"
+        />
+        <path
+          d="M-1024 600 L-30 520 C 180 450, 380 600, 560 540 S 860 430, 1054 500 L 2048 560"
+          stroke="#D5E4F0"
+          strokeWidth="40"
+        />
+      </g>
+
+      {/* Minor streets */}
+      <g fill="none" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round">
+        {[
+          "M-20 140 C 200 130, 360 160, 400 170",
+          "M650 180 C 780 170, 900 190, 1044 170",
+          "M-20 380 C 120 370, 200 360, 270 362",
+          "M330 220 C 520 250, 620 260, 740 240",
+          "M820 230 C 900 260, 960 250, 1044 260",
+          "M120 -20 C 140 120, 110 260, 130 470",
+          "M520 250 C 530 340, 500 420, 520 520",
+          "M640 260 C 650 340, 630 400, 640 480",
+          "M920 -20 C 900 140, 940 300, 920 460",
+          "M-20 660 C 140 650, 300 690, 420 700",
+          "M420 600 C 440 700, 400 820, 430 1044",
+          "M140 600 C 160 700, 230 760, 220 1044",
+          "M860 560 C 880 680, 860 820, 900 1044",
+          "M300 860 C 420 880, 500 860, 560 850",
+          "M820 960 C 900 950, 960 960, 1044 950",
+        ].map((d) => (
+          <path key={d} d={d} />
+        ))}
+      </g>
+
+      {/* Arterials, cased; where they meet the river they read as bridges */}
+      {["#E2DDD1", "#FFFFFF"].map((stroke, i) => (
+        <g
+          key={stroke}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={i ? 16 : 22}
+          strokeLinecap="round"
+        >
+          <path d="M-1024 300 L-20 300 C 300 260, 640 360, 1044 290 L 2048 290" />
+          <path d="M-1024 720 L-20 720 C 340 760, 700 670, 1044 740 L 2048 740" />
+          <path d="M300 -1024 L300 -20 C 330 300, 250 700, 320 1044 L 320 2048" />
+          <path d="M760 -1024 L760 -20 C 730 300, 820 700, 760 1044 L 760 2048" />
+        </g>
+      ))}
+
+      {/* Rail line */}
+      <g fill="none">
+        <path
+          d="M-1024 410 L-20 406 C 120 400, 200 398, 290 398 C 400 400, 520 440, 640 432 C 780 422, 900 390, 1044 380 L 2048 370"
+          stroke="#FFFFFF"
+          strokeWidth="9"
+        />
+        <path
+          d="M-1024 410 L-20 406 C 120 400, 200 398, 290 398 C 400 400, 520 440, 640 432 C 780 422, 900 390, 1044 380 L 2048 370"
+          stroke="#B9B4A8"
+          strokeWidth="3"
+          strokeDasharray="10 6"
+        />
+      </g>
+
+      {/* Points of interest */}
+      <g fill="#BDB8AC">
+        {[
+          [210, 180],
+          [440, 330],
+          [580, 300],
+          [860, 330],
+          [200, 640],
+          [500, 700],
+          [880, 660],
+          [380, 900],
+          [960, 880],
+        ].map(([cx, cy]) => (
+          <circle key={`${cx},${cy}`} cx={cx} cy={cy} r="5" />
+        ))}
+      </g>
+
+      {labels && (
+        <>
+          <g
+            fontFamily={LABEL_FONT}
+            fontSize="15"
+            fontWeight="500"
+            letterSpacing="3.5"
+            fill="#1B1B19"
+            fillOpacity="0.32"
+          >
+            <text x="520" y="120">
+              NORTH PARK
+            </text>
+            <text x="70" y="600">
+              OLD TOWN
+            </text>
+            <text x="840" y="140">
+              HILLSIDE
+            </text>
+            <text x="600" y="980">
+              SOUTH GARDENS
+            </text>
+          </g>
+          <text
+            fontFamily={LABEL_FONT}
+            fontSize="14"
+            fontStyle="italic"
+            letterSpacing="2"
+            fill="#5D88AA"
+            fillOpacity="0.75"
+            x="380"
+            y="568"
+            transform="rotate(-6 380 568)"
+          >
+            River
+          </text>
+        </>
+      )}
+    </g>
+  );
+}
 
 // Route styles mirror the app's map: dotted walking, a heavier train line.
 const ROUTE_STYLE: Record<
@@ -239,14 +225,14 @@ const ROUTE_STYLE: Record<
 
 export type MapRoute = {
   mode: Mode;
-  points: LatLng[];
+  points: Point[];
   opacity?: number;
   /** Draws the route in once, after `delay` seconds over `duration` seconds. */
   draw?: { delay: number; duration: number };
 };
 
 export type MapPin = {
-  at: LatLng;
+  at: Point;
   label?: string;
   side?: "l" | "r" | "u" | "d";
   radius?: number;
@@ -254,7 +240,7 @@ export type MapPin = {
   className?: string;
 };
 
-/** The sample day on a map of Singapore, fitted to `fit` and cropped to fill its box. */
+/** The sample day on the made-up city, fitted to `fit` and cropped to fill its box. */
 export function DayMap({
   width,
   height,
@@ -268,7 +254,7 @@ export function DayMap({
 }: {
   width: number;
   height: number;
-  fit: LatLng[];
+  fit: Point[];
   padding: number | [number, number, number, number];
   fontSize?: number;
   strokeScale?: number;
@@ -277,12 +263,12 @@ export function DayMap({
   pins?: MapPin[];
 }) {
   const fs = fontSize;
-  const lats = fit.map((p) => p[0]);
-  const lngs = fit.map((p) => p[1]);
-  const south = Math.min(...lats);
-  const north = Math.max(...lats);
-  const west = Math.min(...lngs);
-  const east = Math.max(...lngs);
+  const xs = fit.map((p) => p[0]);
+  const ys = fit.map((p) => p[1]);
+  const left = Math.min(...xs);
+  const right = Math.max(...xs);
+  const top = Math.min(...ys);
+  const bottom = Math.max(...ys);
   const [pt, pr, pb, pl] =
     typeof padding === "number"
       ? [padding, padding, padding, padding]
@@ -290,16 +276,13 @@ export function DayMap({
   const innerWidth = width - pl - pr;
   const innerHeight = height - pt - pb;
   const scale = Math.min(
-    innerWidth / (east - west),
-    innerHeight / (north - south),
+    innerWidth / (right - left),
+    innerHeight / (bottom - top),
   );
-  const ox = pl + (innerWidth - (east - west) * scale) / 2;
-  const oy = pt + (innerHeight - (north - south) * scale) / 2;
-  const project = (p: LatLng) => [
-    ox + (p[1] - west) * scale,
-    oy + (north - p[0]) * scale,
-  ];
-  const path = (points: LatLng[], closed = false) =>
+  const ox = pl + (innerWidth - (right - left) * scale) / 2 - left * scale;
+  const oy = pt + (innerHeight - (bottom - top) * scale) / 2 - top * scale;
+  const project = (p: Point) => [ox + p[0] * scale, oy + p[1] * scale];
+  const path = (points: Point[]) =>
     points
       .map(
         (p, i) =>
@@ -308,34 +291,7 @@ export function DayMap({
             .map((v) => v.toFixed(1))
             .join(" "),
       )
-      .join("") + (closed ? "Z" : "");
-
-  const areas = (
-    name: string,
-    shapes: LatLng[][],
-    style: CSSProperties,
-    closed = true,
-  ) =>
-    shapes.map((shape, i) => (
-      <path
-        // biome-ignore lint/suspicious/noArrayIndexKey: fixed map features
-        key={`${name}${i}`}
-        d={path(shape, closed)}
-        style={style}
-      />
-    ));
-  const lines = (name: string, shapes: LatLng[][], style: CSSProperties) =>
-    areas(
-      name,
-      shapes,
-      {
-        fill: "none",
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-        ...style,
-      },
-      false,
-    );
+      .join("");
 
   return (
     <svg
@@ -344,65 +300,11 @@ export function DayMap({
       aria-hidden="true"
       className="absolute inset-0 block size-full"
     >
-      <rect
-        x={-width}
-        y={-height}
-        width={width * 3}
-        height={height * 3}
-        fill="#86c3f2"
-      />
-      <path d={path(COAST, true)} fill="#f7f3ea" />
-      {areas("land", FEATURES.land, { fill: "#f0ece2" })}
-      {areas("airport", FEATURES.airport, { fill: "#e6ddf3" })}
-      {areas("green", FEATURES.green, { fill: "#aee29a" })}
-      {areas("water", FEATURES.water, { fill: "#86c3f2" })}
-      {lines("coast", FEATURES.coastGreen, {
-        stroke: "#aee29a",
-        strokeWidth: fs * 0.6,
-      })}
-      {lines("runway", FEATURES.runway, {
-        stroke: "#cfc4e2",
-        strokeWidth: fs * 0.22,
-      })}
-      {lines("casing", FEATURES.roads, {
-        stroke: "#e5a72e",
-        strokeWidth: fs * 0.42,
-      })}
-      {lines("road", FEATURES.roads, {
-        stroke: "#ffcc4d",
-        strokeWidth: fs * 0.28,
-      })}
-      {labels &&
-        LABELS.map(([text, lat, lng, type]) => {
-          const [x, y] = project([lat, lng]);
-          return (
-            <text
-              key={text}
-              x={x}
-              y={y}
-              textAnchor="middle"
-              dominantBaseline="central"
-              style={{
-                fontFamily:
-                  "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-                fontSize: fs * 0.66,
-                fontWeight: type === "l" ? 600 : 500,
-                letterSpacing: fs * 0.06,
-                fill:
-                  type === "w"
-                    ? "#2d78c2"
-                    : type === "g"
-                      ? "#2e7a2b"
-                      : "#76767b",
-                paintOrder: "stroke",
-                stroke: type === "w" ? "none" : "rgba(255,255,255,0.8)",
-                strokeWidth: fs * 0.18,
-              }}
-            >
-              {text}
-            </text>
-          );
-        })}
+      <g
+        transform={`translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${scale.toFixed(4)})`}
+      >
+        <City labels={labels} />
+      </g>
       {routes.map((route, i) => {
         const style = ROUTE_STYLE[route.mode];
         const d = path(route.points);
