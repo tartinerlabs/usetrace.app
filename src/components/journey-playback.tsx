@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { onScrollFrame } from "@/components/chapter-rail";
 import { DayMap } from "@/components/day-map";
-import { JOURNEYS, OFFICE, type Point, RESTAURANT } from "@/lib/sample-day";
+import { COFFEE, JOURNEYS, type Point, WATERFRONT } from "@/lib/sample-day";
 
-// The evening drive from the Office to a restaurant: 18:15 to 18:43, 23.5 km.
+// The evening drive from Coffee to the Waterfront: 17:45 to 18:20, 24.3 km.
 const DRIVE = JOURNEYS[3].points;
 const PLAY_MS = 9000;
 
@@ -78,8 +78,8 @@ export function JourneyPlayback() {
   }, []);
 
   const driven = along(DRIVE, Math.max(0.001, progress));
-  const minutes = Math.round(28 * progress);
-  const label = `18:${String(15 + minutes).padStart(2, "0")} · ${(23.5 * progress).toFixed(1)} KM`;
+  const minutes = 17 * 60 + 45 + Math.round(35 * progress);
+  const label = `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")} · ${(24.3 * progress).toFixed(1)} KM`;
 
   return (
     <div
@@ -88,7 +88,7 @@ export function JourneyPlayback() {
     >
       <div
         role="img"
-        aria-label="Playback of the drive from the Office to a restaurant, about two thirds of the way along."
+        aria-label="Playback of the drive from Coffee to the Waterfront, about two thirds of the way along."
         className="relative aspect-[14/9] bg-[#86c3f2]"
       >
         <DayMap
@@ -103,8 +103,8 @@ export function JourneyPlayback() {
             { mode: "drive", points: driven },
           ]}
           pins={[
-            { at: OFFICE, label: "Office", side: "u" },
-            { at: RESTAURANT, label: "Restaurant", side: "d" },
+            { at: COFFEE, label: "Coffee", side: "u" },
+            { at: WATERFRONT, label: "Waterfront", side: "d" },
             { at: driven[driven.length - 1], radius: 9, fill: "var(--sun)" },
           ]}
         />
@@ -144,9 +144,9 @@ export function JourneyPlayback() {
           </div>
         </div>
         <div className="flex justify-between font-mono text-secondary text-xs">
-          <span>18:15 OFFICE</span>
+          <span>17:45 COFFEE</span>
           <span className="text-ink tabular-nums">{label}</span>
-          <span>18:43 RESTAURANT</span>
+          <span>18:20 WATERFRONT</span>
         </div>
       </div>
     </div>
