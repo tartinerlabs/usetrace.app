@@ -52,86 +52,83 @@ export const ACTIVITIES: Record<
 
 export type DayPart = { kind: Activity; name: string; minutes: number };
 
+// The same day as the app's sample: places are named by what they are, not by landmark.
 export const SAMPLE_DAY: DayPart[] = [
   { kind: "place", name: "Home", minutes: 462 },
   { kind: "walk", name: "Walk", minutes: 6 },
-  { kind: "train", name: "Downtown Line", minutes: 32 },
+  { kind: "train", name: "The morning train", minutes: 32 },
   { kind: "walk", name: "Walk", minutes: 7 },
-  { kind: "place", name: "Work", minutes: 238 },
-  { kind: "walk", name: "Walk", minutes: 14 },
-  { kind: "place", name: "Marina Bay Sands", minutes: 45 },
-  { kind: "walk", name: "Walk", minutes: 14 },
-  { kind: "place", name: "Work", minutes: 277 },
+  { kind: "place", name: "Office", minutes: 588 },
   { kind: "drive", name: "Drive", minutes: 28 },
-  { kind: "place", name: "Jewel Changi Airport", minutes: 89 },
+  { kind: "place", name: "Restaurant", minutes: 89 },
   { kind: "drive", name: "Drive", minutes: 30 },
   { kind: "place", name: "Home", minutes: 198 },
 ];
 
-/** Totals of the sample day, as the Today screen shows them. */
-export const DAY_TOTALS = { km: 54.8, minutesInMotion: 129, places: 4 };
-
-export type LatLng = [number, number];
+/** A point on the made-up city of the map, in its 1024 × 1024 space. */
+export type Point = [x: number, y: number];
 export type Mode = "walk" | "train" | "drive";
 
-export const HOME: LatLng = [1.353, 103.948];
-export const WORK: LatLng = [1.279, 103.8505];
-export const MARINA_BAY_SANDS: LatLng = [1.2834, 103.8607];
-export const JEWEL: LatLng = [1.3602, 103.9894];
-const BEDOK: LatLng = [1.3546, 103.9453];
-const DOWNTOWN: LatLng = [1.2793, 103.8528];
+// The city is made up, so the map shows no real places.
+export const HOME: Point = [250, 250];
+export const OFFICE: Point = [700, 330];
+export const RESTAURANT: Point = [860, 560];
+const HOME_STATION: Point = [290, 398];
+const OFFICE_STATION: Point = [640, 432];
 
-// The routes of the day, in order.
-export const JOURNEYS: { mode: Mode; points: LatLng[] }[] = [
-  { mode: "walk", points: [HOME, [1.3536, 103.947], BEDOK] },
+// The routes of the day, in order. They follow the streets and the rail line of the map.
+export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
+  {
+    mode: "walk",
+    points: [HOME, [262, 280], [272, 320], [282, 360], HOME_STATION],
+  },
   {
     mode: "train",
     points: [
-      BEDOK,
-      [1.3456, 103.9384],
-      [1.3365, 103.933],
-      [1.3348, 103.918],
-      [1.3349, 103.9089],
-      [1.33, 103.899],
-      [1.3263, 103.89],
-      [1.3268, 103.8835],
-      [1.3214, 103.8716],
-      [1.3139, 103.863],
-      [1.3054, 103.8556],
-      [1.2985, 103.8505],
-      [1.2925, 103.8445],
-      [1.2843, 103.8436],
-      [1.2821, 103.8485],
-      DOWNTOWN,
+      HOME_STATION,
+      [350, 399],
+      [400, 401],
+      [460, 413],
+      [520, 428],
+      [580, 435],
+      OFFICE_STATION,
     ],
   },
-  { mode: "walk", points: [DOWNTOWN, [1.2791, 103.8515], WORK] },
   {
     mode: "walk",
-    points: [WORK, [1.28, 103.856], [1.2815, 103.859], MARINA_BAY_SANDS],
-  },
-  {
-    mode: "walk",
-    points: [MARINA_BAY_SANDS, [1.2815, 103.859], [1.28, 103.856], WORK],
+    points: [OFFICE_STATION, [655, 405], [670, 375], [685, 350], OFFICE],
   },
   {
     mode: "drive",
     points: [
-      WORK,
-      MARINA_BAY_SANDS,
-      [1.29, 103.87],
-      [1.296, 103.885],
-      [1.302, 103.905],
-      [1.313, 103.93],
-      [1.326, 103.955],
-      [1.34, 103.978],
-      [1.353, 103.988],
-      JEWEL,
+      OFFICE,
+      [735, 334],
+      [758, 355],
+      [768, 420],
+      [778, 500],
+      [800, 550],
+      [830, 566],
+      RESTAURANT,
     ],
   },
   {
     mode: "drive",
-    points: [JEWEL, [1.358, 103.98], [1.356, 103.965], [1.354, 103.955], HOME],
+    points: [
+      RESTAURANT,
+      [890, 515],
+      [918, 460],
+      [925, 380],
+      [930, 302],
+      [850, 310],
+      [760, 322],
+      [640, 318],
+      [450, 300],
+      [300, 288],
+      [270, 272],
+      HOME,
+    ],
+    // The way home sits back, so the morning reads first.
+    opacity: 0.5,
   },
 ];
 

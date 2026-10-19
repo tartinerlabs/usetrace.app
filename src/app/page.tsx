@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { AppStoreBadge } from "@/components/app-store-badge";
 import { ChapterRail } from "@/components/chapter-rail";
-import { CountUp } from "@/components/count-up";
 import { DayMap, type MapPin, type MapRoute } from "@/components/day-map";
 import { DayRibbon } from "@/components/day-ribbon";
 import { DuoStage } from "@/components/duo-stage";
@@ -14,12 +13,11 @@ import {
   type Activity,
   DAY_POINTS,
   HOME,
-  JEWEL,
   JOURNEYS,
-  MARINA_BAY_SANDS,
+  OFFICE,
+  RESTAURANT,
   SAMPLE_DAY,
   STAY_OPACITY,
-  WORK,
 } from "@/lib/sample-day";
 import {
   APP_STORE_NAME,
@@ -114,21 +112,11 @@ function Icon({
 }
 
 const DAY_MAP_LABEL =
-  "Map of Singapore with the routes of Monday 5 October: a train from Home to Work, a lunch walk to Marina Bay Sands, a drive to Jewel Changi Airport and a drive home.";
+  "Map of Monday 5 October: a train from Home to the Office, a drive to a restaurant and a drive home.";
 
-const [walkToStation, train, walkToWork, lunchWalk, , eveningDrive, driveHome] =
-  JOURNEYS;
-
-/** The routes of the day, without the walk back from lunch, drawn in one after another. */
+/** The routes of the day, drawn in one after another. */
 function drawnRoutes(timings: [delay: number, duration: number][]): MapRoute[] {
-  return [
-    walkToStation,
-    train,
-    walkToWork,
-    lunchWalk,
-    eveningDrive,
-    driveHome,
-  ].map((journey, i) => ({
+  return JOURNEYS.map((journey, i) => ({
     ...journey,
     // The routes start to draw 0.9 s after the page loads.
     draw: { delay: 0.9 + timings[i][0], duration: timings[i][1] },
@@ -154,166 +142,13 @@ function RibbonStrip({ className }: { className: string }) {
   );
 }
 
-function Stat({ value, label }: { value: ReactNode; label: string }) {
-  return (
-    <span className="flex flex-col gap-[0.5cqw]">
-      <span className="font-medium text-[6.2cqw] tabular-nums tracking-[-0.2cqw]">
-        {value}
-      </span>
-      <span className="text-[3.1cqw] text-secondary">{label}</span>
-    </span>
-  );
-}
-
-/** The Today screen, drawn in HTML so it stays sharp at any size. */
-function TodayScreen() {
-  const tabs = [
-    { icon: "route", label: "Today", active: true },
-    { icon: "history", label: "History" },
-    { icon: "location_on", label: "Places" },
-    { icon: "account_circle", label: "You" },
-  ];
-
-  return (
-    <div className="absolute right-0 bottom-0 w-[46%] rounded-[clamp(26px,4.6vw,50px)] bg-ink p-1 shadow-[0_30px_60px_-20px_rgba(27,27,25,0.45)]">
-      <div
-        role="img"
-        aria-label="The Today screen in Trace. It shows Monday 5 October: 54.8 km travelled, 2 h 9 min in motion and 4 places, with the routes on a map of Singapore."
-        className="@container relative aspect-[402/874] w-full overflow-hidden rounded-[clamp(22px,4.2vw,46px)] bg-canvas text-ink"
-      >
-        <span
-          aria-hidden="true"
-          className="absolute top-[2.7cqw] left-1/2 z-[2] h-[9.2cqw] w-[31cqw] -translate-x-1/2 rounded-full bg-black"
-        />
-        <div className="box-content flex h-[9.2cqw] items-center justify-between pt-[2.7cqw] pr-[8cqw] pl-[10cqw] font-semibold text-[4.2cqw]">
-          <span>19:38</span>
-          <span className="flex items-center gap-[1.5cqw]">
-            <Icon name="wifi" className="text-[4.6cqw]" />
-            <span className="h-[3cqw] w-[6.5cqw] rounded-[1cqw] bg-ink" />
-          </span>
-        </div>
-        <div className="flex flex-col px-[6cqw] pt-[5.6cqw]">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-[1.5cqw]">
-              {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
-              <img src="/brand/logo.svg" alt="" className="w-[4.6cqw]" />
-              <span className="font-semibold text-[5cqw] tracking-[-0.2cqw]">
-                trace
-              </span>
-            </span>
-            <span className="flex items-center gap-[1.4cqw] rounded-full bg-[#e2e6dc] px-[3.6cqw] py-[2cqw] text-[#2e4a3a] text-[3.3cqw]">
-              <Icon name="auto_awesome" className="text-[3.8cqw]" />
-              Sample day
-            </span>
-          </div>
-          <span className="mt-[6cqw] text-[5cqw] text-secondary">Monday</span>
-          <span className="font-semibold text-[12.4cqw] leading-[1.05] tracking-[-0.6cqw]">
-            5 Oct
-          </span>
-          <span className="mt-[2.5cqw] text-[3.7cqw] text-body">
-            City mornings. An evening at Changi.
-          </span>
-          <div className="mt-[5cqw] flex gap-[7cqw]">
-            <Stat value={<CountUp total="km" />} label="travelled" />
-            <Stat value={<CountUp total="motion" />} label="in motion" />
-            <Stat value={<CountUp total="places" />} label="places" />
-          </div>
-          <div className="mt-[5cqw] overflow-hidden rounded-[5cqw] border border-line bg-surface">
-            <div className="relative h-[64cqw] overflow-hidden bg-[#f7f3ea]">
-              <DayMap
-                width={352}
-                height={256}
-                fit={DAY_POINTS}
-                padding={34}
-                fontSize={15}
-                strokeScale={1.1}
-                routes={drawnRoutes([
-                  [0, 0.3],
-                  [0.2, 1.2],
-                  [1.3, 0.2],
-                  [1.4, 0.2],
-                  [1.5, 1],
-                  [2.4, 1.1],
-                ]).map((route) =>
-                  route.points === driveHome.points
-                    ? { ...route, opacity: 0.55 }
-                    : route,
-                )}
-                pins={[
-                  { at: HOME, label: "Home", side: "d" },
-                  { at: WORK, label: "Work", side: "l", className: "stop-in" },
-                  {
-                    at: MARINA_BAY_SANDS,
-                    label: "Marina Bay Sands",
-                    side: "r",
-                    className: "stop-in",
-                  },
-                  {
-                    at: JEWEL,
-                    label: "Jewel Changi",
-                    side: "u",
-                    className: "stop-in-late",
-                  },
-                ]}
-              />
-              <span className="absolute top-[3.5cqw] right-[3.5cqw] rounded-full bg-white/85 px-[2.6cqw] py-[1.2cqw] font-mono text-[2.6cqw] tracking-[0.4cqw]">
-                SINGAPORE
-              </span>
-            </div>
-            <div className="flex gap-[5cqw] px-[4cqw] py-[3.4cqw] font-medium text-[3.2cqw]">
-              {(["walk", "drive", "train"] as const).map((kind) => (
-                <span
-                  key={kind}
-                  className="flex items-center gap-[1cqw]"
-                  style={{ color: ACTIVITIES[kind].color }}
-                >
-                  <Icon name={ACTIVITIES[kind].icon} className="text-[4cqw]" />
-                  {{ walk: "Walking", drive: "Driving", train: "Train" }[kind]}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="mt-[6cqw] flex justify-between text-[2.8cqw] text-secondary">
-            <span className="font-mono tracking-[0.4cqw]">A DAY IN COLOUR</span>
-            <span>Touch to explore</span>
-          </div>
-          <div className="mt-[3cqw] flex h-[6cqw] gap-[0.6cqw]">
-            {SAMPLE_DAY.map((part, index) => (
-              <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: fixed order of the day
-                key={index}
-                className="rounded-[1.2cqw]"
-                style={{
-                  flex: `${part.minutes} 1 0`,
-                  background: ACTIVITIES[part.kind].color,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="absolute right-[5cqw] bottom-[4cqw] left-[5cqw] flex rounded-full bg-white/80 p-[1.4cqw] shadow-[0_1cqw_5cqw_rgba(27,27,25,0.14)]">
-          {tabs.map((tab) => (
-            <span
-              key={tab.label}
-              className={`flex flex-1 flex-col items-center gap-[0.6cqw] rounded-full py-[2cqw] ${tab.active ? "bg-ink/[0.07] text-walk" : ""}`}
-            >
-              <Icon name={tab.icon} className="text-[6cqw]" />
-              <span className="font-semibold text-[2.8cqw]">{tab.label}</span>
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function DayStoryCard() {
   return (
     <div className={`${card} overflow-hidden`}>
       <div
         role="img"
         aria-label={DAY_MAP_LABEL}
-        className="relative aspect-[7/5] bg-[#86c3f2]"
+        className="relative aspect-[7/5] bg-canvas"
       >
         <DayMap
           width={560}
@@ -324,10 +159,9 @@ function DayStoryCard() {
           strokeScale={1.2}
           routes={JOURNEYS}
           pins={[
-            { at: HOME, label: "Home", side: "d" },
-            { at: WORK, label: "Work", side: "l" },
-            { at: MARINA_BAY_SANDS, label: "Marina Bay Sands", side: "r" },
-            { at: JEWEL, label: "Jewel Changi Airport", side: "u" },
+            { at: HOME, label: "Home", side: "u" },
+            { at: OFFICE, label: "Office", side: "u" },
+            { at: RESTAURANT, label: "Restaurant", side: "d" },
           ]}
         />
       </div>
@@ -336,13 +170,12 @@ function DayStoryCard() {
           DAILY STORY · MONDAY 5 OCT
         </span>
         <span className="font-semibold text-[22px] tracking-[-0.3px]">
-          City mornings. An evening at Changi.
+          City mornings. A slower evening.
         </span>
         <p className="text-pretty text-[15px] text-secondary leading-normal">
-          You were out the door at 7:42 and on the Downtown Line soon after. You
-          spent most of the day at Work, with a lunch walk to Marina Bay Sands.
-          In the evening you drove to Jewel Changi Airport for dinner, and were
-          home by 8:42.
+          You were out the door at 7:42 and on the train soon after. Most of the
+          day belonged to the Office. In the evening you drove to a restaurant
+          for dinner, and were home by 8:42.
         </p>
       </div>
     </div>
@@ -358,21 +191,21 @@ const PLACES = [
     private: true,
   },
   {
-    name: "Work",
+    name: "Office",
     icon: "work",
     visits: 143,
     usual: "Usually arrives 08:31",
     private: false,
   },
   {
-    name: "Marina Bay Sands",
-    icon: "restaurant",
-    visits: 9,
-    usual: "Usually arrives 12:39",
+    name: "Park",
+    icon: "park",
+    visits: 28,
+    usual: "Usually arrives 09:16",
     private: false,
   },
   {
-    name: "Jewel Changi Airport",
+    name: "Restaurant",
     icon: "restaurant",
     visits: 12,
     usual: "Usually arrives 18:49",
@@ -487,7 +320,7 @@ function ExploreCard() {
         <span className="rounded-lg bg-sun px-2.5 py-1 font-semibold text-on-sun text-sm">
           First
         </span>
-        <span className="text-[15px]">First visit to Tiong Bahru · 2 Oct</span>
+        <span className="text-[15px]">First visit to a new area · 2 Oct</span>
       </div>
     </div>
   );
@@ -547,17 +380,22 @@ const CHAPTERS: {
 ];
 
 const STORY = [
-  { icon: "work", colour: "var(--train)", text: "At work", time: "08:27" },
   {
-    icon: "restaurant",
-    colour: "var(--walk)",
-    text: "Lunch at Marina Bay Sands",
-    time: "12:39",
+    icon: "train",
+    colour: "var(--train)",
+    text: "The morning train",
+    time: "07:49",
+  },
+  {
+    icon: "work",
+    colour: "var(--train)",
+    text: "At the Office",
+    time: "08:27",
   },
   {
     icon: "restaurant",
     colour: "var(--drive)",
-    text: "Dinner at Jewel Changi",
+    text: "Dinner at a restaurant",
     time: "18:49",
   },
 ];
@@ -608,13 +446,13 @@ function DuoPhone() {
                 </span>
               </div>
               <span className="text-[clamp(10px,1.4vw,17px)] text-body">
-                City mornings. An evening at Changi.
+                City mornings. A slower evening.
               </span>
               <div className="flex gap-[clamp(10px,2.6vw,32px)]">
                 {[
-                  ["54.8 km", "travelled"],
-                  ["2 h 9 m", "in motion"],
-                  ["4", "places"],
+                  ["49.3 km", "travelled"],
+                  ["1 h 41 m", "in motion"],
+                  ["3", "places"],
                 ].map(([value, label]) => (
                   <div key={label} className="flex flex-col">
                     <span className="font-semibold text-[clamp(14px,2.4vw,30px)] tracking-[-0.5px]">
@@ -686,7 +524,7 @@ function DuoPhone() {
                 <div
                   role="img"
                   aria-label="The map of Monday 5 October on the left half of the inner display."
-                  className="absolute inset-0 bg-[#86c3f2]"
+                  className="absolute inset-0 bg-canvas"
                 >
                   <DayMap
                     width={350}
@@ -696,14 +534,9 @@ function DuoPhone() {
                     fontSize={12}
                     routes={JOURNEYS}
                     pins={[
-                      { at: HOME, label: "Home", side: "d" },
-                      { at: WORK, label: "Work", side: "l" },
-                      {
-                        at: MARINA_BAY_SANDS,
-                        label: "Marina Bay Sands",
-                        side: "u",
-                      },
-                      { at: JEWEL, label: "Jewel Changi", side: "u" },
+                      { at: HOME, label: "Home", side: "u" },
+                      { at: OFFICE, label: "Office", side: "u" },
+                      { at: RESTAURANT, label: "Restaurant", side: "d" },
                     ]}
                   />
                 </div>
@@ -733,7 +566,7 @@ function DuoPhone() {
                     WebkitBackdropFilter: foldBlur,
                   }}
                 />
-                <div className="relative h-[44%] w-full flex-none bg-[#86c3f2]">
+                <div className="relative h-[44%] w-full flex-none bg-canvas">
                   <DayMap
                     width={400}
                     height={256}
@@ -742,7 +575,7 @@ function DuoPhone() {
                     fontSize={12}
                     labels={false}
                     routes={JOURNEYS}
-                    pins={[HOME, WORK, MARINA_BAY_SANDS, JEWEL].map(
+                    pins={[HOME, OFFICE, RESTAURANT].map(
                       (at): MapPin => ({ at }),
                     )}
                   />
@@ -758,8 +591,8 @@ function DuoPhone() {
                   </div>
                   <div className="flex gap-[clamp(10px,2.4vw,28px)]">
                     {[
-                      ["54.8 km", "travelled"],
-                      ["4", "places"],
+                      ["49.3 km", "travelled"],
+                      ["3", "places"],
                     ].map(([value, label]) => (
                       <div key={label} className="flex flex-col">
                         <span className="font-semibold text-[clamp(13px,2.2vw,26px)] tracking-[-0.5px]">
@@ -927,49 +760,44 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className="relative aspect-[1/1.08] w-full max-w-[620px] justify-self-center">
-            <div
-              role="img"
-              aria-label={DAY_MAP_LABEL}
-              className="absolute top-[4%] left-0 h-[82%] w-[84%] overflow-hidden rounded-[32px] border border-line bg-[#86c3f2]"
-            >
-              <DayMap
-                width={520}
-                height={560}
-                fit={DAY_POINTS}
-                padding={[150, 250, 150, 110]}
-                fontSize={15}
-                strokeScale={1.3}
-                routes={drawnRoutes([
-                  [0.2, 0.3],
-                  [0.4, 1.2],
-                  [1.5, 0.2],
-                  [1.6, 0.2],
-                  [1.7, 1],
-                  [2.6, 1.1],
-                ])}
-                pins={[
-                  { at: HOME, label: "Home", side: "d" },
-                  { at: WORK, label: "Work", side: "l", className: "stop-in" },
-                  {
-                    at: MARINA_BAY_SANDS,
-                    label: "Marina Bay Sands",
-                    side: "d",
-                    className: "stop-in",
-                  },
-                  {
-                    at: JEWEL,
-                    label: "Jewel Changi",
-                    side: "u",
-                    className: "stop-in-late",
-                  },
-                ]}
-              />
-              <span className="absolute top-5 left-5 rounded-full bg-white/85 px-3 py-1.5 font-mono text-xs tracking-[1px]">
-                MONDAY 5 OCT · SINGAPORE
-              </span>
-            </div>
-            <TodayScreen />
+          <div
+            role="img"
+            aria-label={DAY_MAP_LABEL}
+            className="relative aspect-square w-full max-w-[560px] justify-self-center overflow-hidden rounded-[36px] bg-canvas"
+          >
+            <DayMap
+              width={540}
+              height={540}
+              fit={DAY_POINTS}
+              padding={[90, 60, 60, 60]}
+              fontSize={16}
+              strokeScale={1.6}
+              routes={drawnRoutes([
+                [0.2, 0.3],
+                [0.4, 1.2],
+                [1.5, 0.2],
+                [1.7, 1],
+                [2.6, 1.1],
+              ])}
+              pins={[
+                { at: HOME, label: "Home", side: "u" },
+                {
+                  at: OFFICE,
+                  label: "Office",
+                  side: "u",
+                  className: "stop-in",
+                },
+                {
+                  at: RESTAURANT,
+                  label: "Restaurant",
+                  side: "d",
+                  className: "stop-in-late",
+                },
+              ]}
+            />
+            <span className="absolute top-5 left-5 rounded-full bg-white/85 px-3 py-1.5 font-mono text-xs tracking-[1px]">
+              MONDAY 5 OCT
+            </span>
           </div>
         </section>
 
