@@ -18,7 +18,7 @@ const MEMORIES: Record<number, [title: string, icon: string]> = {
   2: ["First visit to a new area", "explore"],
   3: ["Lunch at the food market", "restaurant"],
   4: ["Ferry to the island", "directions_boat"],
-  5: ["Dinner at a restaurant", "restaurant"],
+  5: ["Evening at the Waterfront", "waves"],
   7: ["Walk in the park", "park"],
   9: ["Drinks by the river", "local_bar"],
   10: ["Cycle along the coast", "directions_bike"],

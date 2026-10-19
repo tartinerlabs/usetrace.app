@@ -54,13 +54,13 @@ export type DayPart = { kind: Activity; name: string; minutes: number };
 
 // The same day as the app's sample: places are named by what they are, not by landmark.
 export const SAMPLE_DAY: DayPart[] = [
-  { kind: "place", name: "Home", minutes: 462 },
+  { kind: "place", name: "Home", minutes: 485 },
   { kind: "walk", name: "Walk", minutes: 6 },
-  { kind: "train", name: "The morning train", minutes: 32 },
-  { kind: "walk", name: "Walk", minutes: 7 },
-  { kind: "place", name: "Office", minutes: 588 },
-  { kind: "drive", name: "Drive", minutes: 28 },
-  { kind: "place", name: "Restaurant", minutes: 89 },
+  { kind: "train", name: "The morning train", minutes: 23 },
+  { kind: "walk", name: "Walk", minutes: 6 },
+  { kind: "place", name: "Coffee", minutes: 545 },
+  { kind: "drive", name: "Drive", minutes: 35 },
+  { kind: "place", name: "Waterfront", minutes: 112 },
   { kind: "drive", name: "Drive", minutes: 30 },
   { kind: "place", name: "Home", minutes: 198 },
 ];
@@ -71,10 +71,10 @@ export type Mode = "walk" | "train" | "drive";
 
 // The city is made up, so the map shows no real places.
 export const HOME: Point = [250, 250];
-export const OFFICE: Point = [700, 330];
-export const RESTAURANT: Point = [860, 560];
+export const COFFEE: Point = [700, 330];
+export const WATERFRONT: Point = [860, 560];
 const HOME_STATION: Point = [290, 398];
-const OFFICE_STATION: Point = [640, 432];
+const COFFEE_STATION: Point = [640, 432];
 
 // The routes of the day, in order. They follow the streets and the rail line of the map.
 export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
@@ -91,30 +91,30 @@ export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
       [460, 413],
       [520, 428],
       [580, 435],
-      OFFICE_STATION,
+      COFFEE_STATION,
     ],
   },
   {
     mode: "walk",
-    points: [OFFICE_STATION, [655, 405], [670, 375], [685, 350], OFFICE],
+    points: [COFFEE_STATION, [655, 405], [670, 375], [685, 350], COFFEE],
   },
   {
     mode: "drive",
     points: [
-      OFFICE,
+      COFFEE,
       [735, 334],
       [758, 355],
       [768, 420],
       [778, 500],
       [800, 550],
       [830, 566],
-      RESTAURANT,
+      WATERFRONT,
     ],
   },
   {
     mode: "drive",
     points: [
-      RESTAURANT,
+      WATERFRONT,
       [890, 515],
       [918, 460],
       [925, 380],

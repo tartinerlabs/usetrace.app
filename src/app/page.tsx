@@ -11,13 +11,13 @@ import { JourneyPlayback } from "@/components/journey-playback";
 import {
   ACTIVITIES,
   type Activity,
+  COFFEE,
   DAY_POINTS,
   HOME,
   JOURNEYS,
-  OFFICE,
-  RESTAURANT,
   SAMPLE_DAY,
   STAY_OPACITY,
+  WATERFRONT,
 } from "@/lib/sample-day";
 import {
   APP_STORE_NAME,
@@ -112,7 +112,7 @@ function Icon({
 }
 
 const DAY_MAP_LABEL =
-  "Map of Monday 5 October: a train from Home to the Office, a drive to a restaurant and a drive home.";
+  "Map of Monday 5 October: a train from Home to Coffee, a drive to the Waterfront and a drive home.";
 
 /** The routes of the day, drawn in one after another. */
 function drawnRoutes(timings: [delay: number, duration: number][]): MapRoute[] {
@@ -160,8 +160,8 @@ function DayStoryCard() {
           routes={JOURNEYS}
           pins={[
             { at: HOME, label: "Home", side: "u" },
-            { at: OFFICE, label: "Office", side: "u" },
-            { at: RESTAURANT, label: "Restaurant", side: "d" },
+            { at: COFFEE, label: "Coffee", side: "u" },
+            { at: WATERFRONT, label: "Waterfront", side: "d" },
           ]}
         />
       </div>
@@ -173,9 +173,9 @@ function DayStoryCard() {
           City mornings. A slower evening.
         </span>
         <p className="text-pretty text-[15px] text-secondary leading-normal">
-          You were out the door at 7:42 and on the train soon after. Most of the
-          day belonged to the Office. In the evening you drove to a restaurant
-          for dinner, and were home by 8:42.
+          You were out the door at 8:05 and on the train soon after. Most of the
+          day belonged to Coffee. In the evening you drove out to the
+          Waterfront, and were home by 8:42.
         </p>
       </div>
     </div>
@@ -194,21 +194,21 @@ const PLACES = [
     name: "Office",
     icon: "work",
     visits: 143,
-    usual: "Usually arrives 08:31",
+    usual: "Usually arrives 09:21",
     private: false,
   },
   {
-    name: "Park",
-    icon: "park",
-    visits: 28,
-    usual: "Usually arrives 09:16",
+    name: "Coffee",
+    icon: "local_cafe",
+    visits: 96,
+    usual: "Usually arrives 08:40",
     private: false,
   },
   {
-    name: "Restaurant",
-    icon: "restaurant",
+    name: "Waterfront",
+    icon: "waves",
     visits: 12,
-    usual: "Usually arrives 18:49",
+    usual: "Usually arrives 18:20",
     private: false,
   },
 ];
@@ -338,7 +338,7 @@ const CHAPTERS: {
   {
     id: "map",
     activity: "walk",
-    time: "07:42",
+    time: "08:05",
     title: "See your whole day on one map.",
     body: "Trace draws each route on the map. The line shows how you moved. Each evening, Trace writes a short story of your day.",
     note: "You can add notes and photos. You can also correct a stop that is not correct.",
@@ -347,7 +347,7 @@ const CHAPTERS: {
   {
     id: "history",
     activity: "train",
-    time: "07:48",
+    time: "08:12",
     title: "Look back at any day.",
     body: "Open a day, a week, a month or a year. Each day keeps its memory card, with its notes and photos.",
     visual: <HistoryCalendar />,
@@ -355,7 +355,7 @@ const CHAPTERS: {
   {
     id: "journey",
     activity: "drive",
-    time: "18:15",
+    time: "17:45",
     title: "Play back a journey.",
     body: "Move the slider to go back in time. The map shows where you were and when.",
     visual: <JourneyPlayback />,
@@ -363,7 +363,7 @@ const CHAPTERS: {
   {
     id: "places",
     activity: "place",
-    time: "18:43",
+    time: "18:20",
     title: "Know your places.",
     body: "Trace finds the places that you go to frequently. See how frequently you go and when you usually arrive.",
     note: "Make a place private, and Trace keeps only a pin for it. Your exact location is not stored, synced or exported.",
@@ -384,19 +384,19 @@ const STORY = [
     icon: "train",
     colour: "var(--train)",
     text: "The morning train",
-    time: "07:49",
+    time: "08:12",
   },
   {
-    icon: "work",
-    colour: "var(--train)",
-    text: "At the Office",
-    time: "08:27",
+    icon: "local_cafe",
+    colour: "var(--walk)",
+    text: "Coffee first",
+    time: "08:40",
   },
   {
-    icon: "restaurant",
+    icon: "waves",
     colour: "var(--drive)",
-    text: "Dinner at a restaurant",
-    time: "18:49",
+    text: "Out to the water",
+    time: "18:20",
   },
 ];
 
@@ -450,8 +450,8 @@ function DuoPhone() {
               </span>
               <div className="flex gap-[clamp(10px,2.6vw,32px)]">
                 {[
-                  ["49.3 km", "travelled"],
-                  ["1 h 41 m", "in motion"],
+                  ["47.6 km", "travelled"],
+                  ["1 h 38 m", "in motion"],
                   ["3", "places"],
                 ].map(([value, label]) => (
                   <div key={label} className="flex flex-col">
@@ -535,8 +535,8 @@ function DuoPhone() {
                     routes={JOURNEYS}
                     pins={[
                       { at: HOME, label: "Home", side: "u" },
-                      { at: OFFICE, label: "Office", side: "u" },
-                      { at: RESTAURANT, label: "Restaurant", side: "d" },
+                      { at: COFFEE, label: "Coffee", side: "u" },
+                      { at: WATERFRONT, label: "Waterfront", side: "d" },
                     ]}
                   />
                 </div>
@@ -575,7 +575,7 @@ function DuoPhone() {
                     fontSize={12}
                     labels={false}
                     routes={JOURNEYS}
-                    pins={[HOME, OFFICE, RESTAURANT].map(
+                    pins={[HOME, COFFEE, WATERFRONT].map(
                       (at): MapPin => ({ at }),
                     )}
                   />
@@ -591,7 +591,7 @@ function DuoPhone() {
                   </div>
                   <div className="flex gap-[clamp(10px,2.4vw,28px)]">
                     {[
-                      ["49.3 km", "travelled"],
+                      ["47.6 km", "travelled"],
                       ["3", "places"],
                     ].map(([value, label]) => (
                       <div key={label} className="flex flex-col">
@@ -782,14 +782,14 @@ export default function Home() {
               pins={[
                 { at: HOME, label: "Home", side: "u" },
                 {
-                  at: OFFICE,
-                  label: "Office",
+                  at: COFFEE,
+                  label: "Coffee",
                   side: "u",
                   className: "stop-in",
                 },
                 {
-                  at: RESTAURANT,
-                  label: "Restaurant",
+                  at: WATERFRONT,
+                  label: "Waterfront",
                   side: "d",
                   className: "stop-in-late",
                 },
