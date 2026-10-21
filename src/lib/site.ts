@@ -12,12 +12,8 @@ export const SITE_URL = "https://usetrace.app";
 export const BUNDLE_ID = "com.tartinerlabs.Trace";
 export const MIN_IOS = "18.0";
 
-// While null, the Smart App Banner is omitted and the badge renders as
-// "Available soon".
-export const APP_STORE_ID: string | null = "6819217828";
-export const APP_STORE_URL: string | null = APP_STORE_ID
-  ? `https://apps.apple.com/app/id${APP_STORE_ID}`
-  : null;
+export const APP_STORE_ID = "6819217828";
+export const APP_STORE_URL = `https://apps.apple.com/app/id${APP_STORE_ID}`;
 
 export const SUPPORT_EMAIL = "support@usetrace.app";
 

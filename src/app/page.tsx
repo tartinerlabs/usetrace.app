@@ -57,9 +57,8 @@ const jsonLd = {
       applicationCategory: "LifestyleApplication",
       url: SITE_URL,
       image: `${SITE_URL}/images/app-icon.png`,
-      ...(APP_STORE_URL
-        ? { downloadUrl: APP_STORE_URL, installUrl: APP_STORE_URL }
-        : {}),
+      downloadUrl: APP_STORE_URL,
+      installUrl: APP_STORE_URL,
     },
     {
       "@type": "Organization",
