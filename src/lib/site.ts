@@ -19,6 +19,9 @@ export const APP_STORE_URL: string | null = APP_STORE_ID
   ? `https://apps.apple.com/app/id${APP_STORE_ID}`
   : null;
 
+// Public beta link, shown while the app has no App Store listing.
+export const TESTFLIGHT_URL = "https://testflight.apple.com/join/y3FvK35M";
+
 export const SUPPORT_EMAIL = "support@usetrace.app";
 
 // Child pages that set their own openGraph/twitter lose the root
