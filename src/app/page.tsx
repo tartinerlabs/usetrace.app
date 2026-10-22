@@ -460,10 +460,8 @@ const bezel = "clamp(8px,1.2vw,14px)";
 const outerRadius = "clamp(28px,4vw,52px)";
 const innerRadius = "clamp(20px,3.2vw,40px)";
 const foldBlur = "blur(calc(var(--duo-fold) * 6px))";
-// The right half's hinge corners: rounded while the outer display covers it
-// (folded past 90°, open < 0.5), square once the inner display meets it.
-const hinge = (radius: string) =>
-  `calc(${radius} * clamp(0, (0.5 - var(--duo-open)) * 1000, 1))`;
+// Corners on the hinge side stay square, open or folded, as on the device.
+const awayFromHinge = (radius: string) => `0 ${radius} ${radius} 0`;
 
 async function DuoPhone() {
   const [innerSnapshot, outerSnapshot] = await Promise.all([
@@ -487,13 +485,13 @@ async function DuoPhone() {
           className="absolute top-0 left-1/2 h-full w-1/2 bg-ink shadow-[0_40px_80px_-30px_rgba(27,27,25,0.5)]"
           style={{
             padding: `${bezel} ${bezel} ${bezel} 0`,
-            borderRadius: `${hinge(outerRadius)} ${outerRadius} ${outerRadius} ${hinge(outerRadius)}`,
+            borderRadius: awayFromHinge(outerRadius),
           }}
         >
           <div
             className="relative size-full overflow-hidden bg-canvas"
             style={{
-              borderRadius: `${hinge(innerRadius)} ${innerRadius} ${innerRadius} ${hinge(innerRadius)}`,
+              borderRadius: awayFromHinge(innerRadius),
             }}
           >
             <div className="flex min-w-0 flex-col gap-[clamp(8px,1.6vw,20px)] overflow-hidden p-[clamp(14px,3.4vw,44px)]">
@@ -549,6 +547,19 @@ async function DuoPhone() {
                   </li>
                 ))}
               </ul>
+            </div>
+            {/* Open, the status bar sits at the top of the same rail. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-y-0 right-0 w-[17.7%]"
+            >
+              <span className="absolute inset-x-0 top-[5.5%] -translate-y-1/2 text-center font-semibold text-[clamp(8px,1.3vw,16px)] tracking-[-0.3px]">
+                9:41
+              </span>
+              <Icon
+                name="wifi"
+                className="absolute inset-x-0 top-[11%] -translate-y-1/2 text-center text-[clamp(10px,1.8vw,24px)]"
+              />
             </div>
             <span
               aria-hidden="true"
@@ -607,11 +618,14 @@ async function DuoPhone() {
             <div
               aria-hidden="true"
               className="absolute inset-0 rotate-y-180 bg-ink backface-hidden"
-              style={{ padding: bezel, borderRadius: outerRadius }}
+              style={{
+                padding: bezel,
+                borderRadius: awayFromHinge(outerRadius),
+              }}
             >
               <div
-                className="relative flex size-full flex-col overflow-hidden bg-canvas"
-                style={{ borderRadius: innerRadius }}
+                className="relative flex size-full overflow-hidden bg-canvas"
+                style={{ borderRadius: awayFromHinge(innerRadius) }}
               >
                 <span
                   className="pointer-events-none absolute inset-0 z-[2]"
@@ -620,41 +634,54 @@ async function DuoPhone() {
                     WebkitBackdropFilter: foldBlur,
                   }}
                 />
-                <div className="relative h-[44%] w-full flex-none bg-canvas">
-                  <DayMap
-                    {...DUO_OUTER_VIEW}
-                    snapshot={outerSnapshot}
-                    fontSize={12}
-                    labels={false}
-                    routes={JOURNEYS}
-                    pins={DAY_PINS.map(({ at }) => ({ at }))}
-                  />
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <div className="relative h-[44%] w-full flex-none bg-canvas">
+                    <DayMap
+                      {...DUO_OUTER_VIEW}
+                      snapshot={outerSnapshot}
+                      fontSize={12}
+                      labels={false}
+                      routes={JOURNEYS}
+                      pins={DAY_PINS.map(({ at }) => ({ at }))}
+                    />
+                  </div>
+                  <div className="flex min-h-0 flex-1 flex-col gap-[clamp(6px,1.2vw,14px)] p-[clamp(12px,2.6vw,32px)]">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="font-semibold text-[clamp(20px,4vw,50px)] leading-none tracking-[-0.04em]">
+                        5 Oct
+                      </span>
+                      <span className="font-mono text-[clamp(8px,1vw,12px)] text-secondary tracking-[1px]">
+                        OUTER DISPLAY
+                      </span>
+                    </div>
+                    <div className="flex gap-[clamp(10px,2.4vw,28px)]">
+                      {[
+                        ["52.3 km", "travelled"],
+                        ["5", "places"],
+                      ].map(([value, label]) => (
+                        <div key={label} className="flex flex-col">
+                          <span className="font-semibold text-[clamp(13px,2.2vw,26px)] tracking-[-0.5px]">
+                            {value}
+                          </span>
+                          <span className="text-[clamp(9px,1.1vw,13px)] text-secondary">
+                            {label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <RibbonStrip className="h-[clamp(8px,1.4vw,18px)]" />
+                  </div>
                 </div>
-                <div className="flex min-h-0 flex-1 flex-col gap-[clamp(6px,1.2vw,14px)] p-[clamp(12px,2.6vw,32px)]">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <span className="font-semibold text-[clamp(20px,4vw,50px)] leading-none tracking-[-0.04em]">
-                      5 Oct
-                    </span>
-                    <span className="font-mono text-[clamp(8px,1vw,12px)] text-secondary tracking-[1px]">
-                      OUTER DISPLAY
-                    </span>
-                  </div>
-                  <div className="flex gap-[clamp(10px,2.4vw,28px)]">
-                    {[
-                      ["52.3 km", "travelled"],
-                      ["5", "places"],
-                    ].map(([value, label]) => (
-                      <div key={label} className="flex flex-col">
-                        <span className="font-semibold text-[clamp(13px,2.2vw,26px)] tracking-[-0.5px]">
-                          {value}
-                        </span>
-                        <span className="text-[clamp(9px,1.1vw,13px)] text-secondary">
-                          {label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <RibbonStrip className="h-[clamp(8px,1.4vw,18px)]" />
+                {/* Folded, the camera and status bar sit in a rail away from the hinge. */}
+                <div className="relative w-[18%] flex-none">
+                  <span className="absolute top-[4%] left-1/2 aspect-square h-[5.8%] -translate-x-1/2 rounded-full bg-ink" />
+                  <span className="absolute inset-x-0 top-[13%] -translate-y-1/2 text-center font-semibold text-[clamp(8px,1.3vw,16px)] tracking-[-0.3px]">
+                    9:41
+                  </span>
+                  <Icon
+                    name="wifi"
+                    className="absolute inset-x-0 top-[18.5%] -translate-y-1/2 text-center text-[clamp(10px,1.8vw,24px)]"
+                  />
                 </div>
               </div>
             </div>
