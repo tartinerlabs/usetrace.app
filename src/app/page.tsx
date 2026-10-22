@@ -3,7 +3,12 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { AppStoreBadge } from "@/components/app-store-badge";
 import { ChapterRail } from "@/components/chapter-rail";
-import { DayMap, type MapPin, type MapRoute } from "@/components/day-map";
+import {
+  DayMap,
+  type MapPin,
+  type MapRoute,
+  type MapView,
+} from "@/components/day-map";
 import { DayRibbon } from "@/components/day-ribbon";
 import { DuoStage } from "@/components/duo-stage";
 import { HistoryCalendar } from "@/components/history-calendar";
@@ -11,13 +16,16 @@ import { JourneyPlayback } from "@/components/journey-playback";
 import {
   ACTIVITIES,
   type Activity,
-  COFFEE,
+  BOTANIC_GARDENS,
   DAY_POINTS,
-  HOME,
+  EAST_COAST_PARK,
+  EVENING_DRIVE,
+  GARDENS_BY_THE_BAY,
+  JEWEL_CHANGI,
   JOURNEYS,
+  MARINA_BAY_SANDS,
   SAMPLE_DAY,
   STAY_OPACITY,
-  WATERFRONT,
 } from "@/lib/sample-day";
 import {
   APP_STORE_NAME,
@@ -30,6 +38,7 @@ import {
   SUPPORT_EMAIL,
   TAGLINE,
 } from "@/lib/site";
+import { snapshotUrl } from "@/lib/snapshot";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -111,8 +120,37 @@ function Icon({
   );
 }
 
+// Each map's box. A snapshot of Apple Maps covers exactly its box.
+const HERO_VIEW: MapView = {
+  width: 540,
+  height: 540,
+  fit: DAY_POINTS,
+  padding: [90, 60, 60, 100],
+};
+const STORY_VIEW: MapView = {
+  width: 560,
+  height: 400,
+  fit: DAY_POINTS,
+  padding: [56, 56, 56, 90],
+};
+const PLAYBACK_VIEW: MapView = {
+  width: 560,
+  height: 360,
+  fit: EVENING_DRIVE,
+  padding: 64,
+};
+
 const DAY_MAP_LABEL =
-  "Map of Monday 5 October: a train from Home to Coffee, a drive to the Waterfront and a drive home.";
+  "Map of Monday 5 October in Singapore: a walk from Marina Bay Sands to Gardens by the Bay, a train to the Botanic Gardens, a drive to Jewel Changi, a drive to East Coast Park and a drive back.";
+
+// The western and eastern labels sit inwards, so they stay inside the map.
+const DAY_PINS: MapPin[] = [
+  { at: MARINA_BAY_SANDS, label: "Marina Bay Sands", side: "l" },
+  { at: GARDENS_BY_THE_BAY, label: "Gardens by the Bay", side: "d" },
+  { at: BOTANIC_GARDENS, label: "Botanic Gardens", side: "d" },
+  { at: JEWEL_CHANGI, label: "Jewel Changi", side: "l" },
+  { at: EAST_COAST_PARK, label: "East Coast Park", side: "d" },
+];
 
 /** The routes of the day, drawn in one after another. */
 function drawnRoutes(timings: [delay: number, duration: number][]): MapRoute[] {
@@ -142,7 +180,8 @@ function RibbonStrip({ className }: { className: string }) {
   );
 }
 
-function DayStoryCard() {
+async function DayStoryCard() {
+  const snapshot = await snapshotUrl(STORY_VIEW);
   return (
     <div className={`${card} overflow-hidden`}>
       <div
@@ -151,18 +190,12 @@ function DayStoryCard() {
         className="relative aspect-[7/5] bg-canvas"
       >
         <DayMap
-          width={560}
-          height={400}
-          fit={DAY_POINTS}
-          padding={56}
+          {...STORY_VIEW}
+          snapshot={snapshot}
           fontSize={14}
           strokeScale={1.2}
           routes={JOURNEYS}
-          pins={[
-            { at: HOME, label: "Home", side: "u" },
-            { at: COFFEE, label: "Coffee", side: "u" },
-            { at: WATERFRONT, label: "Waterfront", side: "d" },
-          ]}
+          pins={DAY_PINS}
         />
       </div>
       <div className="flex flex-col gap-2 border-line border-t px-[clamp(20px,3vw,28px)] pt-5 pb-6">
@@ -170,12 +203,13 @@ function DayStoryCard() {
           DAILY STORY · MONDAY 5 OCT
         </span>
         <span className="font-semibold text-[22px] tracking-[-0.3px]">
-          City mornings. A slower evening.
+          Garden mornings. A slower evening.
         </span>
         <p className="text-pretty text-[15px] text-secondary leading-normal">
-          You were out the door at 8:05 and on the train soon after. Most of the
-          day belonged to Coffee. In the evening you drove out to the
-          Waterfront, and were home by 8:42.
+          You left Marina Bay Sands at 8:05 and walked to Gardens by the Bay. A
+          train took you to the Botanic Gardens. In the afternoon you had coffee
+          at Jewel Changi. In the evening you drove to East Coast Park, and were
+          back by 8:30.
         </p>
       </div>
     </div>
@@ -184,34 +218,42 @@ function DayStoryCard() {
 
 const PLACES = [
   {
-    name: "Home",
-    icon: "home",
-    visits: 268,
-    usual: "Usually arrives 20:42",
+    name: "Marina Bay Sands",
+    icon: "hotel",
+    visits: 64,
+    usual: "Usually arrives 20:30",
     private: true,
   },
   {
-    name: "Office",
-    icon: "work",
-    visits: 143,
-    usual: "Usually arrives 09:21",
+    name: "Botanic Gardens",
+    icon: "park",
+    visits: 41,
+    usual: "Usually arrives 10:04",
     private: false,
   },
   {
-    name: "Coffee",
+    name: "Gardens by the Bay",
+    icon: "local_florist",
+    visits: 29,
+    usual: "Usually arrives 08:12",
+    private: false,
+  },
+  {
+    name: "Jewel Changi",
     icon: "local_cafe",
-    visits: 96,
-    usual: "Usually arrives 08:40",
+    visits: 18,
+    usual: "Usually arrives 13:10",
     private: false,
   },
   {
-    name: "Waterfront",
+    name: "East Coast Park",
     icon: "waves",
     visits: 12,
-    usual: "Usually arrives 18:20",
+    usual: "Usually arrives 18:05",
     private: false,
   },
 ];
+const MOST_VISITS = Math.max(...PLACES.map((place) => place.visits));
 
 function PlacesCard() {
   return (
@@ -249,7 +291,7 @@ function PlacesCard() {
               <span
                 className="block h-1 rounded-sm bg-sun unreached:w-0! motion-safe:transition-[width] motion-safe:duration-[1.1s] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)]"
                 style={{
-                  width: `${Math.max(2, Math.round((place.visits / 268) * 100))}%`,
+                  width: `${Math.max(2, Math.round((place.visits / MOST_VISITS) * 100))}%`,
                   transitionDelay: `${(0.3 + index * 0.15).toFixed(2)}s`,
                 }}
               />
@@ -347,7 +389,7 @@ const CHAPTERS: {
   {
     id: "history",
     activity: "train",
-    time: "08:12",
+    time: "09:37",
     title: "Look back at any day.",
     body: "Open a day, a week, a month or a year. Each day keeps its memory card, with its notes and photos.",
     visual: <HistoryCalendar />,
@@ -358,12 +400,12 @@ const CHAPTERS: {
     time: "17:45",
     title: "Play back a journey.",
     body: "Move the slider to go back in time. The map shows where you were and when.",
-    visual: <JourneyPlayback />,
+    visual: <Playback />,
   },
   {
     id: "places",
     activity: "place",
-    time: "18:20",
+    time: "18:05",
     title: "Know your places.",
     body: "Trace finds the places that you go to frequently. See how frequently you go and when you usually arrive.",
     note: "Make a place private, and Trace keeps only a pin for it. Your exact location is not stored, synced or exported.",
@@ -372,7 +414,7 @@ const CHAPTERS: {
   {
     id: "explore",
     activity: "place",
-    time: "20:42",
+    time: "20:30",
     title: "No streaks. No scores.",
     body: "A quiet day at home does not remove progress. As you go to new streets, your explored map fills in.",
     visual: <ExploreCard />,
@@ -384,19 +426,19 @@ const STORY = [
     icon: "train",
     colour: "var(--train)",
     text: "The morning train",
-    time: "08:12",
+    time: "09:37",
   },
   {
     icon: "local_cafe",
-    colour: "var(--walk)",
-    text: "Coffee first",
-    time: "08:40",
+    colour: "var(--drive)",
+    text: "Coffee at Jewel",
+    time: "13:10",
   },
   {
     icon: "waves",
     colour: "var(--drive)",
     text: "Out to the water",
-    time: "18:20",
+    time: "18:05",
   },
 ];
 
@@ -446,13 +488,13 @@ function DuoPhone() {
                 </span>
               </div>
               <span className="text-[clamp(10px,1.4vw,17px)] text-body">
-                City mornings. A slower evening.
+                Garden mornings. A slower evening.
               </span>
               <div className="flex gap-[clamp(10px,2.6vw,32px)]">
                 {[
-                  ["47.6 km", "travelled"],
-                  ["1 h 38 m", "in motion"],
-                  ["3", "places"],
+                  ["52.3 km", "travelled"],
+                  ["1 h 51 m", "in motion"],
+                  ["5", "places"],
                 ].map(([value, label]) => (
                   <div key={label} className="flex flex-col">
                     <span className="font-semibold text-[clamp(14px,2.4vw,30px)] tracking-[-0.5px]">
@@ -530,14 +572,10 @@ function DuoPhone() {
                     width={350}
                     height={500}
                     fit={DAY_POINTS}
-                    padding={40}
+                    padding={[40, 40, 40, 70]}
                     fontSize={12}
                     routes={JOURNEYS}
-                    pins={[
-                      { at: HOME, label: "Home", side: "u" },
-                      { at: COFFEE, label: "Coffee", side: "u" },
-                      { at: WATERFRONT, label: "Waterfront", side: "d" },
-                    ]}
+                    pins={DAY_PINS}
                   />
                 </div>
                 <span
@@ -575,9 +613,7 @@ function DuoPhone() {
                     fontSize={12}
                     labels={false}
                     routes={JOURNEYS}
-                    pins={[HOME, COFFEE, WATERFRONT].map(
-                      (at): MapPin => ({ at }),
-                    )}
+                    pins={DAY_PINS.map(({ at }) => ({ at }))}
                   />
                 </div>
                 <div className="flex min-h-0 flex-1 flex-col gap-[clamp(6px,1.2vw,14px)] p-[clamp(12px,2.6vw,32px)]">
@@ -591,8 +627,8 @@ function DuoPhone() {
                   </div>
                   <div className="flex gap-[clamp(10px,2.4vw,28px)]">
                     {[
-                      ["47.6 km", "travelled"],
-                      ["3", "places"],
+                      ["52.3 km", "travelled"],
+                      ["5", "places"],
                     ].map(([value, label]) => (
                       <div key={label} className="flex flex-col">
                         <span className="font-semibold text-[clamp(13px,2.2vw,26px)] tracking-[-0.5px]">
@@ -683,7 +719,17 @@ const FAQ = [
   },
 ];
 
-export default function Home() {
+async function Playback() {
+  return (
+    <JourneyPlayback
+      view={PLAYBACK_VIEW}
+      snapshot={await snapshotUrl(PLAYBACK_VIEW)}
+    />
+  );
+}
+
+export default async function Home() {
+  const heroSnapshot = await snapshotUrl(HERO_VIEW);
   const accentAt = TAGLINE.lastIndexOf(" ") + 1;
 
   return (
@@ -766,35 +812,30 @@ export default function Home() {
             className="relative aspect-square w-full max-w-[560px] justify-self-center overflow-hidden rounded-[36px] bg-canvas"
           >
             <DayMap
-              width={540}
-              height={540}
-              fit={DAY_POINTS}
-              padding={[90, 60, 60, 60]}
+              {...HERO_VIEW}
+              snapshot={heroSnapshot}
               fontSize={16}
               strokeScale={1.6}
               routes={drawnRoutes([
-                [0.2, 0.3],
-                [0.4, 1.2],
-                [1.5, 0.2],
-                [1.7, 1],
-                [2.6, 1.1],
+                [0.1, 0.15],
+                [0.3, 0.15],
+                [0.5, 0.6],
+                [1.15, 0.12],
+                [1.35, 0.9],
+                [2.3, 0.45],
+                [2.8, 0.7],
               ])}
-              pins={[
-                { at: HOME, label: "Home", side: "u" },
-                {
-                  at: COFFEE,
-                  label: "Coffee",
-                  side: "u",
-                  className: "stop-in",
-                },
-                {
-                  at: WATERFRONT,
-                  label: "Waterfront",
-                  side: "d",
-                  className: "stop-in-late",
-                },
-              ]}
+              // Each stop appears as its route arrives.
+              pins={DAY_PINS.map((pin, i) =>
+                i ? { ...pin, delay: [1.15, 2.2, 3.2, 3.7][i - 1] } : pin,
+              )}
             />
+            {/* The drawn map's credit; Apple Maps images carry their own. */}
+            {!heroSnapshot && (
+              <span className="absolute right-4 bottom-3 font-mono text-[10px] text-secondary">
+                Map data: URA, geoBoundaries (ODbL)
+              </span>
+            )}
             <span className="absolute top-5 left-5 rounded-full bg-white/85 px-3 py-1.5 font-mono text-xs tracking-[1px]">
               MONDAY 5 OCT
             </span>
@@ -842,8 +883,8 @@ export default function Home() {
           </div>
           <p className="mt-5 max-w-[52ch] text-base text-secondary leading-normal">
             Each colour is one way that you moved. Each part shows its time in
-            the day. This page follows the same day, from the first walk to the
-            evening at home.
+            the day. This page follows the same day in Singapore, from the first
+            walk to the evening back at Marina Bay Sands.
           </p>
         </section>
 
