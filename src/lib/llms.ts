@@ -1,4 +1,5 @@
 import { LIVE as ARC_LIVE } from "@/lib/arc-timeline";
+import { LIVE as LOCATION_HISTORY_LIVE } from "@/lib/iphone-location-history";
 import {
   APP_STORE_NAME,
   MIN_IOS,
@@ -55,7 +56,7 @@ Trace is an app. It is not an API. An agent cannot connect to Trace or read a jo
 - [About](${SITE_URL}/about): what Trace does and the rules that we follow
 - [Support](${SITE_URL}/support): permissions, pause, iCloud sync, export, data deletion and notifications
 - [Google Maps Timeline alternative](${SITE_URL}/google-maps-timeline-alternative): how Trace and Google Maps Timeline are different
-${ARC_LIVE ? `- [Trace vs Arc Timeline](${SITE_URL}/arc-timeline-alternative): how Trace and Arc Timeline are different\n` : ""}- [Privacy Policy](${SITE_URL}/privacy): the data that Trace keeps, and where Trace keeps it
+${ARC_LIVE ? `- [Trace vs Arc Timeline](${SITE_URL}/arc-timeline-alternative): how Trace and Arc Timeline are different\n` : ""}${LOCATION_HISTORY_LIVE ? `- [iPhone location history](${SITE_URL}/iphone-location-history): what the iPhone keeps, and how Trace shows your routes on a map\n` : ""}- [Privacy Policy](${SITE_URL}/privacy): the data that Trace keeps, and where Trace keeps it
 - [Sitemap](${SITE_URL}/sitemap.xml)
 `;
 

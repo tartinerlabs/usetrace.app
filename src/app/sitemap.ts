@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { LIVE as ARC_LIVE } from "@/lib/arc-timeline";
+import { LIVE as LOCATION_HISTORY_LIVE } from "@/lib/iphone-location-history";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -17,6 +18,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ? [
           {
             url: `${SITE_URL}/arc-timeline-alternative`,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
+    ...(LOCATION_HISTORY_LIVE
+      ? [
+          {
+            url: `${SITE_URL}/iphone-location-history`,
             changeFrequency: "monthly" as const,
             priority: 0.7,
           },
