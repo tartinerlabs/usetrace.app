@@ -1,4 +1,4 @@
-import { APP_STORE_URL } from "@/lib/site";
+import { APP_STORE_URL, TESTFLIGHT_URL } from "@/lib/site";
 
 // Apple's official black badge artwork.
 function Badge() {
@@ -24,6 +24,12 @@ export function AppStoreBadge() {
         <p className="text-secondary text-sm">
           Available soon on the App Store
         </p>
+        <a
+          href={TESTFLIGHT_URL}
+          className="text-sm font-medium underline underline-offset-4"
+        >
+          Join the beta on TestFlight
+        </a>
       </div>
     );
   }
