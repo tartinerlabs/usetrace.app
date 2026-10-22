@@ -3,8 +3,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  cacheComponents: true,
-  partialPrefetching: true,
   reactCompiler: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   // No dependency on a host image service.
@@ -70,3 +68,5 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX();
 
 export default withMDX(nextConfig);
+
+import("@opennextjs/cloudflare").then((m) => m.initOpenNextCloudflareForDev());
