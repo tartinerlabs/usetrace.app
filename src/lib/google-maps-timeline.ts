@@ -119,6 +119,10 @@ export const FAQ: { question: string; answer: string }[] = [
     answer: `Yes, if you use an iPhone. ${BRAND} records the places you go and the routes you take, automatically. You do not need a Google Account.`,
   },
   {
+    question: "Does the iPhone have a timeline like Google Maps?",
+    answer: `Not the same. Apple Maps has Visited Places. It records the places that you stop at, but not the routes between them. Visited Places is not available in all countries. ${BRAND} records your stays and your journeys, with the route of each journey.`,
+  },
+  {
     question: `Does ${BRAND} send my locations to a server?`,
     answer: `No. ${BRAND} encrypts your journal on your iPhone. We do not operate servers that receive your journal. If you turn on iCloud sync, your journal goes to your own iCloud account.`,
   },
