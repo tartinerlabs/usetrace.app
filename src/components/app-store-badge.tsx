@@ -22,15 +22,19 @@ export function AppStoreBadge() {
           <div className="opacity-60" aria-hidden="true">
             <Badge />
           </div>
-          {/* Same height and radius as the badge. */}
+          {/* Styled like the badge, without Apple's marks: Apple publishes no
+              TestFlight badge. */}
           <a
             href={TESTFLIGHT_URL}
             target="_blank"
             rel="noopener noreferrer"
             data-ph-capture-attribute-cta="testflight"
-            className="inline-flex h-[3.125rem] items-center whitespace-nowrap rounded-[0.6rem] border border-line bg-surface px-6 font-semibold text-[15px] text-ink shadow-sm motion-safe:transition-colors hover:border-sun hover:text-sun"
+            className="inline-flex h-[3.125rem] flex-col items-start justify-center whitespace-nowrap rounded-[0.6rem] border border-[#a6a6a6] bg-black px-5 text-white leading-none motion-safe:transition-opacity hover:opacity-85"
           >
-            Join TestFlight
+            <span className="text-[11px]">Join the beta on</span>
+            <span className="mt-0.5 font-semibold text-[21px] tracking-tight">
+              TestFlight
+            </span>
           </a>
         </div>
         <p className="text-secondary text-sm">
