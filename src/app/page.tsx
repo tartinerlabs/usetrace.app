@@ -133,6 +133,20 @@ const STORY_VIEW: MapView = {
   fit: DAY_POINTS,
   padding: [56, 56, 56, 90],
 };
+// The Duo's inner and outer displays crop their maps by under 5 px, so
+// Apple's logo stays whole.
+const DUO_INNER_VIEW: MapView = {
+  width: 350,
+  height: 500,
+  fit: DAY_POINTS,
+  padding: [40, 40, 40, 70],
+};
+const DUO_OUTER_VIEW: MapView = {
+  width: 400,
+  height: 256,
+  fit: DAY_POINTS,
+  padding: 30,
+};
 const PLAYBACK_VIEW: MapView = {
   width: 560,
   height: 360,
@@ -451,7 +465,11 @@ const foldBlur = "blur(calc(var(--duo-fold) * 6px))";
 const hinge = (radius: string) =>
   `calc(${radius} * clamp(0, (0.5 - var(--duo-open)) * 1000, 1))`;
 
-function DuoPhone() {
+async function DuoPhone() {
+  const [innerSnapshot, outerSnapshot] = await Promise.all([
+    snapshotUrl(DUO_INNER_VIEW),
+    snapshotUrl(DUO_OUTER_VIEW),
+  ]);
   return (
     <div
       className="relative aspect-[1.4/1] w-full"
@@ -569,10 +587,8 @@ function DuoPhone() {
                   className="absolute inset-0 bg-canvas"
                 >
                   <DayMap
-                    width={350}
-                    height={500}
-                    fit={DAY_POINTS}
-                    padding={[40, 40, 40, 70]}
+                    {...DUO_INNER_VIEW}
+                    snapshot={innerSnapshot}
                     fontSize={12}
                     routes={JOURNEYS}
                     pins={DAY_PINS}
@@ -606,10 +622,8 @@ function DuoPhone() {
                 />
                 <div className="relative h-[44%] w-full flex-none bg-canvas">
                   <DayMap
-                    width={400}
-                    height={256}
-                    fit={DAY_POINTS}
-                    padding={30}
+                    {...DUO_OUTER_VIEW}
+                    snapshot={outerSnapshot}
                     fontSize={12}
                     labels={false}
                     routes={JOURNEYS}
