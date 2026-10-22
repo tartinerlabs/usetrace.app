@@ -1,4 +1,5 @@
-// The illustrative day that the home page follows: Monday 5 October.
+// The illustrative day that the home page follows. Pages label it "Today",
+// not a date.
 
 export type Activity = "walk" | "cycle" | "train" | "drive" | "place";
 

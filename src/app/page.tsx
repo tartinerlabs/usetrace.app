@@ -112,7 +112,7 @@ function Icon({
 }
 
 const DAY_MAP_LABEL =
-  "Map of Monday 5 October: a train from Home to Coffee, a drive to the Waterfront and a drive home.";
+  "Map of a sample day: a train from Home to Coffee, a drive to the Waterfront and a drive home.";
 
 /** The routes of the day, drawn in one after another. */
 function drawnRoutes(timings: [delay: number, duration: number][]): MapRoute[] {
@@ -167,7 +167,7 @@ function DayStoryCard() {
       </div>
       <div className="flex flex-col gap-2 border-line border-t px-[clamp(20px,3vw,28px)] pt-5 pb-6">
         <span className="font-mono text-secondary text-xs tracking-[1px]">
-          DAILY STORY · MONDAY 5 OCT
+          DAILY STORY · TODAY
         </span>
         <span className="font-semibold text-[22px] tracking-[-0.3px]">
           City mornings. A slower evening.
@@ -320,7 +320,9 @@ function ExploreCard() {
         <span className="rounded-lg bg-sun px-2.5 py-1 font-semibold text-on-sun text-sm">
           First
         </span>
-        <span className="text-[15px]">First visit to a new area · 2 Oct</span>
+        <span className="text-[15px]">
+          First visit to a new area · Last week
+        </span>
       </div>
     </div>
   );
@@ -376,6 +378,33 @@ const CHAPTERS: {
     title: "No streaks. No scores.",
     body: "A quiet day at home does not remove progress. As you go to new streets, your explored map fills in.",
     visual: <ExploreCard />,
+  },
+];
+
+const LATER = [
+  {
+    icon: "calendar_today",
+    question: "Where was I on that Saturday in March?",
+    answer:
+      "Open the day. The map shows each place in order, with the routes between them.",
+  },
+  {
+    icon: "route",
+    question: "How did I get there?",
+    answer:
+      "Play back the journey. The colour of the line shows if you walked, took the train or drove.",
+  },
+  {
+    icon: "location_on",
+    question: "How frequently do I go to the gym?",
+    answer:
+      "Open the place. Trace shows the number of visits and when you usually arrive.",
+  },
+  {
+    icon: "explore",
+    question: "When did I last go somewhere new?",
+    answer:
+      "The explored map shows each new area and the date of your first visit.",
   },
 ];
 
@@ -437,14 +466,9 @@ function DuoPhone() {
             }}
           >
             <div className="flex min-w-0 flex-col gap-[clamp(8px,1.6vw,20px)] overflow-hidden p-[clamp(14px,3.4vw,44px)]">
-              <div className="flex flex-col gap-[clamp(0px,0.4vw,4px)]">
-                <span className="text-[clamp(11px,1.7vw,22px)] text-secondary">
-                  Monday
-                </span>
-                <span className="font-semibold text-[clamp(26px,5.4vw,68px)] leading-none tracking-[-0.04em]">
-                  5 Oct
-                </span>
-              </div>
+              <span className="font-semibold text-[clamp(26px,5.4vw,68px)] leading-none tracking-[-0.04em]">
+                Today
+              </span>
               <span className="text-[clamp(10px,1.4vw,17px)] text-body">
                 City mornings. A slower evening.
               </span>
@@ -523,7 +547,7 @@ function DuoPhone() {
               >
                 <div
                   role="img"
-                  aria-label="The map of Monday 5 October on the left half of the inner display."
+                  aria-label="The map of the day on the left half of the inner display."
                   className="absolute inset-0 bg-canvas"
                 >
                   <DayMap
@@ -583,7 +607,7 @@ function DuoPhone() {
                 <div className="flex min-h-0 flex-1 flex-col gap-[clamp(6px,1.2vw,14px)] p-[clamp(12px,2.6vw,32px)]">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-semibold text-[clamp(20px,4vw,50px)] leading-none tracking-[-0.04em]">
-                      5 Oct
+                      Today
                     </span>
                     <span className="font-mono text-[clamp(8px,1vw,12px)] text-secondary tracking-[1px]">
                       OUTER DISPLAY
@@ -796,7 +820,7 @@ export default function Home() {
               ]}
             />
             <span className="absolute top-5 left-5 rounded-full bg-white/85 px-3 py-1.5 font-mono text-xs tracking-[1px]">
-              MONDAY 5 OCT
+              TODAY
             </span>
           </div>
         </section>
@@ -808,7 +832,7 @@ export default function Home() {
         >
           <div className="mb-4 flex flex-wrap items-baseline justify-between gap-4">
             <h2 id="ribbon-heading" className={`${eyebrow} font-normal`}>
-              A DAY IN COLOUR · MONDAY 5 OCT
+              A DAY IN COLOUR · TODAY
             </h2>
             <ul className="flex flex-wrap gap-x-[18px] gap-y-1.5 text-sm">
               {(["walk", "train", "drive", "place"] as const).map((kind) => {
@@ -895,6 +919,35 @@ export default function Home() {
             );
           })}
         </div>
+
+        {/* Later: the questions that the journal answers. */}
+        <section
+          aria-labelledby="later-heading"
+          className={`${wrap} flex flex-col gap-[clamp(32px,5vw,56px)] pb-[clamp(96px,12vw,160px)]`}
+        >
+          <div className="flex flex-col gap-5">
+            <p className={eyebrow}>MONTHS LATER</p>
+            <h2 id="later-heading" className={sectionHeading}>
+              Your journal has the answer.
+            </h2>
+          </div>
+          <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,250px),1fr))] gap-3">
+            {LATER.map((item) => (
+              <li
+                key={item.question}
+                className={`${card} flex flex-col gap-3 p-[clamp(20px,3vw,28px)]`}
+              >
+                <Icon name={item.icon} className="text-[26px] text-place" />
+                <h3 className="text-balance font-semibold text-[21px] tracking-[-0.3px]">
+                  {item.question}
+                </h3>
+                <p className="text-base text-secondary leading-normal">
+                  {item.answer}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {/* iPhone Duo */}
         <section
