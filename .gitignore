@@ -47,3 +47,11 @@ next-env.d.ts
 # agent skills (restore with `pnpm dlx skills install`)
 .agents
 .grok
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example

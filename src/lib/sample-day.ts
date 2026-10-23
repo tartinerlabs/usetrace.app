@@ -52,85 +52,128 @@ export const ACTIVITIES: Record<
 
 export type DayPart = { kind: Activity; name: string; minutes: number };
 
-// The same day as the app's sample: places are named by what they are, not by landmark.
+// A day out in Singapore. Every place is a public landmark, so the sample
+// shows no one's home or work.
 export const SAMPLE_DAY: DayPart[] = [
-  { kind: "place", name: "Home", minutes: 485 },
-  { kind: "walk", name: "Walk", minutes: 6 },
-  { kind: "train", name: "The morning train", minutes: 23 },
-  { kind: "walk", name: "Walk", minutes: 6 },
-  { kind: "place", name: "Coffee", minutes: 545 },
-  { kind: "drive", name: "Drive", minutes: 35 },
-  { kind: "place", name: "Waterfront", minutes: 112 },
+  { kind: "place", name: "Marina Bay Sands", minutes: 485 },
+  { kind: "walk", name: "Walk", minutes: 7 },
+  { kind: "place", name: "Gardens by the Bay", minutes: 78 },
+  { kind: "walk", name: "Walk", minutes: 7 },
+  { kind: "train", name: "The morning train", minutes: 19 },
+  { kind: "walk", name: "Walk", minutes: 8 },
+  { kind: "place", name: "Botanic Gardens", minutes: 156 },
   { kind: "drive", name: "Drive", minutes: 30 },
-  { kind: "place", name: "Home", minutes: 198 },
+  { kind: "place", name: "Jewel Changi", minutes: 275 },
+  { kind: "drive", name: "Drive", minutes: 20 },
+  { kind: "place", name: "East Coast Park", minutes: 125 },
+  { kind: "drive", name: "Drive", minutes: 20 },
+  { kind: "place", name: "Marina Bay Sands", minutes: 210 },
 ];
 
-/** A point on the made-up city of the map, in its 1024 × 1024 space. */
+/** A point on the map of Singapore: 2048 units to a degree, from 103.6° E and 1.48° N. */
 export type Point = [x: number, y: number];
 export type Mode = "walk" | "train" | "drive";
 
-// The city is made up, so the map shows no real places.
-export const HOME: Point = [250, 250];
-export const COFFEE: Point = [700, 330];
-export const WATERFRONT: Point = [860, 560];
-const HOME_STATION: Point = [290, 398];
-const COFFEE_STATION: Point = [640, 432];
+const at = (lat: number, lng: number): Point => [
+  (lng - 103.6) * 2048,
+  (1.48 - lat) * 2048,
+];
 
-// The routes of the day, in order. They follow the streets and the rail line of the map.
+/** The latitude and longitude of a map point. */
+export const toLatLng = ([x, y]: Point): [lat: number, lng: number] => [
+  1.48 - y / 2048,
+  103.6 + x / 2048,
+];
+
+export const MARINA_BAY_SANDS = at(1.284, 103.8603);
+export const GARDENS_BY_THE_BAY = at(1.2816, 103.864);
+export const BOTANIC_GARDENS = at(1.3175, 103.8155);
+export const JEWEL_CHANGI = at(1.3602, 103.9898);
+export const EAST_COAST_PARK = at(1.3048, 103.923);
+const BAYFRONT = at(1.2818, 103.859);
+const BOTANIC_GARDENS_STATION = at(1.3224, 103.8153);
+
+// The routes of the day, in order. The train follows the Downtown Line.
 export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
   {
     mode: "walk",
-    points: [HOME, [262, 280], [272, 320], [282, 360], HOME_STATION],
+    points: [
+      MARINA_BAY_SANDS,
+      at(1.2832, 103.8618),
+      at(1.2824, 103.863),
+      GARDENS_BY_THE_BAY,
+    ],
+  },
+  {
+    mode: "walk",
+    points: [GARDENS_BY_THE_BAY, at(1.2817, 103.862), BAYFRONT],
   },
   {
     mode: "train",
     points: [
-      HOME_STATION,
-      [350, 399],
-      [400, 401],
-      [460, 413],
-      [520, 428],
-      [580, 435],
-      COFFEE_STATION,
+      BAYFRONT,
+      at(1.2934, 103.861),
+      at(1.3006, 103.8559),
+      at(1.3039, 103.8526),
+      at(1.3066, 103.8494),
+      at(1.3138, 103.838),
+      at(1.32, 103.8259),
+      BOTANIC_GARDENS_STATION,
     ],
   },
   {
     mode: "walk",
-    points: [COFFEE_STATION, [655, 405], [670, 375], [685, 350], COFFEE],
+    points: [BOTANIC_GARDENS_STATION, at(1.3198, 103.8157), BOTANIC_GARDENS],
   },
   {
     mode: "drive",
     points: [
-      COFFEE,
-      [735, 334],
-      [758, 355],
-      [768, 420],
-      [778, 500],
-      [800, 550],
-      [830, 566],
-      WATERFRONT,
+      BOTANIC_GARDENS,
+      at(1.3205, 103.814),
+      at(1.3235, 103.816),
+      at(1.3262, 103.833),
+      at(1.328, 103.848),
+      at(1.33, 103.865),
+      at(1.333, 103.885),
+      at(1.3365, 103.91),
+      at(1.3395, 103.935),
+      at(1.343, 103.96),
+      at(1.348, 103.978),
+      at(1.355, 103.986),
+      JEWEL_CHANGI,
     ],
   },
   {
     mode: "drive",
     points: [
-      WATERFRONT,
-      [890, 515],
-      [918, 460],
-      [925, 380],
-      [930, 302],
-      [850, 310],
-      [760, 322],
-      [640, 318],
-      [450, 300],
-      [300, 288],
-      [270, 272],
-      HOME,
+      JEWEL_CHANGI,
+      at(1.354, 103.988),
+      at(1.343, 103.984),
+      at(1.332, 103.979),
+      at(1.321, 103.964),
+      at(1.313, 103.946),
+      at(1.308, 103.933),
+      EAST_COAST_PARK,
     ],
-    // The way home sits back, so the morning reads first.
+  },
+  {
+    mode: "drive",
+    points: [
+      EAST_COAST_PARK,
+      at(1.3015, 103.91),
+      at(1.299, 103.892),
+      at(1.296, 103.878),
+      at(1.2915, 103.87),
+      at(1.2875, 103.865),
+      MARINA_BAY_SANDS,
+    ],
+    // The way back sits back, so the day reads first.
     opacity: 0.5,
   },
 ];
+
+/** The evening drive from Jewel Changi to East Coast Park: 17:45 to 18:05, 9.5 km. */
+export const EVENING_DRIVE = JOURNEYS[5].points;
 
 /** Every point of the day, to fit a map to the whole day. */
 export const DAY_POINTS = JOURNEYS.flatMap((journey) => journey.points);

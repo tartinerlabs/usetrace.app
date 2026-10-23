@@ -2,7 +2,11 @@ import { APP_STORE_URL } from "@/lib/site";
 
 export function AppStoreBadge() {
   return (
-    <a href={APP_STORE_URL} className="inline-block rounded-[0.6rem]">
+    <a
+      href={APP_STORE_URL}
+      data-ph-capture-attribute-cta="app-store"
+      className="inline-block rounded-[0.6rem]"
+    >
       {/* Apple's official black badge artwork. */}
       {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
       <img

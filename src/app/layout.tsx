@@ -42,9 +42,10 @@ const ICON_NAMES = [
   "graphic_eq",
   "hiking",
   "history",
-  "home",
+  "hotel",
   "local_bar",
   "local_cafe",
+  "local_florist",
   "location_on",
   "lock",
   "park",
@@ -59,7 +60,6 @@ const ICON_NAMES = [
   "waves",
   "widgets",
   "wifi",
-  "work",
 ];
 const ICON_FONT_URL = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0&icon_names=${ICON_NAMES.join(",")}&display=block`;
 
