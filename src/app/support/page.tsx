@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Faq, type FaqItem } from "@/components/faq";
-import {
-  BRAND,
-  SHARE_IMAGE,
-  SUPPORT_EMAIL,
-  TESTFLIGHT_URL,
-  TWITTER_IMAGE,
-} from "@/lib/site";
+import { BRAND, SHARE_IMAGE, SUPPORT_EMAIL, TWITTER_IMAGE } from "@/lib/site";
 
 const title = "Support";
 const description = `Get answers about how to record, pause, sync with iCloud, export and delete your data in ${BRAND}, and about notifications.`;
@@ -263,19 +257,6 @@ export default function Page() {
           <Link href="/privacy" className={linkClassName}>
             Privacy Policy
           </Link>
-          .
-        </p>
-        <p className="mt-3 text-secondary leading-relaxed">
-          Do you want to use new features before we release them? Join the{" "}
-          <a
-            href={TESTFLIGHT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-capture-attribute-cta="testflight"
-            className={linkClassName}
-          >
-            beta on TestFlight
-          </a>
           .
         </p>
       </section>
