@@ -85,8 +85,8 @@ export const metadata: Metadata = {
     title: APP_STORE_NAME,
     description: DESCRIPTION,
   },
-  // Smart App Banner, only once the app is on the App Store.
-  itunes: APP_STORE_ID ? { appId: APP_STORE_ID } : null,
+  // Smart App Banner.
+  itunes: { appId: APP_STORE_ID },
 };
 
 export const viewport: Viewport = {
