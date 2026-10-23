@@ -473,12 +473,10 @@ async function DuoPhone() {
       className="relative aspect-[1.4/1] w-full"
       style={{ transformStyle: "preserve-3d" }}
     >
+      {/* The right half stays still; only the left half swings open. */}
       <div
         className="absolute inset-0"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: "translateX(calc(-25% * (1 - var(--duo-open))))",
-        }}
+        style={{ transformStyle: "preserve-3d" }}
       >
         {/* Right half of the inner display: the day. */}
         <div
