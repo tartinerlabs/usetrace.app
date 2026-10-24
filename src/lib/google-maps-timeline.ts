@@ -7,7 +7,7 @@ import { BRAND, MIN_IOS, SITE_URL } from "@/lib/site";
 export const PATH = "/google-maps-timeline-alternative";
 export const TITLE = "Google Maps Timeline alternative for iPhone";
 export const HEADING = "A private Google Maps Timeline alternative for iPhone";
-export const DESCRIPTION = `Compare ${BRAND} and Google Maps Timeline. ${BRAND} is a private location timeline for iPhone. It has no account, and it can import your Google Timeline.`;
+export const DESCRIPTION = `Compare ${BRAND} and Google Maps Timeline. ${BRAND} is a private location timeline for iPhone. It has no account, and it can import your Google Timeline for free.`;
 export const INTRO = `${BRAND} records the places you go and the routes you take. You do not sign in. Your journal stays encrypted on your iPhone.`;
 
 // Google facts come from Google Maps Help (answers 6258979 and 14169818).
@@ -128,7 +128,7 @@ export const FAQ: { question: string; answer: string }[] = [
   },
   {
     question: `Can I bring my Google Maps Timeline history to ${BRAND}?`,
-    answer: `Yes. Export your Timeline from the Google Maps app on your phone. Then in ${BRAND}, open Settings and tap Import Google Timeline. ${BRAND} adds only the days that have nothing in your journal.`,
+    answer: `Yes. Export your Timeline from the Google Maps app on your phone. Then in ${BRAND}, open Settings and tap Import Google Timeline. ${BRAND} adds only the days that have nothing in your journal. The import is free.`,
   },
   {
     question: "Why is Google Maps Timeline not on my computer?",

@@ -68,6 +68,7 @@ const jsonLd = {
       image: `${SITE_URL}/images/app-icon.png`,
       downloadUrl: APP_STORE_URL,
       installUrl: APP_STORE_URL,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     },
     {
       "@type": "Organization",
@@ -751,6 +752,27 @@ const FAQ = [
     answer: "No. You do not need an account, and you do not sign in.",
   },
   {
+    question: "Is Trace free?",
+    answer: "Yes. Trace is free on the App Store. It has no ads.",
+  },
+  {
+    question: "Can I bring my Google Maps Timeline history?",
+    answer: (
+      <>
+        Yes. Export your Timeline from the Google Maps app on your phone. Then
+        in Trace, open Settings and tap Import Google Timeline. The import is
+        free.{" "}
+        <Link
+          href="/google-maps-timeline-alternative"
+          className="text-on-night underline underline-offset-4"
+        >
+          Compare Trace and Google Maps Timeline
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
     question: "Can I erase all my data?",
     answer:
       "Yes. In Settings, tap Erase Journal. This erases every day, place, route, memory and saved place, and the iCloud copy if you use iCloud sync. Your other devices keep the data that they downloaded before. Older backups of your iPhone can also contain earlier data.",
@@ -1145,8 +1167,8 @@ export default async function Home() {
               Start your first day.
             </h2>
             <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
-              Install Trace and tap Start my journal. Tonight, your day is on
-              the map.
+              Trace is free. Install Trace and tap Start my journal. Tonight,
+              your day is on the map.
             </p>
             <AppStoreBadge />
           </section>
