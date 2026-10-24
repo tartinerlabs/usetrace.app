@@ -367,9 +367,8 @@ export default function Page() {
               Bring your days home.
             </h2>
             <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
-              {BRAND} and the import are free. Install {BRAND} and import your
-              Google Timeline. Your old days and your new days stay on your
-              iPhone.
+              Install {BRAND} and import your Google Timeline. Your old days and
+              your new days stay on your iPhone.
             </p>
             <AppStoreBadge campaign="google-timeline" />
             <Link
