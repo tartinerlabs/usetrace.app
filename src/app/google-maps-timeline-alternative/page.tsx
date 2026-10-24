@@ -138,7 +138,7 @@ export default function Page() {
               {INTRO}
             </p>
             <div className="flex flex-wrap items-center gap-5">
-              <AppStoreBadge />
+              <AppStoreBadge campaign="google-timeline" />
               <a
                 href="#compare"
                 className={`font-medium text-[15px] ${underline}`}
@@ -370,7 +370,7 @@ export default function Page() {
               Install {BRAND} and import your Google Timeline. Your old days and
               your new days stay on your iPhone.
             </p>
-            <AppStoreBadge />
+            <AppStoreBadge campaign="google-timeline" />
             <Link
               href="/"
               className="font-medium text-[15px] underline decoration-[#4a4e55] underline-offset-[5px] motion-safe:transition-colors hover:decoration-on-night"

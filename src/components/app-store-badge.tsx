@@ -1,9 +1,10 @@
-import { APP_STORE_URL } from "@/lib/site";
+import { APP_STORE_ID, APP_STORE_PROVIDER_TOKEN } from "@/lib/site";
 
-export function AppStoreBadge() {
+// `campaign` names the page in App Store Connect campaigns (max 30 characters).
+export function AppStoreBadge({ campaign }: { campaign: string }) {
   return (
     <a
-      href={APP_STORE_URL}
+      href={`https://apps.apple.com/app/apple-store/id${APP_STORE_ID}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=${campaign}&mt=8`}
       data-ph-capture-attribute-cta="app-store"
       className="inline-block rounded-[0.6rem]"
     >
