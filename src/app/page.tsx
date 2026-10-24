@@ -844,7 +844,7 @@ export default async function Home() {
               id="download"
               className="flex scroll-mt-6 flex-wrap items-center gap-5"
             >
-              <AppStoreBadge />
+              <AppStoreBadge campaign="home" />
               <a
                 href="#privacy"
                 className={`font-medium text-[15px] ${underline}`}
@@ -1170,7 +1170,7 @@ export default async function Home() {
               Trace is free. Install Trace and tap Start my journal. Tonight,
               your day is on the map.
             </p>
-            <AppStoreBadge />
+            <AppStoreBadge campaign="home" />
           </section>
         </div>
       </div>

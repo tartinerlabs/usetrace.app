@@ -134,7 +134,7 @@ export default function Page() {
               {INTRO}
             </p>
             <div className="flex flex-wrap items-center gap-5">
-              <AppStoreBadge />
+              <AppStoreBadge campaign="arc-timeline" />
               <a
                 href="#compare"
                 className={`font-medium text-[15px] ${underline}`}
@@ -302,7 +302,7 @@ export default function Page() {
               Install {BRAND} and tap Start my journal. Tonight, your day is on
               the map.
             </p>
-            <AppStoreBadge />
+            <AppStoreBadge campaign="arc-timeline" />
             <Link
               href="/"
               className="font-medium text-[15px] underline decoration-[#4a4e55] underline-offset-[5px] motion-safe:transition-colors hover:decoration-on-night"
