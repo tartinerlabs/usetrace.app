@@ -57,6 +57,13 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
+    // Google reads this for the site name shown in search results.
+    {
+      "@type": "WebSite",
+      name: BRAND,
+      alternateName: [APP_STORE_NAME, "usetrace.app"],
+      url: `${SITE_URL}/`,
+    },
     {
       "@type": "SoftwareApplication",
       name: APP_STORE_NAME,
