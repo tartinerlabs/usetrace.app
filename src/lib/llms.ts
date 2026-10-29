@@ -35,7 +35,7 @@ Trace is an app. It is not an API. An agent cannot connect to Trace or read a jo
 ## Features
 
 - **See your whole day on one map.** Trace draws each route and writes a short story of your day. You can add notes and photos. You can also correct a stop.
-- **Look back at any day.** Open a day, a week, a month or a year.
+- **See any day in your location history.** Open a day, a week, a month or a year.
 - **Play back a journey.** Move the slider to see where you were and when.
 - **Know your places.** See how frequently you go to a place. Make a place private, and Trace keeps only a pin for it.
 - **No streaks. No scores.** As you go to new streets, your explored map fills in.

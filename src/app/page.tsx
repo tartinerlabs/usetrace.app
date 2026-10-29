@@ -403,7 +403,7 @@ const CHAPTERS: {
     id: "history",
     activity: "train",
     time: "09:37",
-    title: "Look back at any day.",
+    title: "See any day in your location history.",
     body: "Open a day, a week, a month or a year. Each day keeps its memory card, with its notes and photos.",
     visual: <HistoryCalendar />,
   },
@@ -814,7 +814,7 @@ export default async function Home() {
                 Ready for iPhone Duo
                 <Icon name="arrow_forward" className="text-lg" />
               </a>
-              <p className={eyebrow}>A MOVEMENT JOURNAL FOR IPHONE</p>
+              <p className={eyebrow}>A PRIVATE LOCATION TIMELINE FOR IPHONE</p>
             </div>
             <h1
               id="hero-heading"

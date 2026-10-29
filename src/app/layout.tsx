@@ -9,8 +9,8 @@ import {
   APP_STORE_NAME,
   BRAND,
   DESCRIPTION,
+  DESCRIPTOR,
   SITE_URL,
-  TAGLINE,
 } from "@/lib/site";
 import "./globals.css";
 
@@ -66,7 +66,7 @@ const ICON_FONT_URL = `https://fonts.googleapis.com/css2?family=Material+Symbols
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${APP_STORE_NAME} · ${TAGLINE}`,
+    default: `${BRAND}: Private ${DESCRIPTOR} for iPhone`,
     template: `%s · ${BRAND}`,
   },
   description: DESCRIPTION,
