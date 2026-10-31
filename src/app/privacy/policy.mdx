@@ -1,6 +1,6 @@
 # Trace Privacy Policy
 
-Effective date: 18 October 2026
+Effective date: 1 November 2026
 
 Trace: Location Timeline ("Trace", "we", "us") is a private journal of the places you go and the paths you take. It is designed so that your movement history is built and kept on your iPhone or iPad. This policy explains what Trace records, where it is kept, what leaves your device, and the choices you have.
 
@@ -8,7 +8,7 @@ Trace: Location Timeline ("Trace", "we", "us") is a private journal of the place
 
 - Trace records nothing until you tap **Start my journal**. You can pause at any time.
 - Your journal is stored on your device, and its sensitive contents are encrypted.
-- We do not run servers that receive your journal, and we cannot read it.
+- We do not run servers that receive your journal, and we cannot read it. Only a bug report or feedback you choose to send reaches us, with what you choose to attach.
 - iCloud sync is optional and off by default. If you turn it on, your journal is encrypted on your device before it is uploaded to your own iCloud account.
 - Some features use Apple services, such as Apple Maps to name the places you visit.
 - Trace contains no third-party analytics or tracking. Crash reports reach us only through Apple, if you share analytics with developers, or when you choose to attach them to a bug report.
@@ -60,7 +60,11 @@ iOS and iPadOS can also give Trace reports of crashes, freezes and heavy resourc
 
 ### Feedback and bug reports
 
-When you send feedback or report a bug, Trace prepares an email in your mail app, where you can review it before sending. It includes your message and only what you choose to add, such as device information, recording status, crash reports, screenshots or a day, journey or visit from your journal. Journal attachments are readable, not encrypted. We use what you send to answer you and fix problems, and you can ask us to delete it.
+When you send feedback or report a bug, Trace shows you what will be sent before you send it. It includes your message and only what you choose to add, such as device information, recording status, crash and battery reports, screenshots or a day, journey or visit from your journal. Journal attachments are readable, not encrypted.
+
+From Trace 1.1, Trace sends your report over an encrypted connection to our reports service at api.usetrace.app, which runs on Cloudflare. The service files it, with its attachments, as an issue in a private GitHub repository that only the Trace team can open. To stop the same report being filed twice, the service keeps the report's random identifier, and nothing else, for a short time in an Upstash database in the EU. A report does not include your name, email address or Apple Account, so we cannot reply to it unless you add a way to contact you. Earlier versions of Trace prepare an email in your mail app instead.
+
+We use what you send to fix problems and improve Trace. To have a report deleted, [contact us](mailto:support@usetrace.app) with roughly when you sent it.
 
 ### Notifications
 
