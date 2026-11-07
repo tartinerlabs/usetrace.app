@@ -4,7 +4,7 @@ export const config: VercelConfig = {
   regions: ["sin1"],
   git: {
     deploymentEnabled: {
-      "dependabot/*": false,
+      "dependabot/**": false,
     },
   },
 };
