@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BRAND, TESTFLIGHT_URL } from "@/lib/site";
+import { BRAND } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -34,17 +34,6 @@ export function SiteFooter() {
               >
                 Google Maps Timeline alternative
               </Link>
-            </li>
-            <li>
-              <a
-                href={TESTFLIGHT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-ph-capture-attribute-cta="testflight"
-                className="hover:text-on-night"
-              >
-                TestFlight beta
-              </a>
             </li>
             {/* Literal year: new Date() is not allowed during prerender with cacheComponents. */}
             <li>© 2026 {BRAND}</li>
