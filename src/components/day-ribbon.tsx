@@ -70,7 +70,7 @@ export function DayRibbon() {
         )}
         {current
           ? current.label
-          : "Touch a colour to see that part of the day."}
+          : "Select a colour to see that part of the day."}
       </p>
       <fieldset
         aria-label="Parts of the day"

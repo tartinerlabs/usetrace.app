@@ -19,13 +19,13 @@
   --ink: #1b1b19;
   --on-ink: #f7f6f2;
   --secondary: #63635c;
-  --sun: #a4542f;
+  --sun: #1e7458;
   --on-sun: #f4f2ec;
-  --walk: #257856;
+  --walk: #66751f;
   --cycle: #187687;
   --train: #6953a3;
   --bus: #5f658f;
-  --drive: #a4542f;
+  --drive: #8e2a5b;
   --flight: #346eaa;
   --place: #5f7161;
   --body: #4a4a44;
@@ -35,7 +35,7 @@
   --night-line: #2a2e35;
   --on-night: #f1efe9;
   --night-secondary: #a3a49e;
-  --peach: #edb48c;
+  --peach: #8fd3b6;
 }
 
 @media (prefers-contrast: more) {
@@ -43,13 +43,13 @@
     --ink: #000000;
     --on-ink: #ffffff;
     --secondary: #48484a;
-    --sun: #834326;
+    --sun: #155a44;
     --on-sun: #ffffff;
-    --walk: #1e6045;
+    --walk: #4f5a18;
     --cycle: #135e6c;
     --train: #544282;
     --bus: #4c5172;
-    --drive: #834326;
+    --drive: #6f2047;
     --flight: #2a5888;
   }
 }
@@ -80,8 +80,7 @@
   --color-peach: var(--peach);
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sans:
-    var(--font-geist), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+    -apple-system, BlinkMacSystemFont, var(--font-inter), Arial, sans-serif;
   --font-rounded:
     ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto,
     sans-serif;
@@ -105,7 +104,8 @@ html {
 body {
   background: var(--canvas);
   color: var(--ink);
-  font-family: var(--font-geist), system-ui, -apple-system, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, var(--font-inter), Arial, sans-serif;
 }
 
 :focus-visible {
@@ -178,5 +178,19 @@ body {
   }
   .stop-in {
     animation: fade-in 0.4s ease var(--stop-delay) both;
+  }
+}
+
+/* Hero: the phone and the paper pieces rise in on load. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    translate: 0 44px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
 }

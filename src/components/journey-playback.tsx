@@ -5,9 +5,9 @@ import { onScrollFrame } from "@/components/chapter-rail";
 import { DayMap, type MapView } from "@/components/day-map";
 import {
   EVENING_DRIVE as DRIVE,
-  EAST_COAST_PARK,
-  JEWEL_CHANGI,
+  MAIN_STREET,
   type Point,
+  STEVENS_CREEK,
 } from "@/lib/sample-day";
 
 const PLAY_MS = 9000;
@@ -87,8 +87,8 @@ export function JourneyPlayback({
   }, []);
 
   const driven = along(DRIVE, Math.max(0.001, progress));
-  const minutes = 17 * 60 + 45 + Math.round(20 * progress);
-  const label = `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")} · ${(9.5 * progress).toFixed(1)} KM`;
+  const minutes = 17 * 60 + 31 + Math.round(16 * progress);
+  const label = `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")} · ${(7 * progress).toFixed(1)} KM`;
 
   return (
     <div
@@ -97,7 +97,7 @@ export function JourneyPlayback({
     >
       <div
         role="img"
-        aria-label="Playback of the drive from Jewel Changi to East Coast Park, about two thirds of the way along."
+        aria-label="Playback of the evening drive from Main Street to Stevens Creek Reservoir."
         className="relative aspect-[14/9] bg-canvas"
       >
         <DayMap
@@ -110,8 +110,8 @@ export function JourneyPlayback({
             { mode: "drive", points: driven },
           ]}
           pins={[
-            { at: JEWEL_CHANGI, label: "Jewel Changi", side: "u" },
-            { at: EAST_COAST_PARK, label: "East Coast Park", side: "d" },
+            { at: MAIN_STREET, label: "Main Street", side: "d" },
+            { at: STEVENS_CREEK, label: "Stevens Creek", side: "r" },
             { at: driven[driven.length - 1], radius: 9, fill: "var(--sun)" },
           ]}
         />
@@ -151,9 +151,9 @@ export function JourneyPlayback({
           </div>
         </div>
         <div className="flex justify-between font-mono text-secondary text-xs">
-          <span>17:45 JEWEL</span>
+          <span>17:31 MAIN STREET</span>
           <span className="text-ink tabular-nums">{label}</span>
-          <span>18:05 EAST COAST</span>
+          <span>17:47 STEVENS CREEK</span>
         </div>
       </div>
     </div>

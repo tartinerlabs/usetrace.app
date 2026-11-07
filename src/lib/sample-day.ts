@@ -52,128 +52,100 @@ export const ACTIVITIES: Record<
 
 export type DayPart = { kind: Activity; name: string; minutes: number };
 
-// A day out in Singapore. Every place is a public landmark, so the sample
-// shows no one's home or work.
+// A day around Cupertino. Every place is public, so the sample shows no one's
+// home or work.
 export const SAMPLE_DAY: DayPart[] = [
-  { kind: "place", name: "Marina Bay Sands", minutes: 485 },
+  { kind: "place", name: "Apple Park", minutes: 485 },
   { kind: "walk", name: "Walk", minutes: 7 },
-  { kind: "place", name: "Gardens by the Bay", minutes: 78 },
-  { kind: "walk", name: "Walk", minutes: 7 },
-  { kind: "train", name: "The morning train", minutes: 19 },
-  { kind: "walk", name: "Walk", minutes: 8 },
-  { kind: "place", name: "Botanic Gardens", minutes: 156 },
-  { kind: "drive", name: "Drive", minutes: 30 },
-  { kind: "place", name: "Jewel Changi", minutes: 275 },
-  { kind: "drive", name: "Drive", minutes: 20 },
-  { kind: "place", name: "East Coast Park", minutes: 125 },
-  { kind: "drive", name: "Drive", minutes: 20 },
-  { kind: "place", name: "Marina Bay Sands", minutes: 210 },
+  { kind: "place", name: "Apple Park Visitor Center", minutes: 78 },
+  { kind: "drive", name: "Drive", minutes: 9 },
+  { kind: "place", name: "Infinite Loop", minutes: 180 },
+  { kind: "drive", name: "Drive", minutes: 12 },
+  { kind: "place", name: "Main Street Cupertino", minutes: 280 },
+  { kind: "drive", name: "Drive", minutes: 16 },
+  { kind: "place", name: "Stevens Creek Reservoir", minutes: 123 },
+  { kind: "drive", name: "Drive", minutes: 18 },
+  { kind: "place", name: "Apple Park", minutes: 232 },
 ];
 
-/** A point on the map of Singapore: 2048 units to a degree, from 103.6° E and 1.48° N. */
+/** The totals of the sample day. The distance is illustrative. */
+export const DAY_TOTALS = { km: 18.9, motion: "1h 2m", places: 5 };
+
+/** A map point: 2048 units to a degree of latitude, from 122.2° W and 37.45° N. */
 export type Point = [x: number, y: number];
 export type Mode = "walk" | "train" | "drive";
 
+// A degree of longitude is shorter at this latitude.
+const X_SCALE = 2048 * Math.cos((37.33 * Math.PI) / 180);
+
 const at = (lat: number, lng: number): Point => [
-  (lng - 103.6) * 2048,
-  (1.48 - lat) * 2048,
+  (lng + 122.2) * X_SCALE,
+  (37.45 - lat) * 2048,
 ];
 
 /** The latitude and longitude of a map point. */
 export const toLatLng = ([x, y]: Point): [lat: number, lng: number] => [
-  1.48 - y / 2048,
-  103.6 + x / 2048,
+  37.45 - y / 2048,
+  x / X_SCALE - 122.2,
 ];
 
-export const MARINA_BAY_SANDS = at(1.284, 103.8603);
-export const GARDENS_BY_THE_BAY = at(1.2816, 103.864);
-export const BOTANIC_GARDENS = at(1.3175, 103.8155);
-export const JEWEL_CHANGI = at(1.3602, 103.9898);
-export const EAST_COAST_PARK = at(1.3048, 103.923);
-const BAYFRONT = at(1.2818, 103.859);
-const BOTANIC_GARDENS_STATION = at(1.3224, 103.8153);
+export const APPLE_PARK = at(37.3349, -122.009);
+export const VISITOR_CENTER = at(37.3327, -122.0053);
+export const INFINITE_LOOP = at(37.3318, -122.0312);
+export const MAIN_STREET = at(37.3236, -122.0107);
+export const STEVENS_CREEK = at(37.298, -122.079);
 
-// The routes of the day, in order. The train follows the Downtown Line.
+// The routes of the day, in order. They are illustrative, not exact roads.
 export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
   {
     mode: "walk",
-    points: [
-      MARINA_BAY_SANDS,
-      at(1.2832, 103.8618),
-      at(1.2824, 103.863),
-      GARDENS_BY_THE_BAY,
-    ],
-  },
-  {
-    mode: "walk",
-    points: [GARDENS_BY_THE_BAY, at(1.2817, 103.862), BAYFRONT],
-  },
-  {
-    mode: "train",
-    points: [
-      BAYFRONT,
-      at(1.2934, 103.861),
-      at(1.3006, 103.8559),
-      at(1.3039, 103.8526),
-      at(1.3066, 103.8494),
-      at(1.3138, 103.838),
-      at(1.32, 103.8259),
-      BOTANIC_GARDENS_STATION,
-    ],
-  },
-  {
-    mode: "walk",
-    points: [BOTANIC_GARDENS_STATION, at(1.3198, 103.8157), BOTANIC_GARDENS],
+    points: [APPLE_PARK, at(37.3335, -122.0068), VISITOR_CENTER],
   },
   {
     mode: "drive",
     points: [
-      BOTANIC_GARDENS,
-      at(1.3205, 103.814),
-      at(1.3235, 103.816),
-      at(1.3262, 103.833),
-      at(1.328, 103.848),
-      at(1.33, 103.865),
-      at(1.333, 103.885),
-      at(1.3365, 103.91),
-      at(1.3395, 103.935),
-      at(1.343, 103.96),
-      at(1.348, 103.978),
-      at(1.355, 103.986),
-      JEWEL_CHANGI,
+      VISITOR_CENTER,
+      at(37.3302, -122.008),
+      at(37.331, -122.025),
+      INFINITE_LOOP,
     ],
   },
   {
     mode: "drive",
     points: [
-      JEWEL_CHANGI,
-      at(1.354, 103.988),
-      at(1.343, 103.984),
-      at(1.332, 103.979),
-      at(1.321, 103.964),
-      at(1.313, 103.946),
-      at(1.308, 103.933),
-      EAST_COAST_PARK,
+      INFINITE_LOOP,
+      at(37.3235, -122.032),
+      at(37.3232, -122.015),
+      MAIN_STREET,
     ],
   },
   {
     mode: "drive",
     points: [
-      EAST_COAST_PARK,
-      at(1.3015, 103.91),
-      at(1.299, 103.892),
-      at(1.296, 103.878),
-      at(1.2915, 103.87),
-      at(1.2875, 103.865),
-      MARINA_BAY_SANDS,
+      MAIN_STREET,
+      at(37.3185, -122.035),
+      at(37.312, -122.055),
+      at(37.303, -122.068),
+      STEVENS_CREEK,
+    ],
+  },
+  {
+    mode: "drive",
+    points: [
+      STEVENS_CREEK,
+      at(37.312, -122.075),
+      at(37.326, -122.062),
+      at(37.335, -122.04),
+      at(37.3365, -122.011),
+      APPLE_PARK,
     ],
     // The way back sits back, so the day reads first.
     opacity: 0.5,
   },
 ];
 
-/** The evening drive from Jewel Changi to East Coast Park: 17:45 to 18:05, 9.5 km. */
-export const EVENING_DRIVE = JOURNEYS[5].points;
+/** The evening drive from Main Street to Stevens Creek Reservoir: 17:31 to 17:47, 7 km. */
+export const EVENING_DRIVE = JOURNEYS[3].points;
 
 /** Every point of the day, to fit a map to the whole day. */
 export const DAY_POINTS = JOURNEYS.flatMap((journey) => journey.points);

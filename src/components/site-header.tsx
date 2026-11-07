@@ -18,13 +18,13 @@ export function SiteHeader() {
       >
         <Link
           href="/#privacy"
-          className="text-secondary motion-safe:transition-colors hover:text-ink"
+          className="text-secondary motion-safe:transition-colors hover:text-ink max-sm:hidden"
         >
           Privacy
         </Link>
         <Link
           href="/#faq"
-          className="text-secondary motion-safe:transition-colors hover:text-ink"
+          className="text-secondary motion-safe:transition-colors hover:text-ink max-sm:hidden"
         >
           Questions
         </Link>

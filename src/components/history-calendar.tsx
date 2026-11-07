@@ -14,16 +14,16 @@ const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const weekday = (day: number) => WEEKDAYS[(day + 2) % 7];
 
 const MEMORIES: Record<number, [title: string, icon: string]> = {
-  1: ["Evening run along the beach", "directions_run"],
+  1: ["Evening run in the park", "directions_run"],
   2: ["First visit to a new area", "explore"],
   3: ["Lunch at the food market", "restaurant"],
   4: ["Ferry to the island", "directions_boat"],
-  5: ["Evening at East Coast Park", "waves"],
+  5: ["Evening at Stevens Creek Reservoir", "park"],
   7: ["Walk in the park", "park"],
   9: ["Drinks by the river", "local_bar"],
   10: ["Cycle along the coast", "directions_bike"],
   11: ["Trail walk at the reservoir", "hiking"],
-  13: ["Night walk at Marina Bay", "directions_walk"],
+  13: ["Night walk on Main Street", "directions_walk"],
   14: ["Haircut in town", "content_cut"],
   15: ["Lunch with friends", "restaurant"],
 };
@@ -46,17 +46,7 @@ export function HistoryCalendar() {
   const photos = selected === 5 ? 1 : (selected % 3) + 1;
 
   return (
-    <div className="flex flex-col gap-5 rounded-[32px] border border-line bg-surface p-[clamp(20px,3vw,32px)]">
-      <div className="grid grid-cols-4 gap-1.5 rounded-[14px] bg-fill p-1 text-center font-semibold text-sm">
-        {["Day", "Week", "Month", "Year"].map((view) => (
-          <span
-            key={view}
-            className={`rounded-[10px] py-2 ${view === "Month" ? "bg-sun text-on-sun" : ""}`}
-          >
-            {view}
-          </span>
-        ))}
-      </div>
+    <div className="flex flex-col gap-5 w-full rounded-[28px] bg-surface p-[clamp(20px,3vw,32px)]">
       <div className="font-semibold text-[26px] tracking-[-0.5px]">October</div>
       <div className="grid grid-cols-7 gap-1.5 text-center">
         {["M", "T", "W", "T", "F", "S", "S"].map((initial, index) => (
@@ -81,7 +71,7 @@ export function HistoryCalendar() {
               onClick={() => setSelected(day)}
               className={`flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl font-semibold text-[15px] motion-safe:transition-colors ${
                 isSelected
-                  ? "bg-sun text-on-sun"
+                  ? "bg-ink text-on-ink"
                   : past
                     ? "cursor-pointer text-ink"
                     : "text-[#b5b2a8]"
@@ -94,7 +84,7 @@ export function HistoryCalendar() {
                     key={colour}
                     className="h-1 w-1.5 rounded-sm unreached:scale-x-0 unreached:opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-300"
                     style={{
-                      background: isSelected ? "var(--on-sun)" : colour,
+                      background: isSelected ? "var(--on-ink)" : colour,
                       transitionDelay: `${(day * 0.03 + j * 0.05).toFixed(2)}s`,
                     }}
                   />
