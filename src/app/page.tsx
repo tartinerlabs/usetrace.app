@@ -149,7 +149,7 @@ const DUO_INNER_VIEW: MapView = {
 };
 const DUO_OUTER_VIEW: MapView = {
   width: 400,
-  height: 256,
+  height: 312,
   fit: DAY_POINTS,
   padding: 30,
 };

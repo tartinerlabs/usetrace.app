@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { APP_STORE_ID, APP_STORE_PROVIDER_TOKEN } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -27,12 +28,13 @@ export function SiteHeader() {
         >
           Questions
         </Link>
-        <Link
-          href="/#download"
+        <a
+          href={`https://apps.apple.com/app/apple-store/id${APP_STORE_ID}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=header&mt=8`}
+          data-ph-capture-attribute-cta="app-store"
           className="inline-flex min-h-11 items-center rounded-full bg-ink px-[18px] font-semibold text-canvas motion-safe:transition-opacity hover:opacity-85"
         >
           Download
-        </Link>
+        </a>
       </nav>
     </header>
   );
