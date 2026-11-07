@@ -120,10 +120,10 @@ function Icon({
 
 // Each map's box. A snapshot of Apple Maps covers exactly its box.
 const PHONE_VIEW: MapView = {
-  width: 334,
-  height: 430,
+  width: 354,
+  height: 300,
   fit: DAY_POINTS,
-  padding: [90, 34, 90, 34],
+  padding: [52, 44, 44, 44],
 };
 const PLAYBACK_VIEW: MapView = {
   width: 560,
@@ -135,7 +135,7 @@ const PLAYBACK_VIEW: MapView = {
 const DAY_PINS: MapPin[] = [
   { at: APPLE_PARK, label: "Apple Park", side: "u" },
   { at: VISITOR_CENTER, side: "d" },
-  { at: INFINITE_LOOP, label: "Infinite Loop", side: "u" },
+  { at: INFINITE_LOOP, label: "Infinite Loop", side: "l" },
   { at: MAIN_STREET, label: "Main Street", side: "d" },
   { at: STEVENS_CREEK, label: "Stevens Creek", side: "r" },
 ];
@@ -159,35 +159,30 @@ function RibbonStrip({ className }: { className: string }) {
   );
 }
 
-/** The Today screen, built from the sample day. */
-/** Action button, volume, side button and Camera Control. */
-const IPHONE_BUTTONS = [
-  "-left-[3px] top-[137px] h-[25px]",
-  "-left-[3px] top-[191px] h-[47px]",
-  "-left-[3px] top-[249px] h-[47px]",
-  "-right-[3px] top-[205px] h-[72px]",
-  "-right-[3px] top-[403px] h-[50px]",
+const TODAY_STATS = [
+  [`${DAY_TOTALS.km} km`, "travelled"],
+  [DAY_TOTALS.motion, "in motion"],
+  [`${DAY_TOTALS.places}`, "places"],
 ];
 
+const TODAY_TABS = ["Today", "History", "Places", "You"];
+
+/**
+ * The Today screen at iPhone 18 Pro size, 402 by 874 points, scaled to fit the
+ * opening in Apple's bezel. The bezel is used as is.
+ */
 async function TodayPhone() {
   const snapshot = await snapshotUrl(PHONE_VIEW);
   return (
     <div
       role="img"
       aria-label={`The Today screen in Trace: a map of the day, with ${DAY_TOTALS.km} km travelled, ${DAY_TOTALS.motion} in motion and ${DAY_TOTALS.places} places.`}
-      className="hero-rise absolute top-0 left-1/2 h-[900px] w-[min(350px,76vw)] -translate-x-1/2 rounded-[61px] bg-[linear-gradient(135deg,#ebe8e1_0%,#b6b2a8_20%,#f6f4ef_36%,#9c988e_56%,#dcd9d1_76%,#8b877e_100%)] p-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45),0_40px_80px_-30px_rgba(27,27,25,0.6)]"
+      className="relative aspect-[1350/2760] w-[300px]"
     >
-      {IPHONE_BUTTONS.map((button) => (
-        <span
-          key={button}
-          className={`absolute -z-10 w-1 rounded-sm bg-[#a8a498] ${button}`}
-        />
-      ))}
-      <div className="h-full rounded-[54px] bg-[#050506] p-[9px]">
-        <div className="relative h-full overflow-hidden rounded-[44px] bg-canvas">
-          <div className="absolute inset-x-0 top-0 z-20 flex h-[54px] items-center justify-between bg-linear-to-b from-canvas/85 to-transparent px-[9%] font-semibold text-[15px] text-ink">
-            <span className="w-[54px] text-center">9:41</span>
-            <span className="absolute top-2.5 left-1/2 h-[29px] w-[31%] -translate-x-1/2 rounded-full bg-black" />
+      <div className="absolute top-[2.5%] left-[5.333%] h-[95%] w-[89.333%] overflow-hidden bg-canvas">
+        <div className="relative flex h-[874px] w-[402px] origin-top-left scale-[0.6667] flex-col px-6 pt-[18px] text-left">
+          <div className="flex h-9 items-center justify-between px-5 font-semibold text-[17px]">
+            <span>9:41</span>
             <svg
               viewBox="0 0 66 12"
               className="h-3 w-[66px]"
@@ -198,9 +193,9 @@ async function TodayPhone() {
               <rect x="4.5" y="5.5" width="3" height="6.5" rx="1" />
               <rect x="9" y="3" width="3" height="9" rx="1" />
               <rect x="13.5" y="0" width="3" height="12" rx="1" />
-              <path d="M29 2.4c2.2 0 4.2.9 5.7 2.3l1.1-1.2A9.800 9.800 0 0 0 29 .7a9.800 9.800 0 0 0-6.800 2.800l1.100 1.200A8.200 8.200 0 0 1 29 2.400Zm0 3.800c1.200 0 2.300.500 3.100 1.200l1.200-1.200A6.200 6.200 0 0 0 29 4.500a6.200 6.200 0 0 0-4.300 1.700l1.200 1.200A4.500 4.500 0 0 1 29 6.200Zm0 3.800c-.7 0-1.300.300-1.700.700L29 12l1.700-1.300c-.4-.4-1-.7-1.700-.7Z" />
+              <path d="M29 2.4c2.2 0 4.2.9 5.7 2.3l1.1-1.2A9.8 9.8 0 0 0 29 .7a9.8 9.8 0 0 0-6.8 2.8l1.1 1.2A8.2 8.2 0 0 1 29 2.4Zm0 3.8c1.2 0 2.3.5 3.1 1.2l1.2-1.2A6.2 6.2 0 0 0 29 4.5a6.2 6.2 0 0 0-4.3 1.7l1.2 1.2A4.5 4.5 0 0 1 29 6.2Zm0 3.8c-.7 0-1.3.3-1.7.7L29 12l1.7-1.3c-.4-.4-1-.7-1.7-.7Z" />
               <rect
-                x="41.500"
+                x="41.5"
                 y="1"
                 width="20"
                 height="10"
@@ -209,39 +204,76 @@ async function TodayPhone() {
                 stroke="currentColor"
                 opacity="0.4"
               />
-              <rect x="43" y="2.500" width="17" height="7" rx="1.800" />
+              <rect x="43" y="2.5" width="17" height="7" rx="1.8" />
               <rect
-                x="62.500"
+                x="62.5"
                 y="4"
-                width="1.500"
+                width="1.5"
                 height="4"
-                rx="0.750"
+                rx="0.75"
                 opacity="0.5"
               />
             </svg>
           </div>
-          <div className="relative aspect-[334/430]">
-            <DayMap
-              {...PHONE_VIEW}
-              snapshot={snapshot}
-              fontSize={11}
-              routes={JOURNEYS}
-              pins={DAY_PINS}
-            />
+          <div className="mt-5 flex items-center gap-2 font-semibold text-[24px]">
+            {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
+            <img src="/brand/logo.svg" alt="" width={24} height={24} />
+            trace
           </div>
-          <div className="-mt-7 relative flex flex-col gap-1.5 rounded-t-[28px] bg-canvas p-5 text-left">
-            <span className="font-bold text-[26px]">Mon, 5 Oct</span>
-            <span className="text-secondary text-sm">
-              {DAY_TOTALS.km} km, {DAY_TOTALS.motion} in motion,{" "}
-              {DAY_TOTALS.places} places
+          <span className="mt-5 text-[20px] text-secondary">Monday</span>
+          <span className="font-semibold text-[62px] leading-none tracking-[-1.5px]">
+            5 Oct
+          </span>
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <span className="text-[17px] text-secondary leading-tight">
+              A slow morning. The long way home.
             </span>
-            <RibbonStrip className="mt-2 h-3" />
-            <span className="mt-3 flex h-11 items-center justify-center rounded-full bg-sun font-semibold text-[15px] text-on-sun">
+            <span className="shrink-0 rounded-full bg-surface px-4 py-2.5 font-semibold text-[15px]">
               Daily story
             </span>
           </div>
+          <div className="mt-5 flex gap-8">
+            {TODAY_STATS.map(([value, label]) => (
+              <span key={label} className="flex flex-col">
+                <span className="font-medium text-[26px]">{value}</span>
+                <span className="text-[14px] text-secondary">{label}</span>
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 overflow-hidden rounded-[28px] bg-surface">
+            <div className="relative h-[300px] w-[354px]">
+              <DayMap
+                {...PHONE_VIEW}
+                snapshot={snapshot}
+                fontSize={13}
+                routes={JOURNEYS}
+                pins={DAY_PINS}
+              />
+            </div>
+            <div className="flex flex-col gap-3 px-4 pt-4 pb-5">
+              <span className="font-semibold text-[13px] text-secondary uppercase tracking-[1.5px]">
+                A day in colour
+              </span>
+              <RibbonStrip className="h-6" />
+            </div>
+          </div>
+          <div className="absolute inset-x-6 bottom-6 flex h-[62px] items-center justify-around rounded-full bg-surface font-semibold text-[13px] text-secondary shadow-[0_6px_20px_-8px_rgba(27,27,25,0.35)]">
+            {TODAY_TABS.map((tab, index) => (
+              <span key={tab} className={index === 0 ? "text-ink" : undefined}>
+                {tab}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
+      {/* biome-ignore lint/performance/noImgElement: fixed bitmap, sized by its parent */}
+      <img
+        src="/devices/iphone-18-pro-black-portrait.png"
+        alt=""
+        width={1350}
+        height={2760}
+        className="pointer-events-none absolute inset-0 size-full"
+      />
     </div>
   );
 }
@@ -534,7 +566,7 @@ export default function Home() {
       <div className="overflow-x-clip">
         <section
           aria-labelledby="hero-heading"
-          className="relative flex flex-col items-center gap-[18px] overflow-hidden px-[clamp(16px,5vw,56px)] pt-[clamp(24px,4vw,48px)] text-center"
+          className="relative flex flex-col items-center gap-[18px] overflow-hidden px-[clamp(16px,5vw,56px)] pt-[clamp(24px,4vw,48px)] pb-28 text-center"
         >
           <p className="font-semibold text-[clamp(17px,1.7vw,20px)] text-sun">
             A private location timeline for iPhone
@@ -558,7 +590,7 @@ export default function Home() {
               No account. No ads.
             </span>
           </div>
-          <div className="relative mt-7 h-[clamp(460px,48vw,700px)] w-full max-w-[1160px]">
+          <div className="relative mt-7 flex w-full max-w-[1160px] justify-center">
             <TodayPhone />
             <PaperPieces />
           </div>
