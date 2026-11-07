@@ -67,9 +67,9 @@ const sections: { heading: string; items: FaqItem[] }[] = [
         question: "Which iPhones does Trace support?",
         answer: (
           <p>
-            Trace needs an iPhone with iOS 18 or later. The daily story uses
-            Apple Intelligence on supported iPhones with iOS 26 or later. On
-            other iPhones, you get a factual summary of your day.
+            Trace needs an iPhone with iOS 26 or later. The daily story uses
+            Apple Intelligence on supported iPhones. On other iPhones, you get a
+            factual summary of your day.
           </p>
         ),
       },
