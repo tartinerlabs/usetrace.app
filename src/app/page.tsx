@@ -160,34 +160,86 @@ function RibbonStrip({ className }: { className: string }) {
 }
 
 /** The Today screen, built from the sample day. */
+/** Action button, volume, side button and Camera Control. */
+const IPHONE_BUTTONS = [
+  "-left-[3px] top-[137px] h-[25px]",
+  "-left-[3px] top-[191px] h-[47px]",
+  "-left-[3px] top-[249px] h-[47px]",
+  "-right-[3px] top-[205px] h-[72px]",
+  "-right-[3px] top-[403px] h-[50px]",
+];
+
 async function TodayPhone() {
   const snapshot = await snapshotUrl(PHONE_VIEW);
   return (
     <div
       role="img"
       aria-label={`The Today screen in Trace: a map of the day, with ${DAY_TOTALS.km} km travelled, ${DAY_TOTALS.motion} in motion and ${DAY_TOTALS.places} places.`}
-      className="hero-rise absolute top-0 left-1/2 h-[900px] w-[min(350px,76vw)] -translate-x-1/2 rounded-t-[56px] bg-ink p-2 shadow-[0_40px_80px_-30px_rgba(27,27,25,0.6)]"
+      className="hero-rise absolute top-0 left-1/2 h-[900px] w-[min(350px,76vw)] -translate-x-1/2 rounded-[61px] bg-[linear-gradient(135deg,#ebe8e1_0%,#b6b2a8_20%,#f6f4ef_36%,#9c988e_56%,#dcd9d1_76%,#8b877e_100%)] p-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45),0_40px_80px_-30px_rgba(27,27,25,0.6)]"
     >
-      <div className="relative h-full overflow-hidden rounded-t-[48px] bg-canvas">
-        <div className="relative aspect-[334/430]">
-          <DayMap
-            {...PHONE_VIEW}
-            snapshot={snapshot}
-            fontSize={11}
-            routes={JOURNEYS}
-            pins={DAY_PINS}
-          />
-        </div>
-        <div className="-mt-7 relative flex flex-col gap-1.5 rounded-t-[28px] bg-canvas p-5 text-left">
-          <span className="font-bold text-[26px]">Mon, 5 Oct</span>
-          <span className="text-secondary text-sm">
-            {DAY_TOTALS.km} km, {DAY_TOTALS.motion} in motion,{" "}
-            {DAY_TOTALS.places} places
-          </span>
-          <RibbonStrip className="mt-2 h-3" />
-          <span className="mt-3 flex h-11 items-center justify-center rounded-full bg-sun font-semibold text-[15px] text-on-sun">
-            Daily story
-          </span>
+      {IPHONE_BUTTONS.map((button) => (
+        <span
+          key={button}
+          className={`absolute -z-10 w-1 rounded-sm bg-[#a8a498] ${button}`}
+        />
+      ))}
+      <div className="h-full rounded-[54px] bg-[#050506] p-[9px]">
+        <div className="relative h-full overflow-hidden rounded-[44px] bg-canvas">
+          <div className="absolute inset-x-0 top-0 z-20 flex h-[54px] items-center justify-between bg-linear-to-b from-canvas/85 to-transparent px-[9%] font-semibold text-[15px] text-ink">
+            <span className="w-[54px] text-center">9:41</span>
+            <span className="absolute top-2.5 left-1/2 h-[29px] w-[31%] -translate-x-1/2 rounded-full bg-black" />
+            <svg
+              viewBox="0 0 66 12"
+              className="h-3 w-[66px]"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <rect x="0" y="8" width="3" height="4" rx="1" />
+              <rect x="4.5" y="5.5" width="3" height="6.5" rx="1" />
+              <rect x="9" y="3" width="3" height="9" rx="1" />
+              <rect x="13.5" y="0" width="3" height="12" rx="1" />
+              <path d="M29 2.4c2.2 0 4.2.9 5.7 2.3l1.1-1.2A9.800 9.800 0 0 0 29 .7a9.800 9.800 0 0 0-6.800 2.800l1.100 1.200A8.200 8.200 0 0 1 29 2.400Zm0 3.800c1.200 0 2.300.500 3.100 1.200l1.200-1.200A6.200 6.200 0 0 0 29 4.500a6.200 6.200 0 0 0-4.300 1.700l1.200 1.200A4.500 4.500 0 0 1 29 6.200Zm0 3.800c-.7 0-1.300.300-1.700.700L29 12l1.700-1.300c-.4-.4-1-.7-1.700-.7Z" />
+              <rect
+                x="41.500"
+                y="1"
+                width="20"
+                height="10"
+                rx="3"
+                fill="none"
+                stroke="currentColor"
+                opacity="0.4"
+              />
+              <rect x="43" y="2.500" width="17" height="7" rx="1.800" />
+              <rect
+                x="62.500"
+                y="4"
+                width="1.500"
+                height="4"
+                rx="0.750"
+                opacity="0.5"
+              />
+            </svg>
+          </div>
+          <div className="relative aspect-[334/430]">
+            <DayMap
+              {...PHONE_VIEW}
+              snapshot={snapshot}
+              fontSize={11}
+              routes={JOURNEYS}
+              pins={DAY_PINS}
+            />
+          </div>
+          <div className="-mt-7 relative flex flex-col gap-1.5 rounded-t-[28px] bg-canvas p-5 text-left">
+            <span className="font-bold text-[26px]">Mon, 5 Oct</span>
+            <span className="text-secondary text-sm">
+              {DAY_TOTALS.km} km, {DAY_TOTALS.motion} in motion,{" "}
+              {DAY_TOTALS.places} places
+            </span>
+            <RibbonStrip className="mt-2 h-3" />
+            <span className="mt-3 flex h-11 items-center justify-center rounded-full bg-sun font-semibold text-[15px] text-on-sun">
+              Daily story
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -506,10 +558,11 @@ export default function Home() {
               No account. No ads.
             </span>
           </div>
-          <div className="relative mt-7 h-[clamp(460px,48vw,640px)] w-full max-w-[1160px]">
+          <div className="relative mt-7 h-[clamp(460px,48vw,700px)] w-full max-w-[1160px]">
             <TodayPhone />
             <PaperPieces />
           </div>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-b from-transparent to-fill" />
         </section>
 
         <section className={`bg-fill ${section}`}>
