@@ -12,7 +12,7 @@
 /* Colours mirror the light ("Paper") variants in Trace/Assets.xcassets. Light only. */
 :root {
   color-scheme: light;
-  --canvas: #f4f2ec;
+  --canvas: #f5f4f1;
   --surface: #ffffff;
   --fill: #ece9e1;
   --line: #e2dfd6;
