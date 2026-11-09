@@ -10,7 +10,7 @@ export const DESCRIPTION = `${BRAND} is a private location timeline for iPhone. 
 
 export const SITE_URL = "https://usetrace.app";
 export const BUNDLE_ID = "com.tartinerlabs.Trace";
-export const MIN_IOS = "18.0";
+export const MIN_IOS = "26";
 
 export const APP_STORE_ID = "6819217828";
 export const APP_STORE_URL = `https://apps.apple.com/app/id${APP_STORE_ID}`;

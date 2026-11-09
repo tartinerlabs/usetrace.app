@@ -608,7 +608,9 @@ export default function Home() {
                   key={when}
                   className="flex flex-col gap-2 rounded-[20px] bg-surface p-6"
                 >
-                  <span className="font-bold text-[15px] text-sun">{when}</span>
+                  <span className="font-bold text-[15px] text-secondary">
+                    {when}
+                  </span>
                   <span className="font-bold text-[23px] leading-7 tracking-[-0.3px]">
                     {what}
                   </span>
@@ -733,7 +735,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={`bg-surface ${section}`}>
+        <section className={section}>
           <div className={`${wrap} flex flex-col gap-[clamp(28px,4vw,44px)]`}>
             <h2 className={heading}>Before you start.</h2>
             <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-[clamp(24px,4vw,48px)]">
