@@ -278,25 +278,95 @@ async function TodayPhone() {
   );
 }
 
+/** A route under the last word of the tagline: a walk, then two journeys. */
+function RouteLine() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 600 44"
+      fill="none"
+      className="absolute top-[0.84em] left-0 h-auto w-full overflow-visible"
+    >
+      <path
+        d="M10 30C50 14 95 38 150 24"
+        stroke="var(--walk)"
+        strokeWidth="8"
+        strokeLinecap="round"
+        strokeDasharray="0.1 15"
+        className="stop-in"
+        style={{ "--stop-delay": "0.5s" } as CSSProperties}
+      />
+      <path
+        d="M150 24C230 4 300 42 390 22"
+        pathLength="1"
+        stroke="var(--train)"
+        strokeWidth="9"
+        strokeLinecap="round"
+        strokeDasharray="1"
+        className="route-draw"
+        style={
+          { "--draw-delay": "0.7s", "--draw-duration": "0.6s" } as CSSProperties
+        }
+      />
+      <path
+        d="M390 22C460 6 530 34 590 14"
+        pathLength="1"
+        stroke="var(--drive)"
+        strokeWidth="9"
+        strokeLinecap="round"
+        strokeDasharray="1"
+        className="route-draw"
+        style={
+          {
+            "--draw-delay": "1.25s",
+            "--draw-duration": "0.6s",
+          } as CSSProperties
+        }
+      />
+      <g
+        fill="var(--surface)"
+        stroke="var(--ink)"
+        strokeWidth="4"
+        className="stop-in"
+        style={{ "--stop-delay": "0.5s" } as CSSProperties}
+      >
+        <circle cx="10" cy="30" r="8" />
+        <circle cx="150" cy="24" r="8" />
+        <circle cx="390" cy="22" r="8" />
+        <circle cx="590" cy="14" r="8" />
+      </g>
+    </svg>
+  );
+}
+
 /** Paper pieces around the phone. Wide screens only. */
 function PaperPieces() {
   return (
     <div aria-hidden="true" className="hidden lg:block">
-      <div className="hero-rise absolute top-9 left-0 w-[290px] -rotate-6 rounded-[14px] bg-surface p-2.5 shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
-        <span className="absolute -top-3 left-24 h-[30px] w-[104px] -rotate-6 bg-sun/25" />
-        <div className="relative aspect-square overflow-hidden rounded-lg">
-          <DayMap
-            width={280}
-            height={280}
-            fit={DAY_POINTS}
-            padding={34}
-            strokeScale={1.8}
-            routes={JOURNEYS}
-            pins={DAY_PINS.map(({ at }) => ({ at }))}
-          />
-        </div>
+      <div className="hero-rise absolute top-[30px] left-0 h-[270px] w-[320px] -rotate-[5deg] overflow-hidden rounded-[26px] bg-surface shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
+        <DayMap
+          width={320}
+          height={270}
+          fit={DAY_POINTS}
+          padding={40}
+          strokeScale={1.8}
+          routes={JOURNEYS}
+          pins={DAY_PINS.map(({ at }) => ({ at }))}
+        />
       </div>
-      <div className="hero-rise absolute top-[370px] left-11 flex w-[300px] rotate-3 rounded-[15px] bg-ink text-left text-on-night shadow-[0_16px_28px_-14px_rgba(27,27,25,0.6)]">
+      <div className="hero-rise absolute top-5 left-[206px] flex rotate-6 items-center gap-[7px] rounded-full bg-sun py-2 pr-[15px] pl-[9px] font-bold text-base text-on-sun shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
+        <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
+          <Icon name="local_cafe" className="text-sm" />
+        </span>
+        Visitor Center
+      </div>
+      <div className="hero-rise absolute top-[236px] left-[18px] flex -rotate-6 items-center gap-[7px] rounded-full bg-ink py-2 pr-[15px] pl-[9px] font-bold text-base text-on-ink shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
+        <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
+          <Icon name="location_on" className="text-sm" />
+        </span>
+        Apple Park
+      </div>
+      <div className="hero-rise absolute top-[360px] left-11 flex w-[300px] rotate-[4deg] rounded-[15px] bg-ink text-left text-on-night shadow-[0_16px_28px_-14px_rgba(27,27,25,0.6)]">
         <div className="min-w-0 flex-1 px-[15px] py-[13px]">
           <div className="font-extrabold text-[11px] text-night-secondary tracking-[1px]">
             DRIVE
@@ -308,13 +378,20 @@ function PaperPieces() {
           <span>16 min</span>
         </div>
       </div>
-      <div className="hero-rise absolute top-16 right-1.5 w-[320px] rotate-[5deg] bg-surface px-[22px] pt-5 pb-8 text-left shadow-[0_14px_28px_-14px_rgba(70,55,30,0.5)] [clip-path:polygon(0_0,100%_0,100%_90%,94%_100%,88%_91%,81%_100%,74%_91%,67%_100%,60%_91%,53%_100%,46%_91%,39%_100%,32%_91%,25%_100%,18%_91%,11%_100%,5%_91%,0_100%)]">
-        <div className="font-bold text-sm text-sun">Daily story</div>
-        <div className="mt-1 font-bold text-[23px] leading-7 tracking-[-0.3px]">
-          A slow morning. The long way home.
+      <div className="hero-rise absolute top-[70px] right-1.5 w-[300px] rotate-[5deg] rounded-3xl bg-surface px-5 py-[18px] text-left shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
+        <div className="flex items-baseline justify-between font-bold text-[15px] text-secondary">
+          <span className="text-sun">Today</span>
+          <span>Monday</span>
         </div>
+        <div className="mt-1 font-extrabold text-[38px] tracking-[-0.8px]">
+          {DAY_TOTALS.km} km
+        </div>
+        <div className="text-[15px] text-secondary">
+          {DAY_TOTALS.motion} moving · {DAY_TOTALS.places} places
+        </div>
+        <RibbonStrip className="mt-3.5 h-3.5" />
       </div>
-      <div className="hero-rise absolute top-[300px] right-[92px] flex size-32 -rotate-[9deg] flex-col items-center justify-center rounded-full border-3 border-sun font-extrabold text-[11px] text-sun tracking-[0.8px] shadow-[inset_0_0_0_4px_var(--canvas),inset_0_0_0_5px_var(--sun)]">
+      <div className="hero-rise absolute top-[290px] right-[92px] flex size-32 -rotate-[9deg] flex-col items-center justify-center rounded-full border-3 border-sun font-extrabold text-[11px] text-sun tracking-[0.8px] shadow-[inset_0_0_0_4px_var(--canvas),inset_0_0_0_5px_var(--sun)]">
         <span>YOUR</span>
         <span className="text-[32px] leading-9 tracking-normal">1st</span>
         <span>DAY</span>
@@ -568,15 +645,21 @@ export default function Home() {
           aria-labelledby="hero-heading"
           className="relative flex flex-col items-center gap-[18px] overflow-hidden px-[clamp(16px,5vw,56px)] pt-[clamp(24px,4vw,48px)] pb-28 text-center"
         >
-          <p className="font-semibold text-[clamp(17px,1.7vw,20px)] text-sun">
-            A private location timeline for iPhone
+          <p className="tag-drop mb-1.5 inline-flex -rotate-2 rounded-[13px] bg-ink text-left font-bold text-[clamp(15px,1.5vw,18px)] text-on-ink tracking-[-0.1px] shadow-[0_14px_24px_-14px_rgba(27,27,25,0.6)]">
+            <span className="px-4 py-2.5">A private location timeline</span>
+            <span className="flex items-center border-[#5a5a55] border-l-2 border-dashed px-3.5 py-2.5 font-extrabold text-[0.75em] text-night-secondary uppercase tracking-[1px]">
+              for iPhone
+            </span>
           </p>
           <h1
             id="hero-heading"
-            className="font-extrabold text-[clamp(60px,10vw,148px)] leading-[0.94] tracking-[-0.045em]"
+            className="pb-[0.2em] font-extrabold text-[clamp(60px,10vw,148px)] leading-[0.94] tracking-[-0.045em]"
           >
             {TAGLINE.slice(0, accentAt)}
-            <span className="text-sun">{TAGLINE.slice(accentAt)}</span>
+            <span className="relative inline-block whitespace-nowrap text-sun">
+              {TAGLINE.slice(accentAt)}
+              <RouteLine />
+            </span>
           </h1>
           <p className="max-w-[44ch] text-[#3a3a35] text-[clamp(18px,1.7vw,22px)] leading-[1.45]">
             {SUMMARY}
