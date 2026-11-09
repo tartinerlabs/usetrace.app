@@ -36,6 +36,9 @@
   --on-night: #f1efe9;
   --night-secondary: #a3a49e;
   --peach: #8fd3b6;
+  /* Buttons: pine on paper, mint on a night page. */
+  --accent: var(--sun);
+  --on-accent: #ffffff;
 }
 
 @media (prefers-contrast: more) {
@@ -78,6 +81,8 @@
   --color-on-night: var(--on-night);
   --color-night-secondary: var(--night-secondary);
   --color-peach: var(--peach);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sans:
     -apple-system, BlinkMacSystemFont, var(--font-inter), Arial, sans-serif;
@@ -86,6 +91,20 @@
     sans-serif;
   --radius-card: 1.75rem;
   --radius-small: 1rem;
+}
+
+/* A page with .page-night is dark from the header down. */
+body:has(.page-night) {
+  --canvas: var(--night);
+  --surface: var(--night-surface);
+  --fill: var(--night-surface);
+  --line: var(--night-line);
+  --ink: var(--on-night);
+  --on-ink: var(--night);
+  --secondary: var(--night-secondary);
+  --body: var(--night-secondary);
+  --accent: var(--peach);
+  --on-accent: var(--night);
 }
 
 /* Follow the iOS Dynamic Type setting in Safari; elsewhere keep the browser default. */

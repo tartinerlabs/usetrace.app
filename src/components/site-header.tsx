@@ -32,7 +32,7 @@ export function SiteHeader() {
       <a
         href={`https://apps.apple.com/app/apple-store/id${APP_STORE_ID}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=header&mt=8`}
         data-ph-capture-attribute-cta="app-store"
-        className="inline-flex min-h-11 items-center justify-self-end rounded-full bg-ink px-[18px] font-semibold text-canvas motion-safe:transition-opacity hover:opacity-85"
+        className="inline-flex min-h-11 items-center justify-self-end rounded-full bg-accent px-[18px] font-semibold text-on-accent motion-safe:transition-opacity hover:opacity-85"
       >
         Download
       </a>

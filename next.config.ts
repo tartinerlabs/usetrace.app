@@ -51,6 +51,11 @@ const nextConfig: NextConfig = {
           destination: "/md/arc-timeline-alternative",
           has: acceptsMarkdown,
         },
+        {
+          source: "/pricing",
+          destination: "/md/pricing",
+          has: acceptsMarkdown,
+        },
       ],
       afterFiles: [],
       // Fallback rewrites run only when no page or file matches.

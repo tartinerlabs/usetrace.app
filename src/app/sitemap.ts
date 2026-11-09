@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { LIVE as ARC_LIVE } from "@/lib/arc-timeline";
+import { LIVE as PRICING_LIVE } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 // Google trusts lastModified only while it stays accurate, so update a page's
@@ -40,6 +41,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ? [
           {
             url: `${SITE_URL}/arc-timeline-alternative`,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
+    ...(PRICING_LIVE
+      ? [
+          {
+            url: `${SITE_URL}/pricing`,
             changeFrequency: "monthly" as const,
             priority: 0.7,
           },
