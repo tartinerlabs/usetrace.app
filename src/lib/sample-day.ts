@@ -1,4 +1,4 @@
-// The illustrative day that the home page follows: Monday 5 October.
+// The illustrative day that the home page follows: Tuesday 9 January.
 
 export type Activity = "walk" | "cycle" | "train" | "drive" | "place";
 
@@ -52,100 +52,93 @@ export const ACTIVITIES: Record<
 
 export type DayPart = { kind: Activity; name: string; minutes: number };
 
-// A day around Cupertino. Every place is public, so the sample shows no one's
-// home or work.
+// A day out from the city to the sea. The places have everyday names, so the
+// sample shows no real home or work.
 export const SAMPLE_DAY: DayPart[] = [
-  { kind: "place", name: "Apple Park", minutes: 485 },
-  { kind: "walk", name: "Walk", minutes: 7 },
-  { kind: "place", name: "Apple Park Visitor Center", minutes: 78 },
-  { kind: "drive", name: "Drive", minutes: 9 },
-  { kind: "place", name: "Infinite Loop", minutes: 180 },
-  { kind: "drive", name: "Drive", minutes: 12 },
-  { kind: "place", name: "Main Street Cupertino", minutes: 280 },
-  { kind: "drive", name: "Drive", minutes: 16 },
-  { kind: "place", name: "Stevens Creek Reservoir", minutes: 123 },
-  { kind: "drive", name: "Drive", minutes: 18 },
-  { kind: "place", name: "Apple Park", minutes: 232 },
+  { kind: "place", name: "Home", minutes: 520 },
+  { kind: "walk", name: "Walk", minutes: 25 },
+  { kind: "train", name: "Train", minutes: 11 },
+  { kind: "place", name: "Museum", minutes: 194 },
+  { kind: "drive", name: "Drive", minutes: 35 },
+  { kind: "place", name: "Seaside", minutes: 155 },
+  { kind: "drive", name: "Drive", minutes: 30 },
+  { kind: "place", name: "Hilltop gardens", minutes: 130 },
+  { kind: "drive", name: "Drive", minutes: 45 },
+  { kind: "place", name: "Home", minutes: 295 },
 ];
 
 /** The totals of the sample day. The distance is illustrative. */
-export const DAY_TOTALS = { km: 18.9, motion: "1h 2m", places: 5 };
+export const DAY_TOTALS = { km: 79.1, motion: "2h 26m", places: 4 };
 
-/** A map point: 2048 units to a degree of latitude, from 122.2° W and 37.45° N. */
+/** A map point: 2048 units to a degree of latitude, from 9.5° W and 38.85° N. */
 export type Point = [x: number, y: number];
 export type Mode = "walk" | "train" | "drive";
 
 // A degree of longitude is shorter at this latitude.
-const X_SCALE = 2048 * Math.cos((37.33 * Math.PI) / 180);
+const X_SCALE = 2048 * Math.cos((38.72 * Math.PI) / 180);
 
 const at = (lat: number, lng: number): Point => [
-  (lng + 122.2) * X_SCALE,
-  (37.45 - lat) * 2048,
+  (lng + 9.5) * X_SCALE,
+  (38.85 - lat) * 2048,
 ];
 
 /** The latitude and longitude of a map point. */
 export const toLatLng = ([x, y]: Point): [lat: number, lng: number] => [
-  37.45 - y / 2048,
-  x / X_SCALE - 122.2,
+  38.85 - y / 2048,
+  x / X_SCALE - 9.5,
 ];
 
-export const APPLE_PARK = at(37.3349, -122.009);
-export const VISITOR_CENTER = at(37.3327, -122.0053);
-export const INFINITE_LOOP = at(37.3318, -122.0312);
-export const MAIN_STREET = at(37.3236, -122.0107);
-export const STEVENS_CREEK = at(37.298, -122.079);
+export const HOME = at(38.7115, -9.13);
+export const STATION = at(38.7062, -9.1447);
+export const MUSEUM = at(38.699, -9.2003);
+export const SEASIDE = at(38.697, -9.421);
+export const GARDENS = at(38.7876, -9.3906);
 
 // The routes of the day, in order. They are illustrative, not exact roads.
 export const JOURNEYS: { mode: Mode; points: Point[]; opacity?: number }[] = [
   {
     mode: "walk",
-    points: [APPLE_PARK, at(37.3335, -122.0068), VISITOR_CENTER],
+    points: [HOME, at(38.7085, -9.137), STATION],
+  },
+  {
+    mode: "train",
+    points: [STATION, at(38.7052, -9.156), at(38.7032, -9.1799), MUSEUM],
   },
   {
     mode: "drive",
     points: [
-      VISITOR_CENTER,
-      at(37.3302, -122.008),
-      at(37.331, -122.025),
-      INFINITE_LOOP,
+      MUSEUM,
+      at(38.698, -9.23),
+      at(38.699, -9.275),
+      at(38.688, -9.315),
+      at(38.682, -9.335),
+      at(38.688, -9.355),
+      at(38.703, -9.398),
+      SEASIDE,
     ],
   },
   {
     mode: "drive",
-    points: [
-      INFINITE_LOOP,
-      at(37.3235, -122.032),
-      at(37.3232, -122.015),
-      MAIN_STREET,
-    ],
+    points: [SEASIDE, at(38.725, -9.425), at(38.76, -9.41), GARDENS],
   },
   {
     mode: "drive",
     points: [
-      MAIN_STREET,
-      at(37.3185, -122.035),
-      at(37.312, -122.055),
-      at(37.303, -122.068),
-      STEVENS_CREEK,
-    ],
-  },
-  {
-    mode: "drive",
-    points: [
-      STEVENS_CREEK,
-      at(37.312, -122.075),
-      at(37.326, -122.062),
-      at(37.335, -122.04),
-      at(37.3365, -122.011),
-      APPLE_PARK,
+      GARDENS,
+      at(38.785, -9.34),
+      at(38.765, -9.28),
+      at(38.752, -9.225),
+      at(38.742, -9.17),
+      at(38.72, -9.14),
+      HOME,
     ],
     // The way back sits back, so the day reads first.
     opacity: 0.5,
   },
 ];
 
-/** The evening drive from Main Street to Stevens Creek Reservoir: 17:31 to 17:47, 7 km. */
-export const EVENING_DRIVE = JOURNEYS[3].points;
+/** The drive from the seaside up to the hilltop gardens: 15:40 to 16:10, 17.8 km. */
+export const HILLS_DRIVE = JOURNEYS[3].points;
 
 /** Every point of the day, to fit a map to the whole day. */
 export const DAY_POINTS = JOURNEYS.flatMap((journey) => journey.points);

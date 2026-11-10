@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { onScrollFrame } from "@/components/chapter-rail";
 import { DayMap, type MapView } from "@/components/day-map";
 import {
-  EVENING_DRIVE as DRIVE,
-  MAIN_STREET,
+  HILLS_DRIVE as DRIVE,
+  GARDENS,
   type Point,
-  STEVENS_CREEK,
+  SEASIDE,
 } from "@/lib/sample-day";
 
 const PLAY_MS = 9000;
@@ -87,8 +87,8 @@ export function JourneyPlayback({
   }, []);
 
   const driven = along(DRIVE, Math.max(0.001, progress));
-  const minutes = 17 * 60 + 31 + Math.round(16 * progress);
-  const label = `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")} · ${(7 * progress).toFixed(1)} KM`;
+  const minutes = 15 * 60 + 40 + Math.round(30 * progress);
+  const label = `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")} · ${(17.8 * progress).toFixed(1)} KM`;
 
   return (
     <div
@@ -97,7 +97,7 @@ export function JourneyPlayback({
     >
       <div
         role="img"
-        aria-label="Playback of the evening drive from Main Street to Stevens Creek Reservoir."
+        aria-label="Playback of the drive from the seaside up to the hilltop gardens."
         className="relative aspect-[14/9] bg-canvas"
       >
         <DayMap
@@ -110,8 +110,8 @@ export function JourneyPlayback({
             { mode: "drive", points: driven },
           ]}
           pins={[
-            { at: MAIN_STREET, label: "Main Street", side: "d" },
-            { at: STEVENS_CREEK, label: "Stevens Creek", side: "r" },
+            { at: SEASIDE, label: "Seaside", side: "r" },
+            { at: GARDENS, label: "Hilltop gardens", side: "l" },
             { at: driven[driven.length - 1], radius: 9, fill: "var(--sun)" },
           ]}
         />
@@ -151,9 +151,9 @@ export function JourneyPlayback({
           </div>
         </div>
         <div className="flex justify-between font-mono text-secondary text-xs">
-          <span>17:31 MAIN STREET</span>
+          <span>15:40 SEASIDE</span>
           <span className="text-ink tabular-nums">{label}</span>
-          <span>17:47 STEVENS CREEK</span>
+          <span>16:10 HILLTOP GARDENS</span>
         </div>
       </div>
     </div>

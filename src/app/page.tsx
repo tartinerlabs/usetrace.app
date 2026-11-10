@@ -8,17 +8,17 @@ import { HistoryCalendar } from "@/components/history-calendar";
 import { JourneyPlayback } from "@/components/journey-playback";
 import {
   ACTIVITIES,
-  APPLE_PARK,
   DAY_POINTS,
   DAY_TOTALS,
-  EVENING_DRIVE,
-  INFINITE_LOOP,
+  GARDENS,
+  HILLS_DRIVE,
+  HOME,
   JOURNEYS,
-  MAIN_STREET,
+  MUSEUM,
   SAMPLE_DAY,
+  SEASIDE,
+  STATION,
   STAY_OPACITY,
-  STEVENS_CREEK,
-  VISITOR_CENTER,
 } from "@/lib/sample-day";
 import {
   APP_STORE_NAME,
@@ -128,16 +128,16 @@ const PHONE_VIEW: MapView = {
 const PLAYBACK_VIEW: MapView = {
   width: 560,
   height: 360,
-  fit: EVENING_DRIVE,
+  fit: HILLS_DRIVE,
   padding: 64,
 };
 
 const DAY_PINS: MapPin[] = [
-  { at: APPLE_PARK, label: "Apple Park", side: "u" },
-  { at: VISITOR_CENTER, side: "d" },
-  { at: INFINITE_LOOP, label: "Infinite Loop", side: "l" },
-  { at: MAIN_STREET, label: "Main Street", side: "d" },
-  { at: STEVENS_CREEK, label: "Stevens Creek", side: "r" },
+  { at: HOME, label: "Home", side: "u" },
+  { at: STATION, side: "d" },
+  { at: MUSEUM, label: "Museum", side: "d" },
+  { at: SEASIDE, label: "Seaside", side: "d" },
+  { at: GARDENS, label: "Hilltop gardens", side: "r" },
 ];
 
 function RibbonStrip({ className }: { className: string }) {
@@ -220,13 +220,13 @@ async function TodayPhone() {
             <img src="/brand/logo.svg" alt="" width={24} height={24} />
             trace
           </div>
-          <span className="mt-5 text-[20px] text-secondary">Monday</span>
+          <span className="mt-5 text-[20px] text-secondary">Tuesday</span>
           <span className="font-semibold text-[62px] leading-none tracking-[-1.5px]">
-            5 Oct
+            9 Jan
           </span>
           <div className="mt-4 flex items-center justify-between gap-4">
             <span className="text-[17px] text-secondary leading-tight">
-              A slow morning. The long way home.
+              A long day out, from the gardens to the sea.
             </span>
             <span className="shrink-0 rounded-full bg-surface px-4 py-2.5 font-semibold text-[15px]">
               Daily story
@@ -356,32 +356,32 @@ function PaperPieces() {
       </div>
       <div className="hero-rise absolute top-5 left-[206px] flex rotate-6 items-center gap-[7px] rounded-full bg-sun py-2 pr-[15px] pl-[9px] font-bold text-base text-on-sun shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
         <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
-          <Icon name="local_cafe" className="text-sm" />
+          <Icon name="museum" className="text-sm" />
         </span>
-        Visitor Center
+        Museum
       </div>
       <div className="hero-rise absolute top-[236px] left-[18px] flex -rotate-6 items-center gap-[7px] rounded-full bg-ink py-2 pr-[15px] pl-[9px] font-bold text-base text-on-ink shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
         <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
-          <Icon name="location_on" className="text-sm" />
+          <Icon name="beach_access" className="text-sm" />
         </span>
-        Apple Park
+        Seaside
       </div>
       <div className="hero-rise absolute top-[360px] left-11 flex w-[300px] rotate-[4deg] rounded-[15px] bg-ink text-left text-on-night shadow-[0_16px_28px_-14px_rgba(27,27,25,0.6)]">
         <div className="min-w-0 flex-1 px-[15px] py-[13px]">
           <div className="font-extrabold text-[11px] text-night-secondary tracking-[1px]">
             DRIVE
           </div>
-          <div className="font-bold text-lg">To the hills</div>
+          <div className="font-bold text-lg">Up to the hills</div>
         </div>
         <div className="flex w-[72px] flex-none flex-col items-center justify-center border-[#5a5a55] border-l-2 border-dashed font-bold text-night-secondary text-xs">
-          <span>17:31</span>
-          <span>16 min</span>
+          <span>15:40</span>
+          <span>30 min</span>
         </div>
       </div>
       <div className="hero-rise absolute top-[70px] right-1.5 w-[300px] rotate-[5deg] rounded-3xl bg-surface px-5 py-[18px] text-left shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
         <div className="flex items-baseline justify-between font-bold text-[15px] text-secondary">
           <span className="text-sun">Today</span>
-          <span>Monday</span>
+          <span>Tuesday</span>
         </div>
         <div className="mt-1 font-extrabold text-[38px] tracking-[-0.8px]">
           {DAY_TOTALS.km} km
@@ -402,38 +402,38 @@ function PaperPieces() {
 
 const PLACES = [
   {
-    name: "Apple Park",
-    icon: "location_on",
+    name: "Home",
+    icon: "home",
     visits: 64,
-    usual: "Usually arrives 20:08",
+    usual: "Usually arrives 19:05",
     private: true,
   },
   {
-    name: "Infinite Loop",
-    icon: "location_on",
+    name: "Seaside",
+    icon: "beach_access",
     visits: 41,
-    usual: "Usually arrives 09:39",
+    usual: "Usually arrives 13:05",
     private: false,
   },
   {
-    name: "Apple Park Visitor Center",
-    icon: "local_cafe",
-    visits: 29,
-    usual: "Usually arrives 08:12",
-    private: false,
-  },
-  {
-    name: "Main Street Cupertino",
+    name: "Food market",
     icon: "restaurant",
-    visits: 18,
-    usual: "Usually arrives 12:51",
+    visits: 29,
+    usual: "Usually arrives 12:40",
     private: false,
   },
   {
-    name: "Stevens Creek Reservoir",
-    icon: "park",
+    name: "Bookshop",
+    icon: "menu_book",
+    visits: 18,
+    usual: "Usually arrives 17:20",
+    private: false,
+  },
+  {
+    name: "Museum",
+    icon: "museum",
     visits: 12,
-    usual: "Usually arrives 17:47",
+    usual: "Usually arrives 09:16",
     private: false,
   },
 ];
