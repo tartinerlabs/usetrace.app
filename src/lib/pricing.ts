@@ -68,7 +68,6 @@ export const PERKS = [
     title: "Your places.",
     text: "See your usual times and totals at each place.",
   },
-  { title: "3D maps.", text: "See your routes and places in 3D." },
   {
     title: "Device labels.",
     text: "See which device recorded each stay and journey.",
@@ -112,7 +111,6 @@ export const COMPARE: {
       { feature: "All-time explored map", trace: false, plus: true },
       { feature: "Usual times at each place", trace: false, plus: true },
       { feature: "Totals at each place", trace: false, plus: true },
-      { feature: "Routes and places in 3D", trace: false, plus: true },
       {
         feature: "The device for each stay and journey",
         trace: false,
