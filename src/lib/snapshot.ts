@@ -31,7 +31,7 @@ export async function snapshotUrl(view: MapView): Promise<string | undefined> {
     spn: `${(north - south).toFixed(6)},${(east - west).toFixed(6)}`,
     size: `${Math.round(view.width)}x${Math.round(view.height)}`,
     scale: "2",
-    t: "mutedStandard",
+    t: "standard",
     colorScheme: "light",
     poi: "0",
     lang: "en-GB",
