@@ -84,9 +84,9 @@ const jsonLd = {
 };
 
 // Same scale as the home page.
-const wrap = "mx-auto w-full max-w-[1128px] px-[clamp(16px,5vw,56px)]";
+const wrap = "mx-auto w-full max-w-page px-gutter";
 const heading =
-  "text-balance font-extrabold text-[clamp(32px,4vw,48px)] leading-none tracking-[-0.03em]";
+  "text-balance font-extrabold text-[clamp(32px,4vw,48px)] leading-none tracking-section";
 
 const FACTS = ["No account", "Encrypted on your iPhone", "No streaks"];
 
@@ -134,12 +134,12 @@ export default function Page() {
 
       <section
         aria-labelledby="hero-heading"
-        className={`${wrap} pt-[clamp(32px,6vw,72px)] pb-20`}
+        className={`${wrap} pt-page-top pb-20`}
       >
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <h1
             id="hero-heading"
-            className="font-extrabold text-[clamp(40px,6vw,72px)] leading-none tracking-[-0.04em]"
+            className="font-extrabold text-[clamp(40px,6vw,72px)] leading-none tracking-title"
           >
             {HEADING}
             <span className="block text-peach">{SUBHEADING}</span>

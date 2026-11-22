@@ -81,7 +81,7 @@ export function ChapterRail({
         }}
       />
       <span
-        className="absolute top-0.5 left-1/2 -ml-[11px] size-[22px] rounded-full border-4 motion-safe:transition-[background-color,transform] motion-safe:duration-300"
+        className="absolute top-0.5 left-1/2 -ml-2.75 size-5.5 rounded-full border-4 motion-safe:transition-[background-color,transform] motion-safe:duration-300"
         style={{
           borderColor: style.color,
           background: reached ? style.color : "var(--canvas)",

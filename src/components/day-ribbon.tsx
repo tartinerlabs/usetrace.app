@@ -60,7 +60,7 @@ export function DayRibbon() {
     <>
       <p
         aria-live="polite"
-        className="mb-3 flex min-h-7 items-center gap-2.5 font-medium text-[17px]"
+        className="mb-3 flex min-h-7 items-center gap-2.5 font-medium text-headline"
       >
         {current && (
           <span
@@ -74,7 +74,7 @@ export function DayRibbon() {
       </p>
       <fieldset
         aria-label="Parts of the day"
-        className="flex h-[clamp(44px,6vw,64px)] gap-[3px]"
+        className="flex h-[clamp(44px,6vw,64px)] gap-0.75"
         onPointerMove={(event) => setActive(partAt(event))}
         onPointerDown={(event) => setActive(partAt(event))}
         onMouseLeave={() => setActive(-1)}
@@ -90,7 +90,7 @@ export function DayRibbon() {
               if (event.currentTarget.matches(":focus-visible"))
                 setActive(index);
             }}
-            className="ribbon-in min-w-[3px] cursor-pointer rounded-lg outline-offset-2 motion-safe:transition-[opacity,transform] motion-safe:duration-200"
+            className="ribbon-in min-w-0.75 cursor-pointer rounded-lg outline-offset-2 motion-safe:transition-[opacity,transform] motion-safe:duration-200"
             style={{
               flex: `${part.minutes} 1 0`,
               background: ACTIVITIES[part.kind].color,

@@ -3,7 +3,7 @@ import type { MDXComponents } from "mdx/types";
 const components: MDXComponents = {
   h1: (props) => (
     <h1
-      className="mb-6 wrap-break-word font-semibold text-[clamp(2rem,1.6rem+2vw,2.75rem)] text-ink leading-tight tracking-tight"
+      className="mb-6 wrap-break-word font-semibold text-page-title text-ink leading-tight tracking-tight"
       {...props}
     />
   ),

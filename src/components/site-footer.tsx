@@ -4,7 +4,7 @@ import { BRAND } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="border-night-line border-t bg-night text-night-secondary">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-wrap items-center justify-between gap-4 px-[clamp(20px,5vw,56px)] py-7 text-sm">
+      <div className="mx-auto flex w-full max-w-site flex-wrap items-center justify-between gap-4 px-gutter-wide py-7 text-sm">
         <p className="flex items-center gap-2 text-on-night">
           {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
           <img src="/brand/logo-dark.svg" alt="" width={20} height={20} />
