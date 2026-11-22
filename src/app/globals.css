@@ -83,11 +83,62 @@
   --color-peach: var(--peach);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
+  /* Fixed tones: hero text, link underlines, ticket perforations, empty days, "No". */
+  --color-ink-soft: #3a3a35;
+  --color-link-underline: #c9c4b6;
+  --color-night-link-underline: #4a4e55;
+  --color-perforation: #5a5a55;
+  --color-faint: #b5b2a8;
+  --color-negative: #b3412f;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sans:
     -apple-system, BlinkMacSystemFont, var(--font-inter), Arial, sans-serif;
+  /* Type scale. No line height, so each size keeps the line height it inherits. */
+  --text-caption: 0.6875rem;
+  --text-footnote: 0.8125rem;
+  --text-subhead: 0.9375rem;
+  --text-headline: 1.0625rem;
+  --text-title-3: 1.1875rem;
+  --text-title-2: 1.3125rem;
+  --text-icon: 1.375rem;
+  --text-title-1: 1.625rem;
+  /* Fluid sizes and spacing shared by more than one page. */
+  --text-lead: clamp(17px, 1.6vw, 20px);
+  --text-intro: clamp(18px, 1.7vw, 22px);
+  --text-page-title: clamp(2rem, 1.6rem + 2vw, 2.75rem);
+  --spacing-gutter: clamp(16px, 5vw, 56px);
+  --spacing-gutter-wide: clamp(20px, 5vw, 56px);
+  --spacing-card-inset: clamp(20px, 3vw, 32px);
+  --spacing-columns: clamp(24px, 5vw, 72px);
+  --spacing-page-top: clamp(32px, 6vw, 72px);
+  --spacing-section: clamp(64px, 8vw, 112px);
+  --tracking-display: -0.045em;
+  --tracking-title: -0.04em;
+  --tracking-heading: -0.035em;
+  --tracking-section: -0.03em;
+  --tracking-caps: 1px;
+  --tracking-stamp: 0.8px;
+  --leading-display: 0.95;
+  --leading-intro: 1.45;
+  /* Cards 28 and rows 16, from the Brand Kit. */
   --radius-card: 1.75rem;
   --radius-small: 1rem;
+  --radius-app-icon: 22.37%;
+  /* Paper pieces and stickers in the hero collage. */
+  --shadow-paper: 0 18px 34px -16px rgba(70, 55, 30, 0.5);
+  --shadow-sticker:
+    0 0 0 4px var(--surface), 0 8px 16px -6px rgba(70, 55, 30, 0.45);
+  --container-site: 77.5rem;
+  --container-page: 70.5rem;
+  --container-feature: 65rem;
+  --container-cta: 55rem;
+  --container-card: 30rem;
+  --container-14ch: 14ch;
+  --container-34ch: 34ch;
+  --container-36ch: 36ch;
+  --container-44ch: 44ch;
+  --container-62ch: 62ch;
+  --ease-spring: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 /* A page with .page-night is dark from the header down. */

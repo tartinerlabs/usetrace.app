@@ -85,13 +85,13 @@ const jsonLd = {
 };
 
 // Same scale and type as the home page.
-const wrap = "mx-auto w-full max-w-[1240px] px-[clamp(20px,5vw,56px)]";
-const eyebrow = "font-mono text-secondary text-xs tracking-[1.2px]";
+const wrap = "mx-auto w-full max-w-site px-gutter-wide";
+const eyebrow = "font-mono text-secondary text-xs tracking-widest";
 const sectionHeading =
-  "text-balance font-semibold text-[clamp(34px,4.6vw,60px)] leading-none tracking-[-0.035em]";
-const card = "rounded-[32px] border border-line bg-surface";
+  "text-balance font-semibold text-[clamp(34px,4.6vw,60px)] leading-none tracking-heading";
+const card = "rounded-4xl border border-line bg-surface";
 const underline =
-  "underline decoration-[#c9c4b6] underline-offset-[5px] motion-safe:transition-colors hover:decoration-ink";
+  "underline decoration-link-underline underline-offset-5 motion-safe:transition-colors hover:decoration-ink";
 
 function Icon({ name, className = "" }: { name: string; className?: string }) {
   return (
@@ -120,24 +120,24 @@ export default function Page() {
         {/* Hero */}
         <section
           aria-labelledby="hero-heading"
-          className={`${wrap} grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(40px,6vw,80px)] pt-[clamp(32px,6vw,72px)] pb-[clamp(72px,10vw,136px)]`}
+          className={`${wrap} grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(40px,6vw,80px)] pt-page-top pb-[clamp(72px,10vw,136px)]`}
         >
           <div className="flex flex-col gap-7">
             <p className={eyebrow}>ARC TIMELINE ALTERNATIVE</p>
             <h1
               id="hero-heading"
-              className="text-balance font-semibold text-[clamp(44px,6vw,84px)] leading-[0.95] tracking-[-0.045em]"
+              className="text-balance font-semibold text-[clamp(44px,6vw,84px)] leading-display tracking-display"
             >
               {HEADING}
             </h1>
-            <p className="max-w-[34ch] text-pretty text-[#3a3a35] text-[clamp(19px,2vw,23px)] leading-[1.45]">
+            <p className="max-w-34ch text-pretty text-ink-soft text-[clamp(19px,2vw,23px)] leading-intro">
               {INTRO}
             </p>
             <div className="flex flex-wrap items-center gap-5">
               <AppStoreBadge campaign="arc-timeline" />
               <a
                 href="#compare"
-                className={`font-medium text-[15px] ${underline}`}
+                className={`font-medium text-subhead ${underline}`}
               >
                 See all the differences
               </a>
@@ -146,7 +146,7 @@ export default function Page() {
 
           {/* The three main differences at a glance. The table below has the detail. */}
           <div
-            className={`${card} w-full max-w-[480px] justify-self-center overflow-hidden`}
+            className={`${card} w-full max-w-card justify-self-center overflow-hidden`}
           >
             <div className="grid grid-cols-[1fr_72px_72px] items-center border-line border-b px-5 py-4 font-semibold text-sm">
               <span className={`${eyebrow} font-normal`}>AT A GLANCE</span>
@@ -157,7 +157,7 @@ export default function Page() {
                   alt={BRAND}
                   width={28}
                   height={28}
-                  className="rounded-[22.37%]"
+                  className="rounded-app-icon"
                 />
               </span>
               <span className="text-center">Arc</span>
@@ -166,7 +166,7 @@ export default function Page() {
               {highlightRows.map((row) => (
                 <li
                   key={row.topic}
-                  className="grid grid-cols-[1fr_72px_72px] items-center px-5 py-4 text-[15px]"
+                  className="grid grid-cols-[1fr_72px_72px] items-center px-5 py-4 text-subhead"
                 >
                   <span className="font-medium">{row.topic}</span>
                   <span className="flex justify-center">
@@ -209,14 +209,14 @@ export default function Page() {
         <div className="bg-night text-on-night [--line:var(--night-line)] [--secondary:var(--night-secondary)]">
           <section
             aria-labelledby="keep-heading"
-            className={`${wrap} pt-[clamp(80px,11vw,152px)] pb-[clamp(64px,8vw,112px)]`}
+            className={`${wrap} pt-[clamp(80px,11vw,152px)] pb-section`}
           >
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-[clamp(28px,5vw,72px)]">
               <div className="flex flex-col gap-6">
                 <p className={eyebrow}>TO BE FAIR</p>
                 <h2
                   id="keep-heading"
-                  className="max-w-[14ch] text-balance font-semibold text-[clamp(40px,6vw,80px)] leading-[0.95] tracking-[-0.045em]"
+                  className="max-w-14ch text-balance font-semibold text-[clamp(40px,6vw,80px)] leading-display tracking-display"
                 >
                   When to keep Arc Timeline.
                 </h2>
@@ -241,7 +241,7 @@ export default function Page() {
           <section
             id="faq"
             aria-labelledby="faq-heading"
-            className={`${wrap} grid grid-cols-1 gap-[clamp(24px,5vw,72px)] pb-[clamp(80px,10vw,144px)] md:grid-cols-3`}
+            className={`${wrap} grid grid-cols-1 gap-columns pb-[clamp(80px,10vw,144px)] md:grid-cols-3`}
           >
             <h2
               id="faq-heading"
@@ -262,12 +262,12 @@ export default function Page() {
                       className="text-2xl text-secondary motion-safe:transition-transform group-open:rotate-45"
                     />
                   </summary>
-                  <p className="max-w-[62ch] pb-6 text-base text-secondary leading-relaxed">
+                  <p className="max-w-62ch pb-6 text-base text-secondary leading-relaxed">
                     {item.answer}
                   </p>
                 </details>
               ))}
-              <p className="mt-5 text-[15px] text-secondary">
+              <p className="mt-5 text-subhead text-secondary">
                 To learn what {BRAND} does with your data, read the{" "}
                 <Link
                   href="/privacy"
@@ -290,22 +290,22 @@ export default function Page() {
               alt=""
               width={96}
               height={96}
-              className="rounded-[22.37%] shadow-[0_0_0_1px_var(--night-line)]"
+              className="rounded-app-icon ring-1 ring-night-line"
             />
             <h2
               id="cta-heading"
-              className="font-semibold text-[clamp(44px,7vw,96px)] leading-[0.95] tracking-[-0.05em]"
+              className="font-semibold text-[clamp(44px,7vw,96px)] leading-display tracking-tighter"
             >
               Start your first day.
             </h2>
-            <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
+            <p className="max-w-36ch text-title-3 text-secondary leading-normal">
               Install {BRAND} and tap Start my journal. Tonight, your day is on
               the map.
             </p>
             <AppStoreBadge campaign="arc-timeline" />
             <Link
               href="/"
-              className="font-medium text-[15px] underline decoration-[#4a4e55] underline-offset-[5px] motion-safe:transition-colors hover:decoration-on-night"
+              className="font-medium text-subhead underline decoration-night-link-underline underline-offset-5 motion-safe:transition-colors hover:decoration-on-night"
             >
               See all the features of {BRAND}
             </Link>

@@ -23,7 +23,7 @@ const STATUS: Record<
     label: "Partly",
     className: "text-secondary",
   },
-  no: { icon: "cancel", label: "No", className: "text-[#b3412f]" },
+  no: { icon: "cancel", label: "No", className: "text-negative" },
 };
 
 export function StatusMark({ status }: { status: Status }) {
@@ -32,7 +32,7 @@ export function StatusMark({ status }: { status: Status }) {
     <span
       role="img"
       aria-label={label}
-      className={`icon text-[22px] ${className}`}
+      className={`icon text-icon ${className}`}
     >
       {icon}
     </span>
@@ -49,8 +49,8 @@ export function ComparisonTable({
 }) {
   return (
     // Below md, each row stacks into a card and the cells carry their own labels.
-    <div className="overflow-hidden rounded-[32px] border border-line bg-surface">
-      <table className="w-full text-left text-[15px] leading-relaxed">
+    <div className="overflow-hidden rounded-4xl border border-line bg-surface">
+      <table className="w-full text-left text-subhead leading-relaxed">
         <thead className="max-md:sr-only">
           <tr className="border-line border-b">
             <th scope="col" className="w-[22%] px-6 py-5">
@@ -58,7 +58,7 @@ export function ComparisonTable({
             </th>
             <th
               scope="col"
-              className="w-[39%] bg-sun/[0.06] px-6 py-5 font-semibold"
+              className="w-[39%] bg-sun/6 px-6 py-5 font-semibold"
             >
               <span className="flex items-center gap-2.5">
                 {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
@@ -67,7 +67,7 @@ export function ComparisonTable({
                   alt=""
                   width={28}
                   height={28}
-                  className="rounded-[22.37%]"
+                  className="rounded-app-icon"
                 />
                 {BRAND}
               </span>
@@ -89,8 +89,8 @@ export function ComparisonTable({
               >
                 {row.topic}
               </th>
-              <td className="bg-sun/[0.06] px-6 py-5 text-ink max-md:block max-md:rounded-2xl max-md:px-4 max-md:py-3">
-                <span className="mb-1 block font-mono text-[11px] text-sun tracking-[1px] md:hidden">
+              <td className="bg-sun/6 px-6 py-5 text-ink max-md:block max-md:rounded-2xl max-md:px-4 max-md:py-3">
+                <span className="mb-1 block font-mono text-caption text-sun tracking-caps md:hidden">
                   {BRAND.toUpperCase()}
                 </span>
                 <span className="flex gap-3">
@@ -99,7 +99,7 @@ export function ComparisonTable({
                 </span>
               </td>
               <td className="px-6 py-5 text-secondary max-md:block max-md:px-4 max-md:pt-3 max-md:pb-0">
-                <span className="mb-1 block font-mono text-[11px] tracking-[1px] md:hidden">
+                <span className="mb-1 block font-mono text-caption tracking-caps md:hidden">
                   {other.toUpperCase()}
                 </span>
                 <span className="flex gap-3">

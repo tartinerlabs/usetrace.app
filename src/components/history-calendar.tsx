@@ -46,14 +46,16 @@ export function HistoryCalendar() {
   const photos = selected === 9 ? 1 : (selected % 3) + 1;
 
   return (
-    <div className="flex flex-col gap-5 w-full rounded-[28px] bg-surface p-[clamp(20px,3vw,32px)]">
-      <div className="font-semibold text-[26px] tracking-[-0.5px]">January</div>
+    <div className="flex flex-col gap-5 w-full rounded-card bg-surface p-card-inset">
+      <div className="font-semibold text-title-1 tracking-[-0.5px]">
+        January
+      </div>
       <div className="grid grid-cols-7 gap-1.5 text-center">
         {["M", "T", "W", "T", "F", "S", "S"].map((initial, index) => (
           <span
             // biome-ignore lint/suspicious/noArrayIndexKey: weekday initials repeat
             key={index}
-            className="font-mono text-[11px] text-secondary"
+            className="font-mono text-caption text-secondary"
           >
             {initial}
           </span>
@@ -68,12 +70,12 @@ export function HistoryCalendar() {
               aria-label={`${weekday(day)} ${day} January`}
               aria-pressed={isSelected}
               onClick={() => setSelected(day)}
-              className={`flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl font-semibold text-[15px] motion-safe:transition-colors ${
+              className={`flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl font-semibold text-subhead motion-safe:transition-colors ${
                 isSelected
                   ? "bg-ink text-on-ink"
                   : past
                     ? "cursor-pointer text-ink"
-                    : "text-[#b5b2a8]"
+                    : "text-faint"
               }`}
             >
               {day}
@@ -93,10 +95,10 @@ export function HistoryCalendar() {
           );
         })}
       </div>
-      <div className="flex items-center gap-3 border-line border-t pt-[18px]">
+      <div className="flex items-center gap-3 border-line border-t pt-4.5">
         <span
           aria-hidden="true"
-          className="icon flex size-11 flex-none items-center justify-center rounded-full bg-fill text-[22px] text-walk"
+          className="icon flex size-11 flex-none items-center justify-center rounded-full bg-fill text-icon text-walk"
         >
           {memory ? memory[1] : "calendar_today"}
         </span>

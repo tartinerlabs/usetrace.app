@@ -84,15 +84,14 @@ const jsonLd = {
 };
 
 // Same scale and type as the home page.
-const wrap = "mx-auto w-full max-w-[1240px] px-[clamp(20px,5vw,56px)]";
-const eyebrow = "font-mono text-secondary text-xs tracking-[1.2px]";
+const wrap = "mx-auto w-full max-w-site px-gutter-wide";
+const eyebrow = "font-mono text-secondary text-xs tracking-widest";
 const sectionHeading =
-  "text-balance font-semibold text-[clamp(34px,4.6vw,60px)] leading-none tracking-[-0.035em]";
-const lead =
-  "text-pretty text-[clamp(17px,1.6vw,20px)] text-body leading-normal";
-const card = "rounded-[32px] border border-line bg-surface";
+  "text-balance font-semibold text-[clamp(34px,4.6vw,60px)] leading-none tracking-heading";
+const lead = "text-pretty text-lead text-body leading-normal";
+const card = "rounded-4xl border border-line bg-surface";
 const underline =
-  "underline decoration-[#c9c4b6] underline-offset-[5px] motion-safe:transition-colors hover:decoration-ink";
+  "underline decoration-link-underline underline-offset-5 motion-safe:transition-colors hover:decoration-ink";
 
 function Icon({ name, className = "" }: { name: string; className?: string }) {
   return (
@@ -124,29 +123,29 @@ export default function Page() {
         {/* Hero */}
         <section
           aria-labelledby="hero-heading"
-          className={`${wrap} grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(40px,6vw,80px)] pt-[clamp(32px,6vw,72px)] pb-[clamp(72px,10vw,136px)]`}
+          className={`${wrap} grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(40px,6vw,80px)] pt-page-top pb-[clamp(72px,10vw,136px)]`}
         >
           <div className="flex flex-col gap-7">
             <p className={eyebrow}>GOOGLE MAPS TIMELINE ALTERNATIVE</p>
             <h1
               id="hero-heading"
-              className="text-balance font-semibold text-[clamp(40px,5.2vw,70px)] leading-[0.95] tracking-[-0.045em]"
+              className="text-balance font-semibold text-[clamp(40px,5.2vw,70px)] leading-display tracking-display"
             >
               {HEADING}
             </h1>
-            <p className="max-w-[34ch] text-pretty text-[#3a3a35] text-[clamp(19px,2vw,23px)] leading-[1.45]">
+            <p className="max-w-34ch text-pretty text-ink-soft text-[clamp(19px,2vw,23px)] leading-intro">
               {INTRO}
             </p>
             <div className="flex flex-wrap items-center gap-5">
               <AppStoreBadge campaign="google-timeline" />
               <a
                 href="#compare"
-                className={`font-medium text-[15px] ${underline}`}
+                className={`font-medium text-subhead ${underline}`}
               >
                 Compare the two apps
               </a>
             </div>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2 border-line border-t pt-[18px] font-mono text-secondary text-xs tracking-[1px]">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 border-line border-t pt-4.5 font-mono text-secondary text-xs tracking-caps">
               <li>NO GOOGLE ACCOUNT</li>
               <li>IMPORTS YOUR TIMELINE</li>
               <li>ENCRYPTED ON YOUR IPHONE</li>
@@ -156,14 +155,14 @@ export default function Page() {
           {/* The import at a glance: Google's file goes in, a Trace journal comes out. */}
           <div
             aria-hidden="true"
-            className="flex w-full max-w-[480px] flex-col items-center justify-self-center"
+            className="flex w-full max-w-card flex-col items-center justify-self-center"
           >
             <div className={`${card} flex w-full items-center gap-4 p-5`}>
               <span className="flex size-14 flex-none items-center justify-center rounded-2xl bg-fill font-mono font-semibold text-secondary text-xs">
                 JSON
               </span>
               <span className="min-w-0">
-                <span className="block truncate font-mono text-[15px]">
+                <span className="block truncate font-mono text-subhead">
                   location-history.json
                 </span>
                 <span className="block text-secondary text-sm">
@@ -186,10 +185,10 @@ export default function Page() {
                   alt=""
                   width={56}
                   height={56}
-                  className="size-14 flex-none rounded-[22.37%]"
+                  className="size-14 flex-none rounded-app-icon"
                 />
                 <span>
-                  <span className="block font-semibold text-[17px]">
+                  <span className="block font-semibold text-headline">
                     Import Google Timeline
                   </span>
                   <span className="block text-secondary text-sm">
@@ -201,12 +200,9 @@ export default function Page() {
                 {IMPORT_RESULTS.map((result) => (
                   <li
                     key={result.text}
-                    className="flex items-center gap-3 text-[15px]"
+                    className="flex items-center gap-3 text-subhead"
                   >
-                    <Icon
-                      name={result.icon}
-                      className="text-[22px] text-walk"
-                    />
+                    <Icon name={result.icon} className="text-icon text-walk" />
                     {result.text}
                   </li>
                 ))}
@@ -262,7 +258,7 @@ export default function Page() {
                 <span className="font-mono font-semibold text-[clamp(44px,5vw,60px)] text-sun leading-none tracking-[-2px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 font-semibold text-[21px] tracking-[-0.3px]">
+                <h3 className="mt-4 font-semibold text-title-2 tracking-[-0.3px]">
                   {step.heading}
                 </h3>
                 <p className="text-base text-secondary leading-[1.55]">
@@ -277,14 +273,14 @@ export default function Page() {
         <div className="bg-night text-on-night [--line:var(--night-line)] [--secondary:var(--night-secondary)]">
           <section
             aria-labelledby="keep-heading"
-            className={`${wrap} pt-[clamp(80px,11vw,152px)] pb-[clamp(64px,8vw,112px)]`}
+            className={`${wrap} pt-[clamp(80px,11vw,152px)] pb-section`}
           >
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-[clamp(28px,5vw,72px)]">
               <div className="flex flex-col gap-6">
                 <p className={eyebrow}>TO BE FAIR</p>
                 <h2
                   id="keep-heading"
-                  className="max-w-[14ch] text-balance font-semibold text-[clamp(40px,6vw,80px)] leading-[0.95] tracking-[-0.045em]"
+                  className="max-w-14ch text-balance font-semibold text-[clamp(40px,6vw,80px)] leading-display tracking-display"
                 >
                   When to keep Google Maps Timeline.
                 </h2>
@@ -309,7 +305,7 @@ export default function Page() {
           <section
             id="faq"
             aria-labelledby="faq-heading"
-            className={`${wrap} grid grid-cols-1 gap-[clamp(24px,5vw,72px)] pb-[clamp(80px,10vw,144px)] md:grid-cols-3`}
+            className={`${wrap} grid grid-cols-1 gap-columns pb-[clamp(80px,10vw,144px)] md:grid-cols-3`}
           >
             <h2
               id="faq-heading"
@@ -330,12 +326,12 @@ export default function Page() {
                       className="text-2xl text-secondary motion-safe:transition-transform group-open:rotate-45"
                     />
                   </summary>
-                  <p className="max-w-[62ch] pb-6 text-base text-secondary leading-relaxed">
+                  <p className="max-w-62ch pb-6 text-base text-secondary leading-relaxed">
                     {item.answer}
                   </p>
                 </details>
               ))}
-              <p className="mt-5 text-[15px] text-secondary">
+              <p className="mt-5 text-subhead text-secondary">
                 To learn what {BRAND} does with your data, read the{" "}
                 <Link
                   href="/privacy"
@@ -358,22 +354,22 @@ export default function Page() {
               alt=""
               width={96}
               height={96}
-              className="rounded-[22.37%] shadow-[0_0_0_1px_var(--night-line)]"
+              className="rounded-app-icon ring-1 ring-night-line"
             />
             <h2
               id="cta-heading"
-              className="font-semibold text-[clamp(44px,7vw,96px)] leading-[0.95] tracking-[-0.05em]"
+              className="font-semibold text-[clamp(44px,7vw,96px)] leading-display tracking-tighter"
             >
               Bring your days home.
             </h2>
-            <p className="max-w-[36ch] text-[19px] text-secondary leading-normal">
+            <p className="max-w-36ch text-title-3 text-secondary leading-normal">
               Install {BRAND} and import your Google Timeline. Your old days and
               your new days stay on your iPhone.
             </p>
             <AppStoreBadge campaign="google-timeline" />
             <Link
               href="/"
-              className="font-medium text-[15px] underline decoration-[#4a4e55] underline-offset-[5px] motion-safe:transition-colors hover:decoration-on-night"
+              className="font-medium text-subhead underline decoration-night-link-underline underline-offset-5 motion-safe:transition-colors hover:decoration-on-night"
             >
               See all the features of {BRAND}
             </Link>

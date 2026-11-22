@@ -93,12 +93,12 @@ export function JourneyPlayback({
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-[32px] border border-line bg-surface"
+      className="overflow-hidden rounded-4xl border border-line bg-surface"
     >
       <div
         role="img"
         aria-label="Playback of the drive from the seaside up to the hilltop gardens."
-        className="relative aspect-[14/9] bg-canvas"
+        className="relative aspect-14/9 bg-canvas"
       >
         <DayMap
           {...view}
@@ -122,13 +122,13 @@ export function JourneyPlayback({
             type="button"
             aria-label={playing ? "Pause playback" : "Play journey"}
             onClick={() => (playing ? stop() : play(progress))}
-            className="icon flex size-11 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-[26px] text-canvas motion-safe:transition-colors hover:bg-sun"
+            className="icon flex size-11 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-title-1 text-canvas motion-safe:transition-colors hover:bg-sun"
           >
             {playing ? "pause" : progress >= 1 ? "replay" : "play_arrow"}
           </button>
-          <div className="group relative h-1.5 min-w-0 flex-1 rounded-[3px] bg-fill">
+          <div className="group relative h-1.5 min-w-0 flex-1 rounded-full bg-fill">
             <span
-              className="absolute inset-y-0 left-0 rounded-[3px] bg-sun"
+              className="absolute inset-y-0 left-0 rounded-full bg-sun"
               style={{ width: `${(progress * 100).toFixed(2)}%` }}
             />
             <span
@@ -146,7 +146,7 @@ export function JourneyPlayback({
               }}
               aria-label="Journey time"
               aria-valuetext={label}
-              className="absolute inset-x-0 -top-[19px] m-0 h-11 w-full cursor-grab opacity-0"
+              className="absolute inset-x-0 -top-4.75 m-0 h-11 w-full cursor-grab opacity-0"
             />
           </div>
         </div>

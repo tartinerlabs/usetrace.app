@@ -221,7 +221,7 @@ const linkClassName =
 export default function Page() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <h1 className="wrap-break-word font-semibold text-[clamp(2rem,1.6rem+2vw,2.75rem)] text-ink leading-tight tracking-tight">
+      <h1 className="wrap-break-word font-semibold text-page-title text-ink leading-tight tracking-tight">
         Support
       </h1>
       <p className="mt-4 text-lg text-secondary leading-relaxed">

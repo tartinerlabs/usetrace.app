@@ -87,14 +87,14 @@ const jsonLd = {
   ],
 };
 
-const wrap = "mx-auto w-full max-w-[1128px] px-[clamp(16px,5vw,56px)]";
+const wrap = "mx-auto w-full max-w-page px-gutter";
 const heading =
-  "text-balance font-extrabold text-[clamp(42px,5.6vw,76px)] leading-none tracking-[-0.04em]";
-const lead = "text-pretty text-[clamp(17px,1.6vw,20px)] leading-normal";
-const card = "rounded-[28px] bg-surface";
+  "text-balance font-extrabold text-[clamp(42px,5.6vw,76px)] leading-none tracking-title";
+const lead = "text-pretty text-lead leading-normal";
+const card = "rounded-card bg-surface";
 const split =
-  "mx-auto flex w-full max-w-[1040px] flex-col items-center justify-center gap-[clamp(40px,7vw,104px)] px-[clamp(16px,5vw,56px)] lg:flex-row";
-const section = "py-[clamp(64px,8vw,112px)]";
+  "mx-auto flex w-full max-w-feature flex-col items-center justify-center gap-[clamp(40px,7vw,104px)] px-gutter lg:flex-row";
+const section = "py-section";
 
 function Icon({
   name,
@@ -147,7 +147,7 @@ function RibbonStrip({ className }: { className: string }) {
         <span
           // biome-ignore lint/suspicious/noArrayIndexKey: fixed order of the day
           key={index}
-          className="min-w-[3px] rounded-sm"
+          className="min-w-0.75 rounded-sm"
           style={{
             flex: `${part.minutes} 1 0`,
             background: ACTIVITIES[part.kind].color,
@@ -177,15 +177,15 @@ async function TodayPhone() {
     <div
       role="img"
       aria-label={`The Today screen in Trace: a map of the day, with ${DAY_TOTALS.km} km travelled, ${DAY_TOTALS.motion} in motion and ${DAY_TOTALS.places} places.`}
-      className="relative aspect-[1350/2760] w-[300px]"
+      className="relative aspect-1350/2760 w-75"
     >
       <div className="absolute top-[2.5%] left-[5.333%] h-[95%] w-[89.333%] overflow-hidden bg-canvas">
-        <div className="relative flex h-[874px] w-[402px] origin-top-left scale-[0.6667] flex-col px-6 pt-[18px] text-left">
-          <div className="flex h-9 items-center justify-between px-5 font-semibold text-[17px]">
+        <div className="relative flex h-218.5 w-100.5 origin-top-left scale-[0.6667] flex-col px-6 pt-4.5 text-left">
+          <div className="flex h-9 items-center justify-between px-5 font-semibold text-headline">
             <span>9:41</span>
             <svg
               viewBox="0 0 66 12"
-              className="h-3 w-[66px]"
+              className="h-3 w-16.5"
               fill="currentColor"
               aria-hidden="true"
             >
@@ -215,33 +215,33 @@ async function TodayPhone() {
               />
             </svg>
           </div>
-          <div className="mt-5 flex items-center gap-2 font-semibold text-[24px]">
+          <div className="mt-5 flex items-center gap-2 font-semibold text-2xl/normal">
             {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
             <img src="/brand/logo.svg" alt="" width={24} height={24} />
             trace
           </div>
-          <span className="mt-5 text-[20px] text-secondary">Tuesday</span>
+          <span className="mt-5 text-xl/normal text-secondary">Tuesday</span>
           <span className="font-semibold text-[62px] leading-none tracking-[-1.5px]">
             9 Jan
           </span>
           <div className="mt-4 flex items-center justify-between gap-4">
-            <span className="text-[17px] text-secondary leading-tight">
+            <span className="text-headline text-secondary leading-tight">
               A long day out, from the gardens to the sea.
             </span>
-            <span className="shrink-0 rounded-full bg-surface px-4 py-2.5 font-semibold text-[15px]">
+            <span className="shrink-0 rounded-full bg-surface px-4 py-2.5 font-semibold text-subhead">
               Daily story
             </span>
           </div>
           <div className="mt-5 flex gap-8">
             {TODAY_STATS.map(([value, label]) => (
               <span key={label} className="flex flex-col">
-                <span className="font-medium text-[26px]">{value}</span>
-                <span className="text-[14px] text-secondary">{label}</span>
+                <span className="font-medium text-title-1">{value}</span>
+                <span className="text-sm/normal text-secondary">{label}</span>
               </span>
             ))}
           </div>
-          <div className="mt-5 overflow-hidden rounded-[28px] bg-surface">
-            <div className="relative h-[300px] w-[354px]">
+          <div className="mt-5 overflow-hidden rounded-card bg-surface">
+            <div className="relative h-75 w-88.5">
               <DayMap
                 {...PHONE_VIEW}
                 snapshot={snapshot}
@@ -251,13 +251,13 @@ async function TodayPhone() {
               />
             </div>
             <div className="flex flex-col gap-3 px-4 pt-4 pb-5">
-              <span className="font-semibold text-[13px] text-secondary uppercase tracking-[1.5px]">
+              <span className="font-semibold text-footnote text-secondary uppercase tracking-[1.5px]">
                 A day in colour
               </span>
               <RibbonStrip className="h-6" />
             </div>
           </div>
-          <div className="absolute inset-x-6 bottom-6 flex h-[62px] items-center justify-around rounded-full bg-surface font-semibold text-[13px] text-secondary shadow-[0_6px_20px_-8px_rgba(27,27,25,0.35)]">
+          <div className="absolute inset-x-6 bottom-6 flex h-15.5 items-center justify-around rounded-full bg-surface font-semibold text-footnote text-secondary shadow-[0_6px_20px_-8px_rgba(27,27,25,0.35)]">
             {TODAY_TABS.map((tab, index) => (
               <span key={tab} className={index === 0 ? "text-ink" : undefined}>
                 {tab}
@@ -343,7 +343,7 @@ function RouteLine() {
 function PaperPieces() {
   return (
     <div aria-hidden="true" className="hidden lg:block">
-      <div className="hero-rise absolute top-[30px] left-0 h-[270px] w-[320px] -rotate-[5deg] overflow-hidden rounded-[26px] bg-surface shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
+      <div className="hero-rise absolute top-7.5 left-0 h-67.5 w-80 -rotate-5 overflow-hidden rounded-[26px] bg-surface shadow-paper">
         <DayMap
           width={320}
           height={270}
@@ -354,44 +354,44 @@ function PaperPieces() {
           pins={DAY_PINS.map(({ at }) => ({ at }))}
         />
       </div>
-      <div className="hero-rise absolute top-5 left-[206px] flex rotate-6 items-center gap-[7px] rounded-full bg-sun py-2 pr-[15px] pl-[9px] font-bold text-base text-on-sun shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
+      <div className="hero-rise absolute top-5 left-51.5 flex rotate-6 items-center gap-1.75 rounded-full bg-sun py-2 pr-3.75 pl-2.25 font-bold text-base text-on-sun shadow-sticker">
         <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
           <Icon name="museum" className="text-sm" />
         </span>
         Museum
       </div>
-      <div className="hero-rise absolute top-[236px] left-[18px] flex -rotate-6 items-center gap-[7px] rounded-full bg-ink py-2 pr-[15px] pl-[9px] font-bold text-base text-on-ink shadow-[0_0_0_4px_var(--surface),0_8px_16px_-6px_rgba(70,55,30,0.45)]">
+      <div className="hero-rise absolute top-59 left-4.5 flex -rotate-6 items-center gap-1.75 rounded-full bg-ink py-2 pr-3.75 pl-2.25 font-bold text-base text-on-ink shadow-sticker">
         <span className="flex size-6 items-center justify-center rounded-full bg-white/20">
           <Icon name="beach_access" className="text-sm" />
         </span>
         Seaside
       </div>
-      <div className="hero-rise absolute top-[360px] left-11 flex w-[300px] rotate-[4deg] rounded-[15px] bg-ink text-left text-on-night shadow-[0_16px_28px_-14px_rgba(27,27,25,0.6)]">
-        <div className="min-w-0 flex-1 px-[15px] py-[13px]">
-          <div className="font-extrabold text-[11px] text-night-secondary tracking-[1px]">
+      <div className="hero-rise absolute top-90 left-11 flex w-75 rotate-4 rounded-[15px] bg-ink text-left text-on-night shadow-[0_16px_28px_-14px_rgba(27,27,25,0.6)]">
+        <div className="min-w-0 flex-1 px-3.75 py-3.25">
+          <div className="font-extrabold text-caption text-night-secondary tracking-caps">
             DRIVE
           </div>
           <div className="font-bold text-lg">Up to the hills</div>
         </div>
-        <div className="flex w-[72px] flex-none flex-col items-center justify-center border-[#5a5a55] border-l-2 border-dashed font-bold text-night-secondary text-xs">
+        <div className="flex w-18 flex-none flex-col items-center justify-center border-perforation border-l-2 border-dashed font-bold text-night-secondary text-xs">
           <span>15:40</span>
           <span>30 min</span>
         </div>
       </div>
-      <div className="hero-rise absolute top-[70px] right-1.5 w-[300px] rotate-[5deg] rounded-3xl bg-surface px-5 py-[18px] text-left shadow-[0_18px_34px_-16px_rgba(70,55,30,0.5)]">
-        <div className="flex items-baseline justify-between font-bold text-[15px] text-secondary">
+      <div className="hero-rise absolute top-17.5 right-1.5 w-75 rotate-5 rounded-3xl bg-surface px-5 py-4.5 text-left shadow-paper">
+        <div className="flex items-baseline justify-between font-bold text-subhead text-secondary">
           <span className="text-sun">Today</span>
           <span>Tuesday</span>
         </div>
         <div className="mt-1 font-extrabold text-[38px] tracking-[-0.8px]">
           {DAY_TOTALS.km} km
         </div>
-        <div className="text-[15px] text-secondary">
+        <div className="text-subhead text-secondary">
           {DAY_TOTALS.motion} moving · {DAY_TOTALS.places} places
         </div>
         <RibbonStrip className="mt-3.5 h-3.5" />
       </div>
-      <div className="hero-rise absolute top-[290px] right-[92px] flex size-32 -rotate-[9deg] flex-col items-center justify-center rounded-full border-3 border-sun font-extrabold text-[11px] text-sun tracking-[0.8px] shadow-[inset_0_0_0_4px_var(--canvas),inset_0_0_0_5px_var(--sun)]">
+      <div className="hero-rise absolute top-72.5 right-23 flex size-32 -rotate-9 flex-col items-center justify-center rounded-full border-3 border-sun font-extrabold text-caption text-sun tracking-stamp shadow-[inset_0_0_0_4px_var(--canvas),inset_0_0_0_5px_var(--sun)]">
         <span>YOUR</span>
         <span className="text-[32px] leading-9 tracking-normal">1st</span>
         <span>DAY</span>
@@ -445,17 +445,17 @@ function PlacesCard() {
       {PLACES.map((place, index) => (
         <li
           key={place.name}
-          className="flex items-center gap-3.5 border-line py-[18px] not-first:border-t"
+          className="flex items-center gap-3.5 border-line py-4.5 not-first:border-t"
         >
           <span className="flex size-11 flex-none items-center justify-center rounded-full bg-fill text-place">
-            <Icon name={place.icon} className="text-[22px]" />
+            <Icon name={place.icon} className="text-icon" />
           </span>
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
             <div className="flex items-baseline justify-between gap-3">
               <span className="flex items-center gap-1.5 font-semibold">
                 {place.name}
                 {place.private && (
-                  <span className="flex items-center gap-1 font-normal text-[13px] text-secondary">
+                  <span className="flex items-center gap-1 font-normal text-footnote text-secondary">
                     <Icon name="lock" className="text-sm" />
                     Private
                   </span>
@@ -463,13 +463,13 @@ function PlacesCard() {
               </span>
               <span className="font-semibold text-lg">{place.visits}</span>
             </div>
-            <div className="flex justify-between gap-3 text-[13px] text-secondary">
+            <div className="flex justify-between gap-3 text-footnote text-secondary">
               <span>{place.usual}</span>
               <span>visits</span>
             </div>
             <span className="block h-1 rounded-sm bg-fill">
               <span
-                className="block h-1 rounded-sm bg-sun unreached:w-0! motion-safe:transition-[width] motion-safe:duration-[1.1s] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)]"
+                className="block h-1 rounded-sm bg-sun unreached:w-0! motion-safe:transition-[width] motion-safe:duration-1100 motion-safe:ease-spring"
                 style={{
                   width: `${Math.max(2, Math.round((place.visits / MOST_VISITS) * 100))}%`,
                   transitionDelay: `${(0.3 + index * 0.15).toFixed(2)}s`,
@@ -519,30 +519,28 @@ function ExploreCard() {
   });
 
   return (
-    <div
-      className={`${card} flex flex-col gap-[18px] p-[clamp(20px,3vw,32px)]`}
-    >
+    <div className={`${card} flex flex-col gap-4.5 p-card-inset`}>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="font-semibold">Explored map</span>
         <span className="font-mono text-secondary text-xs">
           1 SQUARE ≈ 220 M
         </span>
       </div>
-      <div aria-hidden="true" className="grid grid-cols-16 gap-[3px]">
+      <div aria-hidden="true" className="grid grid-cols-16 gap-0.75">
         {squares.map(({ explored, style }, index) => (
           <span
             // biome-ignore lint/suspicious/noArrayIndexKey: fixed grid position
             key={index}
-            className={`aspect-square rounded-[3px] motion-safe:transition-[background-color] motion-safe:duration-400 ${explored ? "unreached:bg-fill!" : ""}`}
+            className={`aspect-square rounded-[3px] motion-safe:transition-colors motion-safe:duration-400 ${explored ? "unreached:bg-fill!" : ""}`}
             style={style}
           />
         ))}
       </div>
-      <div className="flex items-center gap-3 border-line border-t pt-[18px]">
+      <div className="flex items-center gap-3 border-line border-t pt-4.5">
         <span className="rounded-lg bg-sun px-2.5 py-1 font-semibold text-on-sun text-sm">
           First
         </span>
-        <span className="text-[15px]">First visit to a new area · 2 Oct</span>
+        <span className="text-subhead">First visit to a new area · 2 Oct</span>
       </div>
     </div>
   );
@@ -643,17 +641,17 @@ export default function Home() {
       <div className="overflow-x-clip">
         <section
           aria-labelledby="hero-heading"
-          className="relative flex flex-col items-center gap-[18px] overflow-hidden px-[clamp(16px,5vw,56px)] pt-[clamp(24px,4vw,48px)] pb-28 text-center"
+          className="relative flex flex-col items-center gap-4.5 overflow-hidden px-gutter pt-[clamp(24px,4vw,48px)] pb-28 text-center"
         >
           <p className="tag-drop mb-1.5 inline-flex -rotate-2 rounded-[13px] bg-ink text-left font-bold text-[clamp(15px,1.5vw,18px)] text-on-ink tracking-[-0.1px] shadow-[0_14px_24px_-14px_rgba(27,27,25,0.6)]">
             <span className="px-4 py-2.5">A private location timeline</span>
-            <span className="flex items-center border-[#5a5a55] border-l-2 border-dashed px-3.5 py-2.5 font-extrabold text-[0.75em] text-night-secondary uppercase tracking-[1px]">
+            <span className="flex items-center border-perforation border-l-2 border-dashed px-3.5 py-2.5 font-extrabold text-[0.75em] text-night-secondary uppercase tracking-caps">
               for iPhone
             </span>
           </p>
           <h1
             id="hero-heading"
-            className="pb-[0.2em] font-extrabold text-[clamp(60px,10vw,148px)] leading-[0.94] tracking-[-0.045em]"
+            className="pb-[0.2em] font-extrabold text-[clamp(60px,10vw,148px)] leading-[0.94] tracking-display"
           >
             {TAGLINE.slice(0, accentAt)}
             <span className="relative inline-block whitespace-nowrap text-sun">
@@ -661,19 +659,19 @@ export default function Home() {
               <RouteLine />
             </span>
           </h1>
-          <p className="max-w-[44ch] text-[#3a3a35] text-[clamp(18px,1.7vw,22px)] leading-[1.45]">
+          <p className="max-w-44ch text-ink-soft text-intro leading-intro">
             {SUMMARY}
           </p>
           <div
             id="download"
-            className="mt-1.5 flex scroll-mt-6 flex-wrap items-center justify-center gap-[18px]"
+            className="mt-1.5 flex scroll-mt-6 flex-wrap items-center justify-center gap-4.5"
           >
             <AppStoreBadge campaign="home" />
-            <span className="text-[#3a3a35] text-[15px]">
+            <span className="text-ink-soft text-subhead">
               No account. No ads.
             </span>
           </div>
-          <div className="relative mt-7 flex w-full max-w-[1160px] justify-center">
+          <div className="relative mt-7 flex w-full max-w-290 justify-center">
             <TodayPhone />
             <PaperPieces />
           </div>
@@ -682,7 +680,7 @@ export default function Home() {
 
         <section className={`bg-fill ${section}`}>
           <div className={`${wrap} flex flex-col gap-[clamp(28px,4vw,48px)]`}>
-            <h2 className={`${heading} max-w-[14ch]`}>
+            <h2 className={`${heading} max-w-14ch`}>
               Your day records itself.
             </h2>
             <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-5">
@@ -691,7 +689,7 @@ export default function Home() {
                   key={when}
                   className="flex flex-col gap-2 rounded-[20px] bg-surface p-6"
                 >
-                  <span className="font-bold text-[15px] text-secondary">
+                  <span className="font-bold text-subhead text-secondary">
                     {when}
                   </span>
                   <span className="font-bold text-[23px] leading-7 tracking-[-0.3px]">
@@ -711,26 +709,26 @@ export default function Home() {
           aria-labelledby="privacy-heading"
           className="bg-sun py-[clamp(72px,9vw,128px)] text-on-sun"
         >
-          <div className="mx-auto flex max-w-[880px] flex-col items-center gap-[22px] px-[clamp(16px,5vw,56px)] text-center">
-            <div className="flex size-[132px] -rotate-[8deg] flex-col items-center justify-center rounded-full border-3 border-on-sun font-extrabold text-[11px] tracking-[0.8px] shadow-[inset_0_0_0_4px_var(--sun),inset_0_0_0_5px_var(--on-sun)]">
+          <div className="mx-auto flex max-w-cta flex-col items-center gap-5.5 px-gutter text-center">
+            <div className="flex size-33 -rotate-8 flex-col items-center justify-center rounded-full border-3 border-on-sun font-extrabold text-caption tracking-stamp shadow-[inset_0_0_0_4px_var(--sun),inset_0_0_0_5px_var(--on-sun)]">
               <span>STAYS ON</span>
               <span className="text-xl tracking-normal">THIS</span>
               <span>IPHONE</span>
             </div>
             <h2
               id="privacy-heading"
-              className="text-balance font-extrabold text-[clamp(46px,7vw,100px)] leading-[0.98] tracking-[-0.045em]"
+              className="text-balance font-extrabold text-[clamp(46px,7vw,100px)] leading-[0.98] tracking-display"
             >
               Your journal stays on your iPhone.
             </h2>
-            <p className="max-w-[44ch] text-[clamp(18px,1.7vw,22px)] leading-[1.45]">
+            <p className="max-w-44ch text-intro leading-intro">
               We do not receive your journal, so we cannot read it, sell it or
               lose it in a data breach. Trace records nothing until you tap
               Start my journal.
             </p>
             <Link
               href="/privacy"
-              className="inline-flex min-h-11 items-center font-semibold underline underline-offset-[5px]"
+              className="inline-flex min-h-11 items-center font-semibold underline underline-offset-5"
             >
               Read the privacy policy
             </Link>
@@ -739,13 +737,13 @@ export default function Home() {
 
         <section className={`bg-night text-on-night ${section}`}>
           <div className={split}>
-            <div className="w-full max-w-[420px] flex-none text-ink">
+            <div className="w-full max-w-105 flex-none text-ink">
               <HistoryCalendar />
             </div>
-            <div className="flex min-w-0 flex-col gap-[18px]">
+            <div className="flex min-w-0 flex-col gap-4.5">
               <p className="font-bold text-base text-peach">History</p>
               <h2 className={heading}>Find any day, months later.</h2>
-              <p className={`max-w-[36ch] text-night-secondary ${lead}`}>
+              <p className={`max-w-36ch text-night-secondary ${lead}`}>
                 Where was I on that Saturday in March? Open the day. The map
                 shows each place in order.
               </p>
@@ -755,10 +753,10 @@ export default function Home() {
 
         <section className={section}>
           <article className={split}>
-            <div className="flex min-w-0 flex-1 flex-col gap-[18px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-4.5">
               <p className="font-bold text-base text-sun">Playback</p>
               <h2 className={heading}>Play back a journey.</h2>
-              <p className={`max-w-[36ch] text-body ${lead}`}>
+              <p className={`max-w-36ch text-body ${lead}`}>
                 Move the slider to go back in time. The map shows where you were
                 and when.
               </p>
@@ -774,10 +772,10 @@ export default function Home() {
             <div className="w-full min-w-0 flex-1">
               <PlacesCard />
             </div>
-            <div className="flex min-w-0 flex-1 flex-col gap-[18px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-4.5">
               <p className="font-bold text-base text-sun">Places</p>
               <h2 className={heading}>Know the places you go.</h2>
-              <p className={`max-w-[36ch] text-body ${lead}`}>
+              <p className={`max-w-36ch text-body ${lead}`}>
                 See how frequently you go and when you usually arrive. Make a
                 place private, and Trace keeps only a pin.
               </p>
@@ -787,10 +785,10 @@ export default function Home() {
 
         <section className={section}>
           <div className={split}>
-            <div className="flex min-w-0 flex-1 flex-col gap-[18px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-4.5">
               <p className="font-bold text-base text-sun">Explored map</p>
               <h2 className={heading}>No streaks. No scores.</h2>
-              <p className={`max-w-[36ch] text-body ${lead}`}>
+              <p className={`max-w-36ch text-body ${lead}`}>
                 A quiet day at home does not remove progress. As you go to new
                 streets, your explored map fills in.
               </p>
@@ -802,7 +800,7 @@ export default function Home() {
         </section>
 
         <section className={`bg-fill ${section}`}>
-          <div className="mx-auto flex max-w-[880px] flex-col items-center gap-[18px] px-[clamp(16px,5vw,56px)] text-center">
+          <div className="mx-auto flex max-w-cta flex-col items-center gap-4.5 px-gutter text-center">
             <p className="font-bold text-base text-sun">Google Maps Timeline</p>
             <h2 className={heading}>Bring your history with you.</h2>
             <p className={`max-w-[46ch] text-body ${lead}`}>
@@ -811,7 +809,7 @@ export default function Home() {
             </p>
             <Link
               href="/google-maps-timeline-alternative"
-              className="inline-flex min-h-11 items-center font-semibold underline underline-offset-[5px]"
+              className="inline-flex min-h-11 items-center font-semibold underline underline-offset-5"
             >
               Compare Trace and Google Maps Timeline
             </Link>
@@ -827,7 +825,7 @@ export default function Home() {
                   key={title}
                   className="flex flex-col gap-1.5 border-ink border-t-2 pt-4"
                 >
-                  <h3 className="font-bold text-[21px]">{title}</h3>
+                  <h3 className="font-bold text-title-2">{title}</h3>
                   <p className="text-base text-body leading-normal">{body}</p>
                 </li>
               ))}
@@ -841,10 +839,10 @@ export default function Home() {
           aria-labelledby="faq-heading"
           className="bg-night py-[clamp(64px,8vw,104px)] text-on-night [--line:var(--night-line)] [--secondary:var(--night-secondary)]"
         >
-          <div className="mx-auto flex max-w-[1040px] flex-wrap gap-[clamp(24px,5vw,72px)] px-[clamp(16px,5vw,56px)]">
+          <div className="mx-auto flex max-w-feature flex-wrap gap-columns px-gutter">
             <h2
               id="faq-heading"
-              className="flex-[1_1_220px] font-extrabold text-[clamp(34px,4vw,52px)] leading-none tracking-[-0.03em]"
+              className="flex-[1_1_220px] font-extrabold text-[clamp(34px,4vw,52px)] leading-none tracking-section"
             >
               Questions
             </h2>
@@ -862,12 +860,12 @@ export default function Home() {
                       className="text-2xl text-secondary motion-safe:transition-transform group-open:rotate-45"
                     />
                   </summary>
-                  <p className="max-w-[62ch] pb-6 text-base text-secondary leading-relaxed">
+                  <p className="max-w-62ch pb-6 text-base text-secondary leading-relaxed">
                     {item.answer}
                   </p>
                 </details>
               ))}
-              <p className="mt-5 text-[15px] text-secondary">
+              <p className="mt-5 text-subhead text-secondary">
                 More answers are on the{" "}
                 <Link
                   href="/support"
@@ -885,16 +883,16 @@ export default function Home() {
           aria-labelledby="cta-heading"
           className="py-[clamp(72px,9vw,128px)]"
         >
-          <div className="mx-auto flex max-w-[880px] flex-col items-center gap-[22px] px-[clamp(16px,5vw,56px)] text-center">
+          <div className="mx-auto flex max-w-cta flex-col items-center gap-5.5 px-gutter text-center">
             {/* biome-ignore lint/performance/noImgElement: static SVG artwork needs no optimisation */}
             <img src="/brand/logo.svg" alt="" width={92} height={92} />
             <h2
               id="cta-heading"
-              className="font-extrabold text-[clamp(50px,8vw,112px)] leading-[0.96] tracking-[-0.045em]"
+              className="font-extrabold text-[clamp(50px,8vw,112px)] leading-[0.96] tracking-display"
             >
               Start your <span className="text-sun">first day.</span>
             </h2>
-            <p className="max-w-[36ch] text-[#3a3a35] text-[clamp(18px,1.7vw,22px)] leading-[1.45]">
+            <p className="max-w-36ch text-ink-soft text-intro leading-intro">
               Install Trace and tap Start my journal. Tonight, your day is on
               the map.
             </p>

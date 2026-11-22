@@ -15,7 +15,7 @@ export function AppStoreBadge({ campaign }: { campaign: string }) {
         alt="Download on the App Store"
         width={150}
         height={50}
-        className="h-[3.125rem] w-auto"
+        className="h-12.5 w-auto"
       />
     </a>
   );
