@@ -86,9 +86,6 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sans:
     -apple-system, BlinkMacSystemFont, var(--font-inter), Arial, sans-serif;
-  --font-rounded:
-    ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
   --radius-card: 1.75rem;
   --radius-small: 1rem;
 }

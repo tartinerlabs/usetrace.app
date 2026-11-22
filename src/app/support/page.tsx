@@ -221,7 +221,7 @@ const linkClassName =
 export default function Page() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <h1 className="wrap-break-word font-rounded font-semibold text-[clamp(2rem,1.6rem+2vw,2.75rem)] text-ink leading-tight tracking-tight">
+      <h1 className="wrap-break-word font-semibold text-[clamp(2rem,1.6rem+2vw,2.75rem)] text-ink leading-tight tracking-tight">
         Support
       </h1>
       <p className="mt-4 text-lg text-secondary leading-relaxed">
@@ -231,7 +231,7 @@ export default function Page() {
 
       {sections.map((section) => (
         <section key={section.heading} className="mt-12">
-          <h2 className="mb-4 font-rounded font-semibold text-2xl text-ink leading-snug">
+          <h2 className="mb-4 font-semibold text-2xl text-ink leading-snug">
             {section.heading}
           </h2>
           <Faq items={section.items} />
@@ -239,7 +239,7 @@ export default function Page() {
       ))}
 
       <section className="mt-16 rounded-card border border-line bg-fill p-6 sm:p-8">
-        <h2 className="font-rounded font-semibold text-ink text-xl">
+        <h2 className="font-semibold text-ink text-xl">
           Do you need more help?
         </h2>
         <p className="mt-3 text-secondary leading-relaxed">
